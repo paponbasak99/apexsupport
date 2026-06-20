@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: apex-support-hub
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_SECRET_KEY
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        value: anuex
+      - key: DATABASE_PATH
+        value: /var/data/database.sqlite
+      - key: UPLOAD_DIR
+        value: /var/data/uploads
+      - key: DISABLE_ADMIN_IP_CHECK
+        value: "true"
+    disk:
+      name: apex-data
+      mountPath: /var/data
+      sizeGB: 1
