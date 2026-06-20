@@ -6,11 +6,11 @@
 }
 
 .hero--celestial {
-  min-height: 100vh;
+  min-height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 120px 20px;
+  padding: 40px 20px 80px;
   position: relative;
   z-index: 1;
 }
@@ -336,7 +336,7 @@
   
   /* Spacing */
   .hero--celestial {
-    padding: 100px 15px 40px 15px !important;
+    padding: 60px 15px 40px 15px !important;
   }
   .page {
     padding: 3rem 1rem !important;
