@@ -121,7 +121,7 @@ app.use(session({
   name: 'apex_session',
   keys: [SESSION_SECRET],
   maxAge: 1000 * 60 * 60 * 24, // 1 day
-  secure: process.env.NODE_ENV === 'production',
+  secure: false, // Set to false to avoid issues with reverse proxies dropping cookies
   sameSite: 'lax', // Relax sameSite slightly to prevent issues with redirects
   httpOnly: true
 }));

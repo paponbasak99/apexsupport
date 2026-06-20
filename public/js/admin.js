@@ -53,20 +53,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const u = document.getElementById('adminUsername').value;
     const p = document.getElementById('adminPassword').value;
     
-    const res = await fetch('/api/admin/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: u, password: p })
-    });
-    const data = await res.json();
-    if (data.success) {
-      csrfToken = data.csrfToken;
-      document.getElementById('currentUser').textContent = `OP_${data.username.toUpperCase()}`;
-      loginOverlay.style.display = 'none';
-      appLayout.style.display = 'flex';
-      loadDashboard();
-    } else {
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+      });
+      
+      let data;
+      try {
+        data = await res.json();
+      } catch (err) {
+        throw new Error('Server returned an invalid response (might be blocked by device auth or IP firewall).');
+      }
+
+      if (data.success) {
+        csrfToken = data.csrfToken;
+        document.getElementById('currentUser').textContent = `OP_${data.username.toUpperCase()}`;
+        loginOverlay.style.display = 'none';
+        appLayout.style.display = 'flex';
+        loadDashboard();
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+        if (data.error) document.getElementById('loginError').textContent = data.error;
+      }
+    } catch (e) {
       document.getElementById('loginError').style.display = 'block';
+      document.getElementById('loginError').textContent = e.message;
     }
   });
 
