@@ -15,7 +15,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Setup SQLite Database
-const dbPath = process.env.DATABASE_PATH || path.join(__dirname, '../data/database.sqlite');
+let defaultDbPath = path.join(__dirname, '../data/database.sqlite');
+if (process.env.VERCEL) {
+  defaultDbPath = '/tmp/database.sqlite';
+}
+const dbPath = process.env.DATABASE_PATH || defaultDbPath;
 const dbDir = path.dirname(dbPath);
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
@@ -291,7 +295,11 @@ app.delete('/api/admin/links/:id', requireAuth, verifyCSRF, (req, res) => {
 });
 
 // --- Upload API ---
-const uploadDir = process.env.UPLOAD_DIR || path.join(__dirname, '../public/assets/uploads');
+let defaultUploadDir = path.join(__dirname, '../public/assets/uploads');
+if (process.env.VERCEL) {
+  defaultUploadDir = '/tmp/uploads';
+}
+const uploadDir = process.env.UPLOAD_DIR || defaultUploadDir;
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
