@@ -64,7 +64,8 @@ function requireAdminIP(req, res, next) {
       clientIp = clientIp.split(',')[0].trim();
     }
     
-    const skipIPCheck = allowedIPs.includes('*') || process.env.DISABLE_ADMIN_IP_CHECK === 'true';
+    // Default to skipping IP and Device checks unless explicitly enabled, to prevent Vercel/Render lockouts
+    const skipIPCheck = allowedIPs.includes('*') || process.env.DISABLE_ADMIN_IP_CHECK !== 'false';
     
     if (!skipIPCheck && clientIp && !allowedIPs.includes(clientIp)) {
       console.warn(`[SECURITY] Blocked admin access from unauthorized IP: ${clientIp}`);
@@ -87,14 +88,14 @@ function requireAdminIP(req, res, next) {
     // 1. Check if user is authenticating device via URL
     if (req.query.auth === secretKey) {
       // Set a persistent cookie (Valid for 10 years)
-      res.cookie('apex_device_auth', secretKey, { maxAge: 10 * 365 * 24 * 60 * 60 * 1000, httpOnly: true });
+      res.cookie('apex_device_auth', secretKey, { maxAge: 10 * 365 * 24 * 60 * 60 * 1000, httpOnly: true, secure: false, sameSite: 'lax' });
       // Redirect to clear the secret from the address bar
       return res.redirect(req.path);
     }
     
     // 2. Otherwise, check if device already has the persistent token
     const cookies = req.headers.cookie || '';
-    if (!cookies.includes(`apex_device_auth=${secretKey}`)) {
+    if (!skipIPCheck && !cookies.includes(`apex_device_auth=${secretKey}`)) {
       console.warn(`[SECURITY] Blocked admin access from unauthorized device.`);
       return res.status(403).send(`
         <html>
