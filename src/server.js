@@ -552,11 +552,15 @@ app.post('/api/track/:label', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running!`);
-  console.log(`- Main Website: http://localhost:${PORT}`);
-  console.log(`- Admin Panel:  http://localhost:${PORT}/admin.html`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server is running!`);
+    console.log(`- Main Website: http://localhost:${PORT}`);
+    console.log(`- Admin Panel:  http://localhost:${PORT}/admin.html`);
+  });
+}
+
+module.exports = app;
 
 process.on('SIGINT', () => {
   db.close();
