@@ -184,6 +184,23 @@ try {
   } else {
     db.exec('ALTER TABLE links_new RENAME TO links;');
   }
+  
+  // Seed links from data/links.json if the table is empty
+  const count = db.prepare('SELECT COUNT(*) as count FROM links').get().count;
+  if (count === 0) {
+    const linksPath = path.join(__dirname, '../data/links.json');
+    if (fs.existsSync(linksPath)) {
+      const linksData = JSON.parse(fs.readFileSync(linksPath, 'utf-8'));
+      const insert = db.prepare('INSERT INTO links (label, url) VALUES (?, ?)');
+      db.transaction(() => {
+        for (const [label, url] of Object.entries(linksData)) {
+          insert.run(label, url);
+        }
+      })();
+      console.log("Seeded database with initial links from links.json");
+    }
+  }
+
 } catch (e) {
   console.error("Migration error:", e);
 }
