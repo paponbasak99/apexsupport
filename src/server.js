@@ -28,7 +28,7 @@ const db = new Database(dbPath);
 db.pragma('journal_mode = WAL');
 
 // Generate a random session secret if not provided
-const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
+const SESSION_SECRET = process.env.SESSION_SECRET || 'apex_fallback_secret_key_1234567890';
 
 // Security Middleware
 app.use(helmet({
@@ -114,13 +114,15 @@ function requireAdminIP(req, res, next) {
 
 app.use(requireAdminIP);
 
+app.set('trust proxy', 1); // Trust first proxy (Render, Vercel, etc.)
+
 // Session Middleware
 app.use(session({
   name: 'apex_session',
   keys: [SESSION_SECRET],
   maxAge: 1000 * 60 * 60 * 24, // 1 day
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict',
+  sameSite: 'lax', // Relax sameSite slightly to prevent issues with redirects
   httpOnly: true
 }));
 
