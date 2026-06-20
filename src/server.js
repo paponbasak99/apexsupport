@@ -6,7 +6,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const Database = require('better-sqlite3');
-const session = require('express-session');
+const session = require('cookie-session');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const multer = require('multer');
@@ -116,16 +116,12 @@ app.use(requireAdminIP);
 
 // Session Middleware
 app.use(session({
-  secret: SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
   name: 'apex_session',
-  cookie: {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // Requires HTTPS
-    sameSite: 'strict',
-    maxAge: 1000 * 60 * 60 * 24 // 1 day
-  }
+  keys: [SESSION_SECRET],
+  maxAge: 1000 * 60 * 60 * 24, // 1 day
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'strict',
+  httpOnly: true
 }));
 
 // Rate limiters
@@ -425,7 +421,7 @@ app.post('/api/admin/login', (req, res) => {
 
 app.post('/api/admin/logout', (req, res) => {
   if (req.session.userId) logActivity(req.session.userId, 'LOGOUT', 'auth', null, null);
-  req.session.destroy();
+  req.session = null;
   res.json({ success: true });
 });
 

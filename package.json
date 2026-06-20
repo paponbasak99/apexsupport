@@ -119,6 +119,7 @@
     "util": "^0.12.5",
     "validator": "^13.15.35",
     "which-typed-array": "^1.1.21",
-    "word-wrap": "^1.2.5"
+    "word-wrap": "^1.2.5",
+    "cookie-session": "^2.1.0"
   }
 }
