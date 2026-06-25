@@ -103,159 +103,36 @@
   }
 
   function handleDownload(btn, e) {
-  if (!btn || btn.dataset.downloading === 'true') return;
-  var name = getDownloadName(btn);
-  var isLink = btn.tagName === 'A' || btn.tagName === 'BUTTON';
-  var lookupName = name;
-  if (name === 'Optimization Settings') lookupName = 'Paid Sensi Settings';
-  if (name === 'Optimization File') lookupName = 'Paid Sensi File';
+    if (!btn) return;
+    var name = getDownloadName(btn);
+    var lookupName = name;
+    if (name === 'Optimization Settings') lookupName = 'Paid Sensi Settings';
+    if (name === 'Optimization File') lookupName = 'Paid Sensi File';
 
-  // Extract URL from inline onclick if available, and cache it to prevent second-click bugs!
-  var fallbackUrl = btn.dataset.url || null;
-  if (!fallbackUrl) {
-    var onclickAttr = btn.getAttribute('onclick');
-    if (onclickAttr && onclickAttr.indexOf("window.open('") !== -1) {
-      fallbackUrl = onclickAttr.split("window.open('")[1].split("'")[0];
-      btn.dataset.url = fallbackUrl; // Cache it for future clicks
-      btn.removeAttribute('onclick'); // Remove it so it doesn't fire instantly bypassing the animation
-    }
-  }
-
-  var href = downloadLinks[lookupName] || fallbackUrl || (btn.tagName === 'A' ? btn.getAttribute('href') : null);
-  
-  if (e) {
-    e.preventDefault();
-  }
-  
-  // Synchronously open a loading window to avoid popup blockers, but make it look nice!
-  var newWin = null;
-  if (href && href !== '#' && href.trim() !== '') {
-    newWin = window.open('about:blank', '_blank');
-    if (newWin) {
-      newWin.document.write('<body style="display:flex;justify-content:center;align-items:center;height:100vh;margin:0;background-color:#0d0e15;color:#fff;font-family:system-ui,sans-serif;"><div style="text-align:center;"><div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.2);border-top-color:#7ecf8a;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px;"></div><h2 style="margin:0;font-size:18px;font-weight:500;">Securing Connection...</h2></div><style>@keyframes spin { 100% { transform: rotate(360deg); } }</style></body>');
-      newWin.document.title = 'Connecting...';
-    }
-  }
-  
-  btn.dataset.downloading = 'true';
-
-  var originalHTML = btn.innerHTML;
-  var savedAttributes = [];
-  for (var j = 0; j < btn.attributes.length; j++) {
-    if (btn.attributes[j].name !== 'data-downloading') {
-      savedAttributes.push({ name: btn.attributes[j].name, value: btn.attributes[j].value });
-    }
-  }
-
-  btn.classList.add('connecting');
-  btn.innerHTML = '<span class="loader__spinner" style="width:16px;height:16px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:8px;border-top-color:#fff;"></span> Connecting...';
-
-  setTimeout(function() {
-    btn.classList.remove('connecting');
-    btn.classList.add('downloading');
-    btn.innerHTML = originalHTML;
-
-    var bar = document.createElement('span');
-    bar.className = 'btn__progress';
-    btn.appendChild(bar);
-
-    var progress = 0;
-    var startTime = performance.now();
-    var duration = 500;
-    var animationFrameId;
-    
-    function animate(timestamp) {
-      var elapsed = timestamp - startTime;
-      var progressPercent = Math.min(elapsed / duration, 1);
-      
-      var easeOutCubic = 1 - Math.pow(1 - progressPercent, 3);
-      progress = easeOutCubic * 100;
-      
-      bar.style.width = progress + '%';
-      
-      if (progressPercent < 1) {
-        animationFrameId = requestAnimationFrame(animate);
-      } else {
-        completeDownload(btn, name, isLink, href, originalHTML, savedAttributes, newWin);
+    var fallbackUrl = btn.dataset.url || null;
+    if (!fallbackUrl) {
+      var onclickAttr = btn.getAttribute('onclick');
+      if (onclickAttr && onclickAttr.indexOf("window.open('") !== -1) {
+        fallbackUrl = onclickAttr.split("window.open('")[1].split("'")[0];
+        btn.dataset.url = fallbackUrl; 
+        btn.removeAttribute('onclick'); // Prevent duplicate execution
       }
     }
+
+    var href = downloadLinks[lookupName] || fallbackUrl || (btn.tagName === 'A' ? btn.getAttribute('href') : null);
     
-    animationFrameId = requestAnimationFrame(animate);
-    showToast('Download Starting', 'Opening download for ' + name + '.');
-  }, 200);
-}
-
-function triggerButtonHalo(btn) {
-  var rect = btn.getBoundingClientRect();
-  var centerX = rect.left + rect.width / 2 + window.scrollX;
-  var centerY = rect.top + rect.height / 2 + window.scrollY;
-
-  var ring = document.createElement('span');
-  Object.assign(ring.style, {
-    position: 'absolute',
-    left: centerX + 'px',
-    top: centerY + 'px',
-    width: '10px',
-    height: '10px',
-    borderRadius: '50%',
-    border: '2px solid #7ecf8a',
-    boxShadow: '0 0 15px rgba(126, 207, 138, 0.4)',
-    pointerEvents: 'none',
-    zIndex: '3000',
-    transform: 'translate(-50%, -50%) scale(1)',
-    opacity: '1',
-    transition: 'transform 0.5s cubic-bezier(0.1, 0.8, 0.3, 1), opacity 0.5s ease'
-  });
-  
-  document.body.appendChild(ring);
-  
-  // Force reflow
-  void ring.offsetHeight;
-  
-  // Animate: expand size and fade out
-  ring.style.transform = 'translate(-50%, -50%) scale(12)';
-  ring.style.opacity = '0';
-  
-  setTimeout(function() {
-    ring.remove();
-  }, 500);
-}
-
-function completeDownload(btn, name, isLink, href, originalHTML, savedAttributes, newWin) {
-  var bar = btn.querySelector('.btn__progress');
-  if (bar) {
-    bar.style.width = '100%';
-  }
-  btn.classList.remove('downloading');
-  btn.classList.add('complete');
-
-  btn.innerHTML = '';
-  btn.appendChild(createCheckmarkIcon());
-  btn.appendChild(document.createTextNode(' Done!'));
-
-  // Trigger high-end expand halo ripple
-  triggerButtonHalo(btn);
-
-  if (href && href !== '#' && href.trim() !== '') {
-    fetch('/api/track/' + encodeURIComponent(name), { method: 'POST' }).catch(function(){});
-    if (newWin) {
-      newWin.location.href = href;
-    } else {
-      window.open(href, '_blank');
+    if (e) {
+      e.preventDefault();
     }
-  } else if (newWin) {
-    newWin.close(); // Close blank window if no href found
-  }
-
-  setTimeout(function () {
-    btn.innerHTML = originalHTML;
-    btn.classList.remove('complete');
-    delete btn.dataset.downloading;
     
-    var oldBar = btn.querySelector('.btn__progress');
-    if (oldBar) oldBar.remove();
-  }, 800);
-}
+    if (href && href !== '#' && href.trim() !== '') {
+      fetch('/api/track/' + encodeURIComponent(name), { method: 'POST' }).catch(function(){});
+      window.open(href, '_blank');
+      showToast('Download Started', 'Opening ' + name + '...');
+    } else {
+      showToast('Error', 'Download link not found.');
+    }
+  }
 
   function showToast(title, message) {
     toast.classList.remove('toast--exit');
