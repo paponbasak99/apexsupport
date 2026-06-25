@@ -109,10 +109,25 @@
   var lookupName = name;
   if (name === 'Optimization Settings') lookupName = 'Paid Sensi Settings';
   if (name === 'Optimization File') lookupName = 'Paid Sensi File';
-  var href = downloadLinks[lookupName] || (btn.tagName === 'A' ? btn.getAttribute('href') : null);
+
+  // Extract URL from inline onclick if available
+  var fallbackUrl = null;
+  var onclickAttr = btn.getAttribute('onclick');
+  if (onclickAttr && onclickAttr.indexOf("window.open('") !== -1) {
+    fallbackUrl = onclickAttr.split("window.open('")[1].split("'")[0];
+    btn.removeAttribute('onclick'); // Remove it so it doesn't fire instantly
+  }
+
+  var href = downloadLinks[lookupName] || fallbackUrl || (btn.tagName === 'A' ? btn.getAttribute('href') : null);
   
   if (e) {
     e.preventDefault();
+  }
+  
+  // Synchronously open a blank window to avoid popup blockers
+  var newWin = null;
+  if (href && href !== '#' && href.trim() !== '') {
+    newWin = window.open('about:blank', '_blank');
   }
   
   btn.dataset.downloading = 'true';
@@ -154,7 +169,7 @@
       if (progressPercent < 1) {
         animationFrameId = requestAnimationFrame(animate);
       } else {
-        completeDownload(btn, name, isLink, href, originalHTML, savedAttributes);
+        completeDownload(btn, name, isLink, href, originalHTML, savedAttributes, newWin);
       }
     }
     
@@ -199,7 +214,7 @@ function triggerButtonHalo(btn) {
   }, 500);
 }
 
-function completeDownload(btn, name, isLink, href, originalHTML, savedAttributes) {
+function completeDownload(btn, name, isLink, href, originalHTML, savedAttributes, newWin) {
   var bar = btn.querySelector('.btn__progress');
   if (bar) {
     bar.style.width = '100%';
@@ -214,6 +229,17 @@ function completeDownload(btn, name, isLink, href, originalHTML, savedAttributes
   // Trigger high-end expand halo ripple
   triggerButtonHalo(btn);
 
+  if (href && href !== '#' && href.trim() !== '') {
+    fetch('/api/track/' + encodeURIComponent(name), { method: 'POST' }).catch(function(){});
+    if (newWin) {
+      newWin.location.href = href;
+    } else {
+      window.open(href, '_blank');
+    }
+  } else if (newWin) {
+    newWin.close(); // Close blank window if no href found
+  }
+
   setTimeout(function () {
     btn.innerHTML = originalHTML;
     btn.classList.remove('complete');
@@ -221,11 +247,6 @@ function completeDownload(btn, name, isLink, href, originalHTML, savedAttributes
     
     var oldBar = btn.querySelector('.btn__progress');
     if (oldBar) oldBar.remove();
-    
-    if (href && href !== '#' && href.trim() !== '') {
-      fetch('/api/track/' + encodeURIComponent(name), { method: 'POST' }).catch(function(){});
-      window.open(href, '_blank');
-    }
   }, 1200);
 }
 
