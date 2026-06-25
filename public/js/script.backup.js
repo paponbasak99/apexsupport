@@ -161,7 +161,7 @@
 
     var progress = 0;
     var startTime = performance.now();
-    var duration = 1500;
+    var duration = 500;
     var animationFrameId;
     
     function animate(timestamp) {
@@ -182,7 +182,7 @@
     
     animationFrameId = requestAnimationFrame(animate);
     showToast('Download Starting', 'Opening download for ' + name + '.');
-  }, 800);
+  }, 200);
 }
 
 function triggerButtonHalo(btn) {
@@ -254,7 +254,7 @@ function completeDownload(btn, name, isLink, href, originalHTML, savedAttributes
     
     var oldBar = btn.querySelector('.btn__progress');
     if (oldBar) oldBar.remove();
-  }, 1200);
+  }, 800);
 }
 
   function showToast(title, message) {
