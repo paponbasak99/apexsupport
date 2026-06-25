@@ -127,10 +127,14 @@
     e.preventDefault();
   }
   
-  // Synchronously open a blank window to avoid popup blockers
+  // Synchronously open a loading window to avoid popup blockers, but make it look nice!
   var newWin = null;
   if (href && href !== '#' && href.trim() !== '') {
     newWin = window.open('about:blank', '_blank');
+    if (newWin) {
+      newWin.document.write('<body style="display:flex;justify-content:center;align-items:center;height:100vh;margin:0;background-color:#0d0e15;color:#fff;font-family:system-ui,sans-serif;"><div style="text-align:center;"><div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.2);border-top-color:#7ecf8a;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px;"></div><h2 style="margin:0;font-size:18px;font-weight:500;">Securing Connection...</h2></div><style>@keyframes spin { 100% { transform: rotate(360deg); } }</style></body>');
+      newWin.document.title = 'Connecting...';
+    }
   }
   
   btn.dataset.downloading = 'true';
