@@ -110,12 +110,15 @@
   if (name === 'Optimization Settings') lookupName = 'Paid Sensi Settings';
   if (name === 'Optimization File') lookupName = 'Paid Sensi File';
 
-  // Extract URL from inline onclick if available
-  var fallbackUrl = null;
-  var onclickAttr = btn.getAttribute('onclick');
-  if (onclickAttr && onclickAttr.indexOf("window.open('") !== -1) {
-    fallbackUrl = onclickAttr.split("window.open('")[1].split("'")[0];
-    btn.removeAttribute('onclick'); // Remove it so it doesn't fire instantly
+  // Extract URL from inline onclick if available, and cache it to prevent second-click bugs!
+  var fallbackUrl = btn.dataset.url || null;
+  if (!fallbackUrl) {
+    var onclickAttr = btn.getAttribute('onclick');
+    if (onclickAttr && onclickAttr.indexOf("window.open('") !== -1) {
+      fallbackUrl = onclickAttr.split("window.open('")[1].split("'")[0];
+      btn.dataset.url = fallbackUrl; // Cache it for future clicks
+      btn.removeAttribute('onclick'); // Remove it so it doesn't fire instantly bypassing the animation
+    }
   }
 
   var href = downloadLinks[lookupName] || fallbackUrl || (btn.tagName === 'A' ? btn.getAttribute('href') : null);
