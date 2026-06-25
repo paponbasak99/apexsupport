@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const ALLOWED_ROUTES = Object.freeze(['home', 'emulator', 'paid-sensi', 'bypass-issue', 'panel-issue', 'internal-fix', 'other-issues']);
+  const ALLOWED_ROUTES = Object.freeze(['home', 'emulator', 'optimization', 'bypass-issue', 'panel-issue', 'internal-fix', 'other-issues']);
   const DISCORD_URL = 'https://discord.gg/CPaEMTHtJd';
 
   const nav = document.getElementById('nav');
@@ -106,7 +106,10 @@
   if (!btn || btn.dataset.downloading === 'true') return;
   var name = getDownloadName(btn);
   var isLink = btn.tagName === 'A' || btn.tagName === 'BUTTON';
-  var href = downloadLinks[name] || (btn.tagName === 'A' ? btn.getAttribute('href') : null);
+  var lookupName = name;
+  if (name === 'Optimization Settings') lookupName = 'Paid Sensi Settings';
+  if (name === 'Optimization File') lookupName = 'Paid Sensi File';
+  var href = downloadLinks[lookupName] || (btn.tagName === 'A' ? btn.getAttribute('href') : null);
   
   if (e) {
     e.preventDefault();
@@ -318,12 +321,12 @@ function completeDownload(btn, name, isLink, href, originalHTML, savedAttributes
     var btn = e.target.closest('.btn--download');
     if (btn && !btn.closest('.hero__actions')) {
       var name = getDownloadName(btn);
-      if (name === 'Optimization File') {
+      if (name === 'Optimization File' && btn.closest('#optimization')) {
         e.preventDefault();
         openOptimizationModal();
         return;
       }
-      if (name === 'Paid Sensi') {
+      if (name === 'Paid Sensi' || name === 'Optimization') {
         e.preventDefault();
         openSensiModal();
         return;
