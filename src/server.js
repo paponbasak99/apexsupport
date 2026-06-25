@@ -5,7 +5,14 @@ const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const Database = require('better-sqlite3');
+let Database;
+if (!process.env.VERCEL) {
+  try {
+    Database = require('better-sqlite3');
+  } catch (e) {
+    console.warn('better-sqlite3 not available');
+  }
+}
 const crypto = require('crypto');
 
 const app = express();
@@ -17,12 +24,17 @@ if (process.env.VERCEL) {
   defaultDbPath = '/tmp/database.sqlite';
 }
 const dbPath = process.env.DATABASE_PATH || defaultDbPath;
-const dbDir = path.dirname(dbPath);
-if (!fs.existsSync(dbDir)) {
-  fs.mkdirSync(dbDir, { recursive: true });
+let db;
+if (Database) {
+  const dbDir = path.dirname(dbPath);
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
+  }
+  db = new Database(dbPath);
+  db.pragma('journal_mode = WAL');
+} else {
+  console.log('Running in Vercel mode without SQLite database.');
 }
-const db = new Database(dbPath);
-db.pragma('journal_mode = WAL');
 
 
 
@@ -58,8 +70,7 @@ const apiLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 200, message: { er
 app.use('/api/', apiLimiter);
 
 // --- Database Schema & Migration ---
-
-
+if (db) {
 // 2. Links (Migrating from old to new schema if necessary)
 db.exec(`
   CREATE TABLE IF NOT EXISTS links_new (
@@ -151,21 +162,38 @@ db.exec(`
 
 
 
-
+  );
+}
 
 // --- Public APIs ---
 
 app.get('/api/links', (req, res) => {
-  const rows = db.prepare('SELECT label, url FROM links WHERE is_active = 1').all();
-  const linksObj = {};
-  for (const row of rows) {
-    linksObj[row.label] = row.url;
+  if (db) {
+    try {
+      const rows = db.prepare('SELECT label, url FROM links WHERE is_active = 1').all();
+      const linksObj = {};
+      for (const row of rows) {
+        linksObj[row.label] = row.url;
+      }
+      return res.json(linksObj);
+    } catch(e) {}
   }
-  res.json(linksObj);
+  
+  // Fallback for Vercel: read directly from JSON
+  try {
+    const linksPath = path.join(__dirname, '../data/links.json');
+    if (fs.existsSync(linksPath)) {
+      const linksData = JSON.parse(fs.readFileSync(linksPath, 'utf-8'));
+      return res.json(linksData);
+    }
+  } catch (e) {}
+  
+  res.json({});
 });
 
 app.post('/api/track/:label', (req, res) => {
   const { label } = req.params;
+  if (!db) return res.json({ success: true, note: 'Tracking disabled' });
   try {
     // Basic IP hash for deduplication
     const rawIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
