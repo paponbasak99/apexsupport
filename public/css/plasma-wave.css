@@ -1,0 +1,34 @@
+/* ===== PlasmaWave Container ===== */
+
+.plasma-wave-container {
+  width: 100%;
+  height: 100%;
+}
+
+.plasma-wave-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ===== Hero background host ===== */
+/*
+ * Sits inside .hero--celestial (position:relative).
+ * Only covers the bottom 55% of the hero so title text stays clean.
+ */
+#plasma-hero-bg {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 55%;
+  z-index: 0;          /* Always behind .hero__glass-panel (z-index: 2) */
+  pointer-events: none;
+  overflow: hidden;
+  /* Fade in from top — invisible at top edge, solid in middle, fades at bottom */
+  mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  opacity: 0.55;
+}

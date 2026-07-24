@@ -14,7 +14,7 @@ services:
       - key: ADMIN_SECRET_KEY
         generateValue: true
       - key: ADMIN_PASSWORD
-        value: anuex
+        sync: false   # Set this secret in the Render dashboard — do NOT hardcode here
       - key: DATABASE_PATH
         value: /var/data/database.sqlite
       - key: UPLOAD_DIR

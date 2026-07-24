@@ -209,6 +209,18 @@ app.post('/api/track/:label', (req, res) => {
   }
 });
 
+// GET /api/cards — returns all cards ordered by section
+app.get('/api/cards', (req, res) => {
+  if (db) {
+    try {
+      const rows = db.prepare('SELECT * FROM cards ORDER BY section_id, id').all();
+      return res.json(rows);
+    } catch (e) {}
+  }
+  // No cards in DB yet — return empty array (main.js handles this gracefully)
+  res.json([]);
+});
+
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`Server is running!`);
@@ -219,7 +231,8 @@ if (!process.env.VERCEL) {
 
 module.exports = app;
 
+// Guard against null db on Vercel (no SQLite available)
 process.on('SIGINT', () => {
-  db.close();
+  if (db) db.close();
   process.exit();
 });

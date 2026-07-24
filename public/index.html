@@ -5,22 +5,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>APEX ELITE SUPPORT HUB</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+
   <!-- Open Graph / Social Media Meta Tags -->
   <meta property="og:title" content="APEX ELITE SUPPORT HUB" />
   <meta property="og:description"
     content="Premium troubleshooting and configuration dashboard for APEX EGO panels, APKs, emulators, and drivers." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://i.imgur.com/example-banner.jpg" />
+  <meta property="og:image" content="assets/og-banner.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="APEX ELITE SUPPORT HUB" />
   <meta name="twitter:description"
     content="Premium troubleshooting and configuration dashboard for APEX EGO panels, APKs, emulators, and drivers." />
+  <meta name="twitter:image" content="assets/og-banner.png" />
 
   <meta name="description"
     content="Premium troubleshooting and configuration dashboard for APEX EGO panels, APKs, emulators, and drivers." />
 
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; connect-src 'self'" />
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; connect-src 'self' https://esm.sh; worker-src blob:;" />
   <meta name="referrer" content="no-referrer" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 
@@ -31,6 +37,7 @@
     rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/home-redesign.css" />
+  <link rel="stylesheet" href="css/plasma-wave.css" />
 </head>
 
 <body>
@@ -39,6 +46,10 @@
   <nav class="nav" id="nav">
     <div class="nav__inner">
       <a href="#home" class="nav__logo" data-link="home">APEX <span>EGO</span></a>
+      <div class="nav__search-container" style="position: relative; display: flex; align-items: center; margin: 0 15px; flex: 1; max-width: 280px;">
+        <input type="text" id="site-search" placeholder="Search fixes & tools..." style="width: 100%; padding: 7px 12px 7px 34px; border-radius: 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 0.85rem; outline: none; transition: all 0.3s ease;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2.5" style="position: absolute; left: 12px; pointer-events: none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
       <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -73,7 +84,7 @@
 
 
           <div class="hero__cta-row">
-            <a href="https://discord.gg/CPaEMTHtJd" target="_blank" rel="noopener noreferrer"
+            <a href="https://discord.gg/4kTg2H5RxM" target="_blank" rel="noopener noreferrer"
               class="btn-shell btn-shell--primary">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -238,7 +249,8 @@
               <span class="card__value">Fix</span>
             </div>
           </div>
-          <button class="btn btn--primary btn--download">
+          <button class="btn btn--primary btn--download"
+            onclick="window.open('https://www.mediafire.com/file/wlqm5jsk4fvbrie/opengl32.dll/file', '_blank');">
             <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -461,7 +473,7 @@
             </div>
           </div>
           <button class="btn btn--primary btn--download"
-            onclick="window.open('https://cdn.discordapp.com/attachments/1519607401253179445/1519607461017948280/MSI_APP_PALYER.exe?ex=6a3e2c3b&is=6a3cdabb&hm=08a568fe45c9df18590bca45c35c9b231d0d5024bafe5a5d9ff7bc9fca04f64d&', '_blank');">
+            onclick="window.open('https://www.mediafire.com/file/vujf104862thne6/MSI_APP_PALYER.exe/file', '_blank');">
             <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -557,14 +569,15 @@
               <span class="card__value">Optimization</span>
             </div>
           </div>
-          <button class="btn btn--primary btn--download">
+          <button class="btn btn--primary btn--download"
+            onclick="document.getElementById('opt-modal').removeAttribute('hidden');">
             <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
-            Download Files
+            View Files
           </button>
         </div>
         <div class="card" data-accent="purple-power">
@@ -775,8 +788,22 @@
   </main>
 
   <footer class="footer">
-    <span>&copy; APEX EGO All Rights Reserved </span>
-    <a href="#">Privacy Policy</a>
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="footer__logo">APEX <span>EGO</span></span>
+        <p class="footer__tagline">Premium support hub for APEX EGO panel users.</p>
+      </div>
+      <div class="footer__links">
+        <a href="https://discord.gg/4kTg2H5RxM" target="_blank" rel="noopener noreferrer" class="footer__link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+          Discord
+        </a>
+        <a href="#" class="footer__link">Privacy Policy</a>
+      </div>
+      <div class="footer__copy">
+        <span>&copy; 2025 APEX EGO. All Rights Reserved.</span>
+      </div>
+    </div>
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden>
@@ -904,7 +931,7 @@
             </div>
             <p class="card__description">Disables unnecessary background services, schedules, and telemetry for raw
               system speed.</p>
-            <button class="btn btn--primary btn--download" onclick="window.open('https://www.mediafire.com/file/on7t64o38l7ixxz/amberfps.exe/file', '_blank');">
+            <button class="btn btn--primary btn--download" onclick="window.open('https://www.mediafire.com/file/bwo9h5vth9zogb7/ATLAS_OS.rar/file', '_blank');">
               <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -948,14 +975,12 @@
             </div>
             <p class="card__description">Elite in-game sensitivities, DPI calibration, and pointer speed configurations.
             </p>
-            <button class="btn btn--secondary btn--download">
+            <button class="btn btn--secondary btn--download" disabled style="opacity:0.5;cursor:not-allowed;" title="Coming Soon">
               <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
-              Download
+              Coming Soon
             </button>
           </div>
 
@@ -978,14 +1003,12 @@
             </div>
             <p class="card__description">Premium display engine calibration registry scripts and precision tuning
               parameters.</p>
-            <button class="btn btn--primary btn--download">
+            <button class="btn btn--primary btn--download" disabled style="opacity:0.5;cursor:not-allowed;" title="Coming Soon">
               <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
-              Download
+              Coming Soon
             </button>
           </div>
 

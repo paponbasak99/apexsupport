@@ -1,12 +1,17 @@
 /* ===== Celestial Hero Redesign ===== */
 
+/* Fix: all sections need scroll-margin so fixed nav doesn't cover headings */
+section[id] {
+  scroll-margin-top: 95px;
+}
+
 /* Ambient HUD Background removed, handled by styles.css html background */
 .hud-bg {
   display: none;
 }
 
 .hero--celestial {
-  min-height: auto;
+  min-height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -446,5 +451,132 @@
   }
   .btn-shell {
     padding: 14px 20px;
+  }
+}
+
+/* =========================================
+   USER-SELECT FIX
+   Allow copying text inside cards/values
+   ========================================= */
+.card__value,
+.card__label,
+.card__description,
+.card__title,
+.section__header p,
+.hero__subtitle,
+.modal-subtitle,
+.footer__tagline {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* =========================================
+   CARD HOVER ACCENT GLOW
+   Each data-accent gets a matching border glow
+   ========================================= */
+.card {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease;
+}
+
+.card:hover { transform: translateY(-4px); }
+
+.card[data-accent="orange"]:hover  { box-shadow: 0 8px 28px rgba(245,158,11,0.18); border-color: rgba(245,158,11,0.4) !important; }
+.card[data-accent="cyan"]:hover    { box-shadow: 0 8px 28px rgba(6,182,212,0.18);  border-color: rgba(6,182,212,0.4) !important;  }
+.card[data-accent="purple"]:hover  { box-shadow: 0 8px 28px rgba(139,92,246,0.18); border-color: rgba(139,92,246,0.4) !important; }
+.card[data-accent="teal"]:hover    { box-shadow: 0 8px 28px rgba(20,184,166,0.18); border-color: rgba(20,184,166,0.4) !important; }
+.card[data-accent="pink"]:hover    { box-shadow: 0 8px 28px rgba(236,72,153,0.18); border-color: rgba(236,72,153,0.4) !important; }
+.card[data-accent="gray"]:hover    { box-shadow: 0 8px 28px rgba(100,116,139,0.18);border-color: rgba(100,116,139,0.4) !important;}
+.card[data-accent="yellow"]:hover  { box-shadow: 0 8px 28px rgba(234,179,8,0.18);  border-color: rgba(234,179,8,0.4) !important;  }
+.card[data-accent="cyber-red"]:hover { box-shadow: 0 8px 28px rgba(239,68,68,0.18); border-color: rgba(239,68,68,0.4) !important; }
+.card[data-accent="purple-power"]:hover { box-shadow: 0 8px 28px rgba(139,92,246,0.22); border-color: rgba(139,92,246,0.4) !important; }
+
+/* =========================================
+   FOOTER STYLES
+   ========================================= */
+.footer {
+  margin-top: 4rem;
+  border-top: 1px solid #e1e1e1;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 2.5rem 1rem;
+}
+
+.footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 2rem;
+}
+
+.footer__logo {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
+  display: block;
+  margin-bottom: 0.4rem;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.footer__logo span {
+  color: #2563eb;
+}
+
+.footer__tagline {
+  font-size: 0.82rem;
+  color: #888;
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.footer__links {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.footer__link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4a4a4a;
+  text-decoration: none;
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: 0;
+  transition: color 0.2s ease;
+}
+
+.footer__link:hover { color: #2563eb; }
+
+.footer__copy {
+  font-size: 0.78rem;
+  color: #aaa;
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .footer__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 1rem;
+  }
+  .footer__links {
+    justify-content: center;
   }
 }

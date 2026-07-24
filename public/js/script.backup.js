@@ -109,17 +109,33 @@
     if (name === 'Optimization Settings') lookupName = 'Paid Sensi Settings';
     if (name === 'Optimization File') lookupName = 'Paid Sensi File';
 
-    var fallbackUrl = btn.dataset.url || null;
-    if (!fallbackUrl) {
+    // 1. Direct dataset URL on button or link element
+    var directUrl = btn.dataset.url || null;
+
+    // 2. Check href on button or parent anchor element
+    if (!directUrl) {
+      if (btn.tagName === 'A' && btn.getAttribute('href') && btn.getAttribute('href') !== '#') {
+        directUrl = btn.getAttribute('href');
+      } else {
+        var parentAnchor = btn.closest('a');
+        if (parentAnchor && parentAnchor.getAttribute('href') && parentAnchor.getAttribute('href') !== '#') {
+          directUrl = parentAnchor.getAttribute('href');
+        }
+      }
+    }
+
+    // 3. Extract from inline onclick attribute if available
+    if (!directUrl) {
       var onclickAttr = btn.getAttribute('onclick');
       if (onclickAttr && onclickAttr.indexOf("window.open('") !== -1) {
-        fallbackUrl = onclickAttr.split("window.open('")[1].split("'")[0];
-        btn.dataset.url = fallbackUrl; 
+        directUrl = onclickAttr.split("window.open('")[1].split("'")[0];
+        btn.dataset.url = directUrl; 
         btn.removeAttribute('onclick'); // Prevent duplicate execution
       }
     }
 
-    var href = downloadLinks[lookupName] || fallbackUrl || (btn.tagName === 'A' ? btn.getAttribute('href') : null);
+    // 4. Database downloadLinks lookup ONLY as fallback if direct link is not present
+    var href = directUrl || downloadLinks[lookupName] || downloadLinks[name];
     
     if (e) {
       e.preventDefault();
@@ -243,6 +259,27 @@
   navToggle.addEventListener('click', function () {
     nav.classList.toggle('nav--open');
   });
+
+  var siteSearch = document.getElementById('site-search');
+  if (siteSearch) {
+    siteSearch.addEventListener('input', function (e) {
+      var query = e.target.value.toLowerCase().trim();
+      var cards = document.querySelectorAll('.card');
+      
+      cards.forEach(function (card) {
+        if (!query) {
+          card.style.display = '';
+          return;
+        }
+        var text = card.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  }
 
   document.addEventListener('click', function (e) {
     if (nav.classList.contains('nav--open') && !nav.contains(e.target)) {
