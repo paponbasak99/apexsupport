@@ -1,72 +1,4 @@
-/* ===== Celestial Cosmic Background & GradientWaves Component ===== */
-
-html {
-  background: #080614 !important;
-  background-color: #080614 !important;
-  min-height: 100%;
-}
-
-body {
-  position: relative;
-  background-color: transparent !important;
-  color: #f8fafc !important;
-  min-height: 100vh;
-}
-
-/* Permanent Rich Ambient Celestial Mesh Background */
-.celestial-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  overflow: hidden;
-  background: 
-    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(90, 48, 255, 0.45) 0%, rgba(139, 92, 246, 0.18) 45%, transparent 75%),
-    radial-gradient(ellipse 70% 50% at 90% 35%, rgba(168, 85, 247, 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse 80% 55% at 10% 70%, rgba(99, 102, 241, 0.28) 0%, transparent 60%),
-    radial-gradient(ellipse 100% 70% at 50% 115%, rgba(124, 58, 237, 0.4) 0%, rgba(90, 48, 255, 0.15) 50%, transparent 80%),
-    radial-gradient(circle at 50% 50%, rgba(18, 12, 42, 0.95) 0%, #080614 100%);
-  background-color: #080614;
-}
-
-/* Animated Celestial Ambient Wave Glows */
-.celestial-bg::before {
-  content: '';
-  position: absolute;
-  inset: -40%;
-  width: 180%;
-  height: 180%;
-  background: 
-    radial-gradient(circle at 30% 30%, rgba(138, 75, 255, 0.25) 0%, transparent 40%),
-    radial-gradient(circle at 70% 60%, rgba(90, 48, 255, 0.28) 0%, transparent 45%),
-    radial-gradient(circle at 45% 85%, rgba(168, 85, 247, 0.22) 0%, transparent 40%);
-  filter: blur(60px);
-  animation: celestialDrift 18s ease-in-out infinite alternate;
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-/* Subtle Cosmic Grid Mesh Texture */
-.celestial-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse at 50% 40%, black 20%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, black 20%, transparent 75%);
-  pointer-events: none;
-}
-
-@keyframes celestialDrift {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-3%, 2%) scale(1.05); }
-  100% { transform: translate(2%, -3%) scale(0.98); }
-}
-
-/* ===== WebGL GradientWaves Component ===== */
+/* ===== GradientWaves Background Component ===== */
 gradient-waves {
   position: fixed;
   top: 0;
@@ -77,9 +9,10 @@ gradient-waves {
   overflow: hidden;
   display: block;
   pointer-events: none;
-  background: transparent !important;
+  background-color: #06050e;
 }
 
+/* Ensure canvas takes full viewport inside the element */
 gradient-waves canvas {
   width: 100% !important;
   height: 100% !important;
@@ -90,11 +23,24 @@ gradient-waves canvas {
   pointer-events: none;
 }
 
-/* Subtle cinematic depth vignette */
+/* Subtle cinematic depth vignette to enhance contrast and focus */
 gradient-waves::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 25%, transparent 45%, rgba(8, 6, 20, 0.3) 80%, rgba(8, 6, 20, 0.6) 100%);
+  background: radial-gradient(circle at 50% 25%, transparent 45%, rgba(6, 5, 14, 0.4) 80%, rgba(6, 5, 14, 0.7) 100%);
   pointer-events: none;
+}
+
+/* Ensure body content sits comfortably on top of the fixed background */
+body {
+  position: relative;
+  background: transparent !important;
+  color: #f8fafc !important;
+}
+
+/* Clear any opaque background from html and reset body */
+html {
+  background: #06050e !important;
+  background-image: none !important;
 }
