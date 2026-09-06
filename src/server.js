@@ -43,16 +43,17 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://challenges.cloudflare.com"],
+      frameSrc: ["'self'", "https://challenges.cloudflare.com"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'", "https://challenges.cloudflare.com"],
       upgradeInsecureRequests: null, // Allow HTTP on local network (fixes mobile CSS bug)
     },
   },
   hsts: false, // Disable HSTS for local HTTP testing
-  frameguard: { action: 'deny' },
+  frameguard: { action: 'sameorigin' },
   noSniff: true
 })); 
 
@@ -206,6 +207,61 @@ app.post('/api/track/:label', (req, res) => {
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: 'Failed to track click.' });
+  }
+});
+
+// --- Cloudflare Turnstile Human Verification API ---
+app.post('/api/verify-turnstile', async (req, res) => {
+  const { token, action } = req.body || {};
+  const expectedAction = 'download';
+
+  if (!token || typeof token !== 'string' || token.length === 0 || token.length > 2048) {
+    return res.status(400).json({ success: false, error: 'Invalid challenge token.' });
+  }
+
+  const clientIp = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
+  const secretKey = process.env.TURNSTILE_SECRET;
+
+  // Graceful fallback if TURNSTILE_SECRET is not yet set in environment
+  if (!secretKey) {
+    console.warn('⚠️ TURNSTILE_SECRET is not set in environment. Allowing verification.');
+    return res.json({ success: true, verified: true, warning: 'TURNSTILE_SECRET unset in environment' });
+  }
+
+  try {
+    const verifyResponse = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      signal: AbortSignal.timeout(10000),
+      body: new URLSearchParams({
+        secret: secretKey,
+        response: token,
+        remoteip: clientIp,
+      }),
+    });
+
+    if (!verifyResponse.ok) {
+      throw new Error(`Cloudflare siteverify responded with status ${verifyResponse.status}`);
+    }
+
+    const data = await verifyResponse.json();
+
+    if (!data.success) {
+      return res.status(403).json({
+        success: false,
+        error: 'Human verification failed. Please try again.',
+        codes: data['error-codes']
+      });
+    }
+
+    if (action && data.action && data.action !== action && data.action !== expectedAction) {
+      return res.status(403).json({ success: false, error: 'Invalid challenge action.' });
+    }
+
+    return res.json({ success: true, verified: true });
+  } catch (err) {
+    console.error('Turnstile verification error:', err);
+    return res.status(500).json({ success: false, error: 'Verification service temporarily unavailable.' });
   }
 });
 

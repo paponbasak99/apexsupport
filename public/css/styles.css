@@ -3415,3 +3415,54 @@ button, a, input, textarea, select {
   animation: gradientPulse 3s linear infinite;
   text-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
 }
+
+/* ===== Cloudflare Turnstile Verification Modal ===== */
+.verify-modal-content {
+  background: linear-gradient(165deg, rgba(22, 16, 50, 0.96) 0%, rgba(10, 8, 24, 0.98) 100%) !important;
+  border: 1px solid rgba(168, 85, 247, 0.35) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 30px rgba(168, 85, 247, 0.25) !important;
+  border-radius: 16px !important;
+}
+
+.verify-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.28);
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #c084fc;
+}
+
+.verify-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(168, 85, 247, 0.3);
+  border-top-color: #a855f7;
+  border-radius: 50%;
+  animation: verifySpin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+@keyframes verifySpin {
+  to { transform: rotate(360deg); }
+}
+
+#turnstile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 65px;
+}
+
+#turnstile-container iframe {
+  max-width: 100% !important;
+}
+

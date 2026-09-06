@@ -5,6 +5,7 @@ package-lock.json
 # Environment Variables
 .env
 .env.*
+!.env.example
 .env.local
 
 # Database (protects local SQLite database from being committed)
