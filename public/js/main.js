@@ -10,6 +10,20 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!container) container = document.querySelector(`#${card.section_id} .modal-grid`); // fallback for paid sensi modal
       
       if (container) {
+        // Prevent duplicate cards if card already exists statically in the section
+        const existingTitles = Array.from(container.querySelectorAll('.card__title')).map(el => el.textContent.trim().toLowerCase());
+        const cardTitle = (card.title || '').trim().toLowerCase();
+        const existingUrls = Array.from(container.querySelectorAll('.btn--download')).map(el => (el.dataset.url || el.getAttribute('href') || '').trim());
+        const cardUrl = (card.download_link || '').trim();
+
+        const isDuplicateTitle = existingTitles.includes(cardTitle) || 
+          (cardTitle.includes('grabb') && existingTitles.some(t => t.includes('grabb')));
+        const isDuplicateUrl = cardUrl && existingUrls.includes(cardUrl);
+
+        if (isDuplicateTitle || isDuplicateUrl) {
+          return;
+        }
+
         // Construct the dynamic card HTML
         const accent = card.accent_color || 'purple';
         const isPrimaryBtn = card.button_type === 'primary';
@@ -18,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <div class="card" data-accent="${accent}">
             <div class="card__head">
               <div class="card__icon">
-                <img src="${card.logo_url || 'assets/msi.logo.png'}" alt="${card.title}" loading="lazy" style="max-width: 100%; height: auto; border-radius: 8px;">
+                <img src="${card.logo_url || 'assets/msi.logo.png'}" alt="${card.title}" width="40" height="40" loading="lazy" style="width: 40px; height: 40px; object-fit: contain; border-radius: 8px;">
               </div>
               <h3 class="card__title">${card.title}</h3>
               ${card.badge_text ? `<span class="card__badge">${card.badge_text}</span>` : ''}

@@ -196,7 +196,7 @@ app.post('/api/track/:label', (req, res) => {
     const rawIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
     const sessionHash = crypto.createHash('sha256').update(rawIp + new Date().toISOString().slice(0, 10)).digest('hex');
 
-    const link = db.prepare('SELECT id FROM links WHERE label = ?').get(label);
+    const link = db.prepare('SELECT id FROM links WHERE LOWER(TRIM(label)) = LOWER(TRIM(?)) OR label = ?').get(label, label);
     if (link) {
       db.transaction(() => {
         db.prepare('UPDATE links SET clicks = clicks + 1 WHERE id = ?').run(link.id);

@@ -1,7 +1,26 @@
 (function () {
   'use strict';
 
-  const ALLOWED_ROUTES = Object.freeze(['home', 'emulator', 'optimization', 'bypass-issue', 'panel-issue', 'internal-fix', 'other-issues']);
+  const ALLOWED_ROUTES = Object.freeze([
+    'home',
+    'emulator',
+    'optimization',
+    'bypass-issue',
+    'panel-issue',
+    'internal-fix',
+    'other-issues',
+    'lib-bypass',
+    'tutorial-video'
+  ]);
+  const ROUTE_ALIASES = Object.freeze({
+    'uid-bypass-fix': 'bypass-issue',
+    'uid-bypass': 'bypass-issue',
+    'bypass-fix': 'bypass-issue',
+    'lib-bypass-fix': 'lib-bypass',
+    'tutorial-setup-video': 'tutorial-video',
+    'tutorial-setup': 'tutorial-video',
+    'tutorial': 'tutorial-video'
+  });
   const DISCORD_URL = 'https://discord.gg/CPaEMTHtJd';
 
   const nav = document.getElementById('nav');
@@ -24,7 +43,8 @@
   function sanitizeRoute(input) {
     if (typeof input !== 'string') return 'home';
     const trimmed = input.replace(/[^a-z0-9-]/g, '');
-    return ALLOWED_ROUTES.includes(trimmed) ? trimmed : 'home';
+    const resolved = ROUTE_ALIASES[trimmed] || trimmed;
+    return ALLOWED_ROUTES.includes(resolved) ? resolved : 'home';
   }
 
   function getRoute() {
@@ -103,7 +123,7 @@
   }
 
   function handleDownload(btn, e) {
-    if (!btn) return;
+    if (!btn || btn.disabled || btn.hasAttribute('disabled') || btn.classList.contains('disabled')) return;
     var name = getDownloadName(btn);
     var lookupName = name;
     if (name === 'Optimization Settings') lookupName = 'Paid Sensi Settings';
@@ -124,13 +144,13 @@
       }
     }
 
-    // 3. Extract from inline onclick attribute if available
+    // 3. Fallback to inline onclick attribute if still present
     if (!directUrl) {
       var onclickAttr = btn.getAttribute('onclick');
       if (onclickAttr && onclickAttr.indexOf("window.open('") !== -1) {
         directUrl = onclickAttr.split("window.open('")[1].split("'")[0];
         btn.dataset.url = directUrl; 
-        btn.removeAttribute('onclick'); // Prevent duplicate execution
+        btn.removeAttribute('onclick');
       }
     }
 
@@ -197,6 +217,8 @@
   const optModalClose = document.getElementById('opt-modal-close');
   const sensiModal = document.getElementById('sensi-modal');
   const sensiModalClose = document.getElementById('sensi-modal-close');
+  const tutorialModal = document.getElementById('tutorial-modal');
+  const tutorialModalClose = document.getElementById('tutorial-modal-close');
 
   function openOptimizationModal() {
     if (optModal) optModal.removeAttribute('hidden');
@@ -212,6 +234,22 @@
 
   function closeSensiModal() {
     if (sensiModal) sensiModal.setAttribute('hidden', '');
+  }
+
+  function openTutorialModal() {
+    if (tutorialModal) tutorialModal.removeAttribute('hidden');
+  }
+
+  function closeTutorialModal() {
+    if (tutorialModal) {
+      tutorialModal.setAttribute('hidden', '');
+      var iframe = tutorialModal.querySelector('iframe');
+      if (iframe) {
+        var s = iframe.src;
+        iframe.src = '';
+        iframe.src = s;
+      }
+    }
   }
 
   if (optModalClose) {
@@ -238,9 +276,25 @@
     });
   }
 
+  if (tutorialModalClose) {
+    tutorialModalClose.addEventListener('click', closeTutorialModal);
+  }
+
+  if (tutorialModal) {
+    tutorialModal.addEventListener('click', function (e) {
+      if (e.target === tutorialModal) {
+        closeTutorialModal();
+      }
+    });
+  }
+
   document.addEventListener('click', function (e) {
     var btn = e.target.closest('.btn--download');
     if (btn && !btn.closest('.hero__actions')) {
+      if (btn.disabled || btn.hasAttribute('disabled') || btn.classList.contains('disabled')) {
+        e.preventDefault();
+        return;
+      }
       var name = getDownloadName(btn);
       if (name === 'Optimization File' && btn.closest('#optimization')) {
         e.preventDefault();
@@ -256,51 +310,42 @@
     }
   });
 
-  navToggle.addEventListener('click', function () {
-    nav.classList.toggle('nav--open');
+  navToggle.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var isOpen = nav.classList.toggle('nav--open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
-
-  var siteSearch = document.getElementById('site-search');
-  if (siteSearch) {
-    siteSearch.addEventListener('input', function (e) {
-      var query = e.target.value.toLowerCase().trim();
-      var cards = document.querySelectorAll('.card');
-      
-      cards.forEach(function (card) {
-        if (!query) {
-          card.style.display = '';
-          return;
-        }
-        var text = card.textContent.toLowerCase();
-        if (text.indexOf(query) !== -1) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  }
 
   document.addEventListener('click', function (e) {
     if (nav.classList.contains('nav--open') && !nav.contains(e.target)) {
       nav.classList.remove('nav--open');
+      navToggle.setAttribute('aria-expanded', 'false');
     }
   });
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
-      nav.classList.remove('nav--open');
+      if (nav.classList.contains('nav--open')) {
+        nav.classList.remove('nav--open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.focus();
+      }
       closeOptimizationModal();
       closeSensiModal();
+      closeTutorialModal();
     }
   });
 
-  navLinks.addEventListener('click', function (e) {
+  document.addEventListener('click', function (e) {
     var link = e.target.closest('[data-link]');
     if (link) {
       e.preventDefault();
       var route = link.getAttribute('data-link');
       if (route) navigate(route);
+      if (nav.classList.contains('nav--open')) {
+        nav.classList.remove('nav--open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
     }
   });
 
@@ -355,6 +400,7 @@
   setupImages(document.getElementById(route));
   if (route === 'home') setTimeout(animateStats, 100);
   setTimeout(staggerCards, 50);
-
+  var yearEl = document.getElementById('footer-year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 })();
