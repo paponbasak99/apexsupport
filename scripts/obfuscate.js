@@ -65,9 +65,6 @@ const obfuscationResult = JavaScriptObfuscator.obfuscate(originalCode, {
     unicodeEscapeSequence: false
 });
 
-// Save obfuscated code
-fs.writeFileSync(path.join(jsDir, 'script.obfuscated.js'), obfuscationResult.getObfuscatedCode());
-
 // Backup original
 fs.copyFileSync(path.join(jsDir, 'script.js'), path.join(jsDir, 'script.backup.js'));
 
