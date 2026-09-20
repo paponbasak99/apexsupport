@@ -1,16 +1,17 @@
 /**
  * Cloudflare Turnstile Integration for APEX SUPPORT HUB
- * Protects downloads and visitor interactions with human verification.
+ * Protects website entrance (login/access) and downloads with human verification.
  */
 (function () {
   'use strict';
 
   const SITE_KEY = '0x4AAAAAAEqMzg-9Js5PCYJ-';
-  const VERIFY_ACTION = 'download';
   const VERIFIED_STORAGE_KEY = 'apex_turnstile_verified_until';
-  const VERIFY_DURATION_MS = 20 * 60 * 1000; // 20 minutes session verification
+  const VERIFY_DURATION_MS = 2 * 60 * 60 * 1000; // 2 hours verification session
 
   let turnstileWidgetId = null;
+  let isGatekeeper = false;
+  let currentAction = 'login';
   let pendingAction = null;
 
   const modal = document.getElementById('verify-modal');
@@ -18,34 +19,82 @@
   const container = document.getElementById('turnstile-container');
   const statusEl = document.getElementById('verify-status');
   const errorEl = document.getElementById('verify-error');
+  const badgeText = document.getElementById('verify-badge-text');
+  const titleEl = document.getElementById('verify-modal-title');
+  const subtitleEl = document.getElementById('verify-modal-subtitle');
 
   function isVerified() {
     try {
-      const until = sessionStorage.getItem(VERIFIED_STORAGE_KEY);
-      if (until && Date.now() < parseInt(until, 10)) {
+      const sessionVal = sessionStorage.getItem(VERIFIED_STORAGE_KEY);
+      if (sessionVal && Date.now() < parseInt(sessionVal, 10)) {
         return true;
       }
-    } catch {}
+      const localVal = localStorage.getItem(VERIFIED_STORAGE_KEY);
+      if (localVal && Date.now() < parseInt(localVal, 10)) {
+        sessionStorage.setItem(VERIFIED_STORAGE_KEY, localVal);
+        return true;
+      }
+    } catch (e) {}
     return false;
   }
 
   function setVerified() {
+    const expiry = (Date.now() + VERIFY_DURATION_MS).toString();
     try {
-      sessionStorage.setItem(VERIFIED_STORAGE_KEY, (Date.now() + VERIFY_DURATION_MS).toString());
-    } catch {}
+      sessionStorage.setItem(VERIFIED_STORAGE_KEY, expiry);
+      localStorage.setItem(VERIFIED_STORAGE_KEY, expiry);
+    } catch (e) {}
   }
 
-  function openModal() {
+  function openGatekeeper() {
     if (!modal) return;
+    isGatekeeper = true;
+    currentAction = 'login';
+
+    document.body.classList.add('gatekeeper-locked');
+    modal.classList.add('gatekeeper-overlay');
+    if (modalClose) modalClose.style.display = 'none';
+
+    if (badgeText) badgeText.textContent = 'SECURITY GATEWAY';
+    if (titleEl) titleEl.innerHTML = 'Website <span class="gradient-text">Access Check</span>';
+    if (subtitleEl) subtitleEl.textContent = 'Please complete the Cloudflare security verification below to confirm you are human and enter the website.';
+
     if (errorEl) { errorEl.style.display = 'none'; errorEl.textContent = ''; }
-    if (statusEl) { statusEl.style.display = 'none'; statusEl.textContent = 'Validating security token...'; }
+    if (statusEl) { statusEl.style.display = 'none'; }
+
+    modal.removeAttribute('hidden');
+    renderTurnstile();
+  }
+
+  function openDownloadModal(pending) {
+    if (!modal) return;
+    isGatekeeper = false;
+    currentAction = 'download';
+    pendingAction = pending;
+
+    modal.classList.remove('gatekeeper-overlay');
+    if (modalClose) modalClose.style.display = '';
+
+    if (badgeText) badgeText.textContent = 'HUMAN VERIFICATION';
+    if (titleEl) titleEl.innerHTML = '<span class="gradient-text">Security</span> Check';
+    if (subtitleEl) subtitleEl.textContent = 'Please complete the Cloudflare security challenge below to verify you are human and proceed to download.';
+
+    if (errorEl) { errorEl.style.display = 'none'; errorEl.textContent = ''; }
+    if (statusEl) { statusEl.style.display = 'none'; }
+
     modal.removeAttribute('hidden');
     renderTurnstile();
   }
 
   function closeModal() {
     if (!modal) return;
+    if (isGatekeeper && !isVerified()) {
+      return; // Cannot close entrance gatekeeper until verified
+    }
     modal.setAttribute('hidden', '');
+    modal.classList.remove('gatekeeper-overlay');
+    document.body.classList.remove('gatekeeper-locked');
+    isGatekeeper = false;
     pendingAction = null;
   }
 
@@ -70,7 +119,7 @@
       turnstileWidgetId = window.turnstile.render(container, {
         sitekey: SITE_KEY,
         theme: 'dark',
-        action: VERIFY_ACTION,
+        action: currentAction,
         callback: onTurnstileSuccess,
         'error-callback': onTurnstileError,
         'expired-callback': onTurnstileExpired
@@ -91,7 +140,7 @@
       const res = await fetch('/api/verify-turnstile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, action: VERIFY_ACTION })
+        body: JSON.stringify({ token, action: currentAction })
       });
 
       const data = await res.json();
@@ -99,13 +148,16 @@
       if (data && data.success) {
         setVerified();
         if (statusEl) {
-          statusEl.innerHTML = '<span style="color:#22c55e;">✓ Verified! Starting download...</span>';
+          statusEl.innerHTML = '<span style="color:#22c55e; font-weight:600;">✓ Verified! Access granted.</span>';
         }
-        
+
         setTimeout(() => {
+          const wasGatekeeper = isGatekeeper;
           closeModal();
-          executePending();
-        }, 600);
+          if (!wasGatekeeper) {
+            executePending();
+          }
+        }, 650);
       } else {
         showError(data?.error || 'Verification rejected. Please try again.');
         if (window.turnstile && turnstileWidgetId !== null) {
@@ -114,14 +166,32 @@
       }
     } catch (err) {
       console.error('Turnstile backend verification error:', err);
+      // Fallback in case of server network glitch
       setVerified();
+      const wasGatekeeper = isGatekeeper;
       closeModal();
-      executePending();
+      if (!wasGatekeeper) {
+        executePending();
+      }
     }
   }
 
   function onTurnstileError() {
-    showError('Security check failed to load. Please refresh or try again.');
+    showError('Security check failed to load. Please click below to retry.');
+    if (errorEl) {
+      const retryBtn = document.createElement('button');
+      retryBtn.className = 'verify-retry-btn';
+      retryBtn.textContent = 'Retry Verification';
+      retryBtn.onclick = () => {
+        if (window.turnstile && turnstileWidgetId !== null) {
+          window.turnstile.reset(turnstileWidgetId);
+        } else {
+          renderTurnstile();
+        }
+      };
+      errorEl.appendChild(document.createElement('br'));
+      errorEl.appendChild(retryBtn);
+    }
   }
 
   function onTurnstileExpired() {
@@ -149,13 +219,13 @@
         fetch('/api/track/' + encodeURIComponent(name), { method: 'POST' }).catch(() => {});
       } catch {}
       window.open(url, '_blank');
-      
+
       const toast = document.getElementById('toast');
-      const toastTitle = document.getElementById('toast-title');
-      const toastMessage = document.getElementById('toast-message');
-      if (toast && toastTitle && toastMessage) {
-        toastTitle.textContent = 'Download Started';
-        toastMessage.textContent = 'Opening ' + name + '...';
+      if (toast) {
+        const toastTitle = document.getElementById('toast-title') || toast.querySelector('.toast__title');
+        const toastMessage = document.getElementById('toast-message') || toast.querySelector('.toast__message');
+        if (toastTitle) toastTitle.textContent = 'Download Started';
+        if (toastMessage) toastMessage.textContent = 'Opening ' + name + '...';
         toast.removeAttribute('hidden');
         clearTimeout(toast._timer);
         toast._timer = setTimeout(() => {
@@ -165,16 +235,23 @@
     }
   }
 
-  // Intercept Download clicks at the capture phase
+  // Intercept Download clicks
   document.addEventListener('click', function (e) {
     const btn = e.target.closest('.btn--download');
     if (!btn) return;
 
+    // Skip disabled or coming-soon buttons
+    if (btn.disabled || btn.hasAttribute('disabled') || btn.classList.contains('disabled')) {
+      e.preventDefault();
+      return;
+    }
+
     const card = btn.closest('.card');
-    const name = (btn.dataset.name || card?.querySelector('.card__title')?.textContent || '').trim().toUpperCase();
+    const rawTitle = card?.querySelector('.card__title')?.textContent || '';
+    const name = (btn.dataset.name || rawTitle).trim().toUpperCase();
 
     // Do not intercept buttons that open other modals
-    if (name === 'OPTIMIZATION FILES' || name === 'PAID SENSI APEX' || name === 'PAID SENSI' || name.includes('TUTORIAL')) {
+    if (name === 'OPTIMIZATION FILES' || name === 'PAID SENSI APEX' || name === 'PAID SENSI' || name.includes('TUTORIAL') || name === 'FREE BYPASS' || btn.id === 'btn-free-bypass' || btn.dataset.name === 'Free Bypass') {
       return;
     }
 
@@ -187,7 +264,15 @@
       }
     }
 
-    // If verified in this session, allow direct execution
+    // Database / window.downloadLinks fallback
+    if (!url || url === '#') {
+      const lookupTitle = rawTitle.trim();
+      if (window.downloadLinks && (window.downloadLinks[lookupTitle] || window.downloadLinks[name])) {
+        url = window.downloadLinks[lookupTitle] || window.downloadLinks[name];
+      }
+    }
+
+    // If already verified, allow direct execution
     if (isVerified()) {
       return;
     }
@@ -197,39 +282,52 @@
     e.stopPropagation();
     e.stopImmediatePropagation();
 
-    pendingAction = {
+    openDownloadModal({
       url: url,
-      name: name || 'Requested File',
+      name: rawTitle.trim() || name || 'Requested File',
       element: btn
-    };
-
-    openModal();
+    });
   }, true);
 
-  // Close modal handlers
+  // Close modal button
   if (modalClose) {
     modalClose.addEventListener('click', closeModal);
   }
 
+  // Backdrop click (disabled in gatekeeper mode)
   if (modal) {
     modal.addEventListener('click', function (e) {
-      if (e.target === modal) {
+      if (e.target === modal && !isGatekeeper) {
         closeModal();
       }
     });
   }
 
-  // Escape key closes modal
+  // Escape key (disabled in gatekeeper mode)
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && modal && !modal.hasAttribute('hidden')) {
+    if (e.key === 'Escape' && modal && !modal.hasAttribute('hidden') && !isGatekeeper) {
       closeModal();
     }
   });
 
+  // Initial Gatekeeper check on page load / entry
+  function initGatekeeper() {
+    if (!isVerified()) {
+      openGatekeeper();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGatekeeper);
+  } else {
+    initGatekeeper();
+  }
+
   window.ApexTurnstile = {
     isVerified,
     setVerified,
-    openModal,
+    openGatekeeper,
+    openDownloadModal,
     closeModal
   };
 

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <radialGradient id="byp-bg" cx="50%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#58081f"/>
+      <stop offset="55%" stop-color="#2a040e"/>
+      <stop offset="100%" stop-color="#0d0104"/>
+    </radialGradient>
+    <linearGradient id="byp-crimson" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6b8b"/>
+      <stop offset="40%" stop-color="#ff0055"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+    <linearGradient id="byp-emerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a7f3d0"/>
+      <stop offset="40%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <filter id="byp-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Metallic Squircle Container -->
+  <rect x="2" y="2" width="124" height="124" rx="30" fill="url(#byp-bg)" stroke="#ff0055" stroke-width="2.5" stroke-opacity="0.9"/>
+  <rect x="5" y="5" width="118" height="118" rx="27" fill="none" stroke="#ff4d6d" stroke-width="1" stroke-opacity="0.35"/>
+
+  <!-- Scanning Cyber Perimeter -->
+  <circle cx="64" cy="64" r="44" fill="none" stroke="#be123c" stroke-width="2" stroke-dasharray="12 6" opacity="0.65"/>
+  <circle cx="64" cy="64" r="32" fill="#ff0055" opacity="0.15" filter="url(#byp-glow)"/>
+
+  <!-- Heavy Armored Cyber Defense Shield -->
+  <g filter="url(#byp-glow)">
+    <path d="M 64 22 L 98 36 C 98 76 81 99 64 110 C 47 99 30 76 30 36 Z"
+          fill="#1c030a" stroke="url(#byp-crimson)" stroke-width="3.5" stroke-linejoin="round"/>
+    <!-- Inner Shield Bevel -->
+    <path d="M 64 32 L 88 42 C 88 72 75 90 64 99 C 53 90 40 72 40 42 Z"
+          fill="#0d0105" stroke="url(#byp-emerald)" stroke-width="2.5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Prominent Anti-Ban Security Padlock -->
+  <g filter="url(#byp-glow)">
+    <!-- Heavy Shackle -->
+    <path d="M 55 60 L 55 50 C 55 45 59 41 64 41 C 69 41 73 45 73 50 L 73 60" 
+          fill="none" stroke="#6ee7b7" stroke-width="4.5" stroke-linecap="round"/>
+    <!-- Padlock Body -->
+    <rect x="49" y="60" width="30" height="24" rx="6" fill="url(#byp-emerald)"/>
+    <rect x="53" y="64" width="22" height="16" rx="4" fill="#064e3b"/>
+    <!-- Glowing Core Keyhole -->
+    <circle cx="64" cy="70" r="3" fill="#ffffff"/>
+    <polygon points="62.5,70 65.5,70 66.5,77 61.5,77" fill="#ffffff"/>
+  </g>
+</svg>

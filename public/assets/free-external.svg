@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <radialGradient id="ext-bg" cx="50%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#083344"/>
+      <stop offset="55%" stop-color="#041f2e"/>
+      <stop offset="100%" stop-color="#020d14"/>
+    </radialGradient>
+    <linearGradient id="ext-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a5f3fc"/>
+      <stop offset="35%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="ext-glow-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <filter id="ext-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Metallic Squircle Container -->
+  <rect x="2" y="2" width="124" height="124" rx="30" fill="url(#ext-bg)" stroke="#22d3ee" stroke-width="2.5" stroke-opacity="0.9"/>
+  <rect x="5" y="5" width="118" height="118" rx="27" fill="none" stroke="#00f0ff" stroke-width="1" stroke-opacity="0.35"/>
+
+  <!-- High-Tech Radar Target Grid -->
+  <circle cx="64" cy="64" r="44" fill="none" stroke="#0891b2" stroke-width="1.8" stroke-dasharray="10 6" opacity="0.6"/>
+  <circle cx="64" cy="64" r="34" fill="none" stroke="url(#ext-cyan)" stroke-width="2.2" opacity="0.85"/>
+  <circle cx="64" cy="64" r="22" fill="#00f0ff" opacity="0.12" filter="url(#ext-glow)"/>
+
+  <!-- Precision Crosshair Spikes -->
+  <line x1="64" y1="12" x2="64" y2="28" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" filter="url(#ext-glow)"/>
+  <line x1="64" y1="100" x2="64" y2="116" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" filter="url(#ext-glow)"/>
+  <line x1="12" y1="64" x2="28" y2="64" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" filter="url(#ext-glow)"/>
+  <line x1="100" y1="64" x2="116" y2="64" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" filter="url(#ext-glow)"/>
+
+  <!-- Tactical HUD Corner Brackets -->
+  <path d="M 32 44 L 32 32 L 44 32" fill="none" stroke="#67e8f9" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 96 44 L 96 32 L 84 32" fill="none" stroke="#67e8f9" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 32 84 L 32 96 L 44 96" fill="none" stroke="#67e8f9" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 96 84 L 96 96 L 84 96" fill="none" stroke="#67e8f9" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Dominant Apex Wing Emblem with Intense Glow -->
+  <g filter="url(#ext-glow)">
+    <!-- Outer Chevron Wings -->
+    <polygon points="64,30 92,90 77,90 64,66 51,90 36,90" fill="url(#ext-cyan)"/>
+    <!-- Dark Inset -->
+    <polygon points="64,46 76,78 52,78" fill="#041f2e"/>
+    <!-- Glowing Diamond Core -->
+    <polygon points="64,52 72,64 64,76 56,64" fill="#ffffff"/>
+    <circle cx="64" cy="64" r="3" fill="#00f0ff"/>
+  </g>
+</svg>

@@ -111,20 +111,20 @@ try {
     db.exec('ALTER TABLE links_new RENAME TO links;');
   }
   
-  // Seed links from data/links.json if the table is empty
-  const count = db.prepare('SELECT COUNT(*) as count FROM links').get().count;
-  if (count === 0) {
-    const linksPath = path.join(__dirname, '../data/links.json');
-    if (fs.existsSync(linksPath)) {
-      const linksData = JSON.parse(fs.readFileSync(linksPath, 'utf-8'));
-      const insert = db.prepare('INSERT INTO links (label, url) VALUES (?, ?)');
-      db.transaction(() => {
-        for (const [label, url] of Object.entries(linksData)) {
-          insert.run(label, url);
-        }
-      })();
-      console.log("Seeded database with initial links from links.json");
-    }
+  // Sync links from data/links.json into database on startup
+  const linksPath = path.join(__dirname, '../data/links.json');
+  if (fs.existsSync(linksPath)) {
+    const linksData = JSON.parse(fs.readFileSync(linksPath, 'utf-8'));
+    const upsert = db.prepare(`
+      INSERT INTO links (label, url) VALUES (?, ?)
+      ON CONFLICT(label) DO UPDATE SET url = excluded.url
+    `);
+    db.transaction(() => {
+      for (const [label, url] of Object.entries(linksData)) {
+        try { upsert.run(label, url); } catch (e) {}
+      }
+    })();
+    console.log("Synced links from links.json to database");
   }
 
 } catch (e) {
@@ -213,7 +213,7 @@ app.post('/api/track/:label', (req, res) => {
 // --- Cloudflare Turnstile Human Verification API ---
 app.post('/api/verify-turnstile', async (req, res) => {
   const { token, action } = req.body || {};
-  const expectedAction = 'download';
+  const allowedActions = ['download', 'login', 'entry', 'access', 'verification'];
 
   if (!token || typeof token !== 'string' || token.length === 0 || token.length > 2048) {
     return res.status(400).json({ success: false, error: 'Invalid challenge token.' });
@@ -254,7 +254,7 @@ app.post('/api/verify-turnstile', async (req, res) => {
       });
     }
 
-    if (action && data.action && data.action !== action && data.action !== expectedAction) {
+    if (action && data.action && data.action !== action && !allowedActions.includes(data.action)) {
       return res.status(403).json({ success: false, error: 'Invalid challenge action.' });
     }
 
