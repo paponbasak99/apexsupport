@@ -38,12 +38,31 @@
   let currentRoute = '';
   let downloadLinks = {};
 
+  function applyDynamicLinks(links) {
+    if (!links || typeof links !== 'object') return;
+    document.querySelectorAll('.card').forEach(function (card) {
+      var titleEl = card.querySelector('.card__title');
+      var rawTitle = titleEl ? titleEl.textContent.trim() : '';
+      var btn = card.querySelector('.btn--download');
+      if (!btn) return;
+      var btnName = btn.dataset.name ? btn.dataset.name.trim() : '';
+      var matchedUrl = links[rawTitle] || (btnName && links[btnName]);
+      if (matchedUrl && matchedUrl.trim() !== '') {
+        btn.dataset.url = matchedUrl;
+        if (btn.tagName === 'A') {
+          btn.setAttribute('href', matchedUrl);
+        }
+      }
+    });
+  }
+
   // Fetch dynamic links on load & expose globally
   fetch('/api/links')
     .then(res => res.json())
     .then(data => {
       downloadLinks = data;
       window.downloadLinks = data;
+      applyDynamicLinks(data);
     })
     .catch(err => console.error('Failed to load links:', err));
 
@@ -162,8 +181,8 @@
       }
     }
 
-    // 4. Database downloadLinks lookup ONLY as fallback if direct link is not present
-    var href = directUrl || downloadLinks[lookupName] || downloadLinks[name];
+    // 4. Dynamic downloadLinks take precedence over static dataset fallback
+    var href = downloadLinks[lookupName] || downloadLinks[name] || directUrl;
     
     if (e) {
       e.preventDefault();
@@ -228,21 +247,11 @@
 
   const optModal = document.getElementById('opt-modal');
   const optModalClose = document.getElementById('opt-modal-close');
-  const sensiModal = document.getElementById('sensi-modal');
-  const sensiModalClose = document.getElementById('sensi-modal-close');
   const tutorialModal = document.getElementById('tutorial-modal');
   const tutorialModalClose = document.getElementById('tutorial-modal-close');
-  const ownerModal = document.getElementById('owner-modal');
-  const ownerModalClose = document.getElementById('owner-modal-close');
-  const copyOwnerIdBtn = document.getElementById('copy-owner-id-btn');
-  const copyOwnerBtnText = document.getElementById('copy-owner-btn-text');
-  const btnContactOwner = document.getElementById('btn-contact-owner') || document.querySelector('.btn-shell--owner');
-  const OWNER_DISCORD_ID = '1480931378001481839';
-
   const bypassNoticeModal = document.getElementById('bypass-notice-modal');
   const bypassNoticeModalClose = document.getElementById('bypass-notice-modal-close');
   const bypassNoticeModalCancel = document.getElementById('bypass-notice-modal-cancel');
-  const btnBypassContactOwner = document.getElementById('btn-bypass-contact-owner');
 
   function openBypassNoticeModal() {
     if (bypassNoticeModal) bypassNoticeModal.removeAttribute('hidden');
@@ -252,29 +261,6 @@
     if (bypassNoticeModal) bypassNoticeModal.setAttribute('hidden', '');
   }
 
-  function openOwnerModal() {
-    if (ownerModal) ownerModal.removeAttribute('hidden');
-  }
-
-  function closeOwnerModal() {
-    if (ownerModal) ownerModal.setAttribute('hidden', '');
-  }
-
-  function copyOwnerDiscordId() {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(OWNER_DISCORD_ID).then(function () {
-        if (copyOwnerBtnText) copyOwnerBtnText.textContent = '✓ Copied!';
-        showToast('Discord ID Copied!', 'Owner ID: ' + OWNER_DISCORD_ID + ' copied to clipboard');
-        setTimeout(function () {
-          if (copyOwnerBtnText) copyOwnerBtnText.textContent = 'Copy ID';
-        }, 2500);
-      }).catch(function () {
-        showToast('Owner Discord ID', OWNER_DISCORD_ID);
-      });
-    } else {
-      showToast('Owner Discord ID', OWNER_DISCORD_ID);
-    }
-  }
 
   function openOptimizationModal() {
     if (optModal) optModal.removeAttribute('hidden');
@@ -284,13 +270,7 @@
     if (optModal) optModal.setAttribute('hidden', '');
   }
 
-  function openSensiModal() {
-    if (sensiModal) sensiModal.removeAttribute('hidden');
-  }
 
-  function closeSensiModal() {
-    if (sensiModal) sensiModal.setAttribute('hidden', '');
-  }
 
   function openTutorialModal() {
     if (tutorialModal) tutorialModal.removeAttribute('hidden');
@@ -320,17 +300,7 @@
     });
   }
 
-  if (sensiModalClose) {
-    sensiModalClose.addEventListener('click', closeSensiModal);
-  }
 
-  if (sensiModal) {
-    sensiModal.addEventListener('click', function (e) {
-      if (e.target === sensiModal) {
-        closeSensiModal();
-      }
-    });
-  }
 
   if (tutorialModalClose) {
     tutorialModalClose.addEventListener('click', closeTutorialModal);
@@ -341,40 +311,6 @@
       if (e.target === tutorialModal) {
         closeTutorialModal();
       }
-    });
-  }
-
-  if (ownerModalClose) {
-    ownerModalClose.addEventListener('click', closeOwnerModal);
-  }
-
-  if (ownerModal) {
-    ownerModal.addEventListener('click', function (e) {
-      if (e.target === ownerModal) {
-        closeOwnerModal();
-      }
-    });
-  }
-
-  if (copyOwnerIdBtn) {
-    copyOwnerIdBtn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      copyOwnerDiscordId();
-    });
-  }
-
-  if (btnContactOwner) {
-    btnContactOwner.addEventListener('click', function (e) {
-      e.preventDefault();
-      copyOwnerDiscordId();
-      openOwnerModal();
-      try {
-        var iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = 'discord://-/users/' + OWNER_DISCORD_ID;
-        document.body.appendChild(iframe);
-        setTimeout(function () { iframe.remove(); }, 2000);
-      } catch (err) {}
     });
   }
 
@@ -389,13 +325,6 @@
       if (e.target === bypassNoticeModal) {
         closeBypassNoticeModal();
       }
-    });
-  }
-  if (btnBypassContactOwner) {
-    btnBypassContactOwner.addEventListener('click', function () {
-      closeBypassNoticeModal();
-      openOwnerModal();
-      copyOwnerDiscordId();
     });
   }
 
@@ -413,14 +342,9 @@
         showToast('Notice', 'Free Bypass will coming soon. Only Paid Bypass available for now.');
         return;
       }
-      if (name === 'Optimization File' && btn.closest('#optimization')) {
+      if (name.includes('Optimization') && btn.closest('#optimization')) {
         e.preventDefault();
         openOptimizationModal();
-        return;
-      }
-      if (name === 'Paid Sensi' || name === 'Optimization') {
-        e.preventDefault();
-        openSensiModal();
         return;
       }
       handleDownload(btn, e);
@@ -452,9 +376,7 @@
         }
       }
       closeOptimizationModal();
-      closeSensiModal();
       closeTutorialModal();
-      closeOwnerModal();
       closeBypassNoticeModal();
     }
   });

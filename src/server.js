@@ -219,7 +219,9 @@ app.post('/api/verify-turnstile', async (req, res) => {
     return res.status(400).json({ success: false, error: 'Invalid challenge token.' });
   }
 
-  const clientIp = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
+  const rawIp = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
+  const isLocalIp = !rawIp || rawIp === '::1' || rawIp === '127.0.0.1' || rawIp.startsWith('192.168.') || rawIp.startsWith('10.') || rawIp === 'unknown';
+  const clientIp = isLocalIp ? undefined : rawIp;
   const secretKey = process.env.TURNSTILE_SECRET;
 
   // Graceful fallback if TURNSTILE_SECRET is not yet set in environment
@@ -229,15 +231,19 @@ app.post('/api/verify-turnstile', async (req, res) => {
   }
 
   try {
+    const postData = {
+      secret: secretKey,
+      response: token,
+    };
+    if (clientIp) {
+      postData.remoteip = clientIp;
+    }
+
     const verifyResponse = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       signal: AbortSignal.timeout(10000),
-      body: new URLSearchParams({
-        secret: secretKey,
-        response: token,
-        remoteip: clientIp,
-      }),
+      body: new URLSearchParams(postData),
     });
 
     if (!verifyResponse.ok) {

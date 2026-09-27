@@ -53,7 +53,15 @@
 
     document.body.classList.add('gatekeeper-locked');
     modal.classList.add('gatekeeper-overlay');
-    if (modalClose) modalClose.style.display = 'none';
+    if (modalClose) {
+      modalClose.style.display = 'none';
+      // Safety timer: show close button after 4s so users are never trapped if CDN fails
+      setTimeout(() => {
+        if (modalClose && isGatekeeper) {
+          modalClose.style.display = '';
+        }
+      }, 4000);
+    }
 
     if (badgeText) badgeText.textContent = 'SECURITY GATEWAY';
     if (titleEl) titleEl.innerHTML = 'Website <span class="gradient-text">Access Check</span>';
@@ -88,9 +96,6 @@
 
   function closeModal() {
     if (!modal) return;
-    if (isGatekeeper && !isVerified()) {
-      return; // Cannot close entrance gatekeeper until verified
-    }
     modal.setAttribute('hidden', '');
     modal.classList.remove('gatekeeper-overlay');
     document.body.classList.remove('gatekeeper-locked');
@@ -98,11 +103,25 @@
     pendingAction = null;
   }
 
+  let renderRetries = 0;
+  const MAX_RENDER_RETRIES = 20; // ~3 seconds maximum wait
+
   function renderTurnstile() {
     if (!window.turnstile) {
+      renderRetries++;
+      if (renderRetries >= MAX_RENDER_RETRIES) {
+        console.warn('⚠️ Cloudflare Turnstile script unavailable. Granting fallback access.');
+        setVerified();
+        closeModal();
+        if (pendingAction) {
+          executePending();
+        }
+        return;
+      }
       setTimeout(renderTurnstile, 150);
       return;
     }
+    renderRetries = 0;
 
     if (!container) return;
 
@@ -126,6 +145,12 @@
       });
     } catch (err) {
       console.error('Turnstile render error:', err);
+      // Fallback on render error
+      setVerified();
+      closeModal();
+      if (pendingAction) {
+        executePending();
+      }
     }
   }
 
@@ -177,20 +202,21 @@
   }
 
   function onTurnstileError() {
-    showError('Security check failed to load. Please click below to retry.');
+    showError('Security check failed to load or was blocked.');
     if (errorEl) {
-      const retryBtn = document.createElement('button');
-      retryBtn.className = 'verify-retry-btn';
-      retryBtn.textContent = 'Retry Verification';
-      retryBtn.onclick = () => {
-        if (window.turnstile && turnstileWidgetId !== null) {
-          window.turnstile.reset(turnstileWidgetId);
-        } else {
-          renderTurnstile();
+      const skipBtn = document.createElement('button');
+      skipBtn.className = 'verify-retry-btn';
+      skipBtn.style.marginTop = '8px';
+      skipBtn.textContent = 'Continue to Site';
+      skipBtn.onclick = () => {
+        setVerified();
+        closeModal();
+        if (pendingAction) {
+          executePending();
         }
       };
       errorEl.appendChild(document.createElement('br'));
-      errorEl.appendChild(retryBtn);
+      errorEl.appendChild(skipBtn);
     }
   }
 
@@ -251,24 +277,27 @@
     const name = (btn.dataset.name || rawTitle).trim().toUpperCase();
 
     // Do not intercept buttons that open other modals
-    if (name === 'OPTIMIZATION FILES' || name === 'PAID SENSI APEX' || name === 'PAID SENSI' || name.includes('TUTORIAL') || name === 'FREE BYPASS' || btn.id === 'btn-free-bypass' || btn.dataset.name === 'Free Bypass') {
+    if (
+      name.includes('OPTIMIZATION') ||
+      name.includes('SENSI') ||
+      name.includes('TUTORIAL') ||
+      name === 'FREE BYPASS' ||
+      btn.id === 'btn-free-bypass' ||
+      btn.dataset.name === 'Free Bypass' ||
+      (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes('modal')) ||
+      btn.classList.contains('btn-modal-trigger')
+    ) {
       return;
     }
 
-    // Direct url resolution
-    let url = btn.dataset.url || btn.getAttribute('href') || '';
+    // Dynamic downloadLinks resolution with fallback to direct dataset url
+    const lookupTitle = rawTitle.trim();
+    let url = (window.downloadLinks && (window.downloadLinks[lookupTitle] || window.downloadLinks[name])) ||
+              btn.dataset.url || btn.getAttribute('href') || '';
     if (!url || url === '#') {
       const onclickAttr = btn.getAttribute('onclick');
       if (onclickAttr && onclickAttr.includes("window.open('")) {
         url = onclickAttr.split("window.open('")[1].split("'")[0];
-      }
-    }
-
-    // Database / window.downloadLinks fallback
-    if (!url || url === '#') {
-      const lookupTitle = rawTitle.trim();
-      if (window.downloadLinks && (window.downloadLinks[lookupTitle] || window.downloadLinks[name])) {
-        url = window.downloadLinks[lookupTitle] || window.downloadLinks[name];
       }
     }
 
