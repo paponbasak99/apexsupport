@@ -558,21 +558,117 @@
     questionBtn.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
   });
 
-  // --- 4. Live PC & Screen Refresh Detector ---
+  // --- 4. Live Real-Time Screen & Hardware Intelligence ---
+  function getAspect(w, h) {
+    if (!w || !h) return '16:9';
+    const ratio = w / h;
+    if (Math.abs(ratio - 16 / 9) < 0.05) return '16:9';
+    if (Math.abs(ratio - 16 / 10) < 0.05) return '16:10';
+    if (Math.abs(ratio - 21 / 9) < 0.08 || ratio > 2.2) return '21:9 UW';
+    if (Math.abs(ratio - 4 / 3) < 0.05) return '4:3';
+    return ratio.toFixed(2) + ':1';
+  }
+
+  function applyRecommendations(preset, fps, w, h) {
+    const resEl = document.getElementById('diag-res');
+    const fpsEl = document.getElementById('diag-fps');
+    const recEl = document.getElementById('diag-rec');
+    if (!recEl) return;
+
+    const realW = w || window.screen.width || 1920;
+    const realH = h || window.screen.height || 1080;
+    const aspect = getAspect(realW, realH);
+
+    if (preset === '1080p-60') {
+      if (resEl) resEl.textContent = '1920x1080 (16:9 FHD)';
+      if (fpsEl) fpsEl.textContent = '60–90 Hz Esports';
+      recEl.textContent = '90 FPS Unlocker + Smart Keymap';
+      recEl.style.color = '#38bdf8';
+    } else if (preset === '1080p-144') {
+      if (resEl) resEl.textContent = '1920x1080 (16:9 FHD)';
+      if (fpsEl) fpsEl.textContent = '144 Hz High-Refresh';
+      recEl.textContent = '144 FPS Registry + DirectX 12';
+      recEl.style.color = '#a855f7';
+    } else if (preset === '1440p-165') {
+      if (resEl) resEl.textContent = '2560x1440 (16:9 2K QHD)';
+      if (fpsEl) fpsEl.textContent = '165 Hz Ultra Sharp';
+      recEl.textContent = '2K High-DPI Patch + 165 FPS';
+      recEl.style.color = '#38bdf8';
+    } else if (preset === '1080p-240') {
+      if (resEl) resEl.textContent = '1920x1080 (Competitive)';
+      if (fpsEl) fpsEl.textContent = '240 Hz Apex Pro';
+      recEl.textContent = 'Apex 240 FPS Ultra Engine';
+      recEl.style.color = '#ec4899';
+    } else if (preset === 'ultrawide') {
+      if (resEl) resEl.textContent = '2560x1080 (21:9 UW)';
+      if (fpsEl) fpsEl.textContent = 'Ultrawide High-FOV';
+      recEl.textContent = '21:9 Aspect Ratio FOV Fix';
+      recEl.style.color = '#eab308';
+    } else {
+      // Auto-Detect real screen
+      if (resEl) resEl.textContent = realW + 'x' + realH + ' (' + aspect + ')';
+      const measuredFps = fps || 60;
+      if (measuredFps >= 140) {
+        recEl.textContent = (measuredFps >= 200 ? '240 FPS Ultra Engine' : '144 FPS Registry Patch');
+      } else {
+        recEl.textContent = '90 FPS Unlocker + C++ Pack';
+      }
+      recEl.style.color = '#4ade80';
+    }
+  }
+
   function detectSystemSpecs() {
-    const osEl = document.getElementById('diag-os');
+    const resEl = document.getElementById('diag-res');
     const fpsEl = document.getElementById('diag-fps');
     const gpuEl = document.getElementById('diag-gpu');
-    const recEl = document.getElementById('diag-rec');
+    const screenSelect = document.getElementById('screen-preset-select');
 
-    if (osEl) {
-      const ua = navigator.userAgent;
-      let os = 'Windows 64-Bit';
-      if (ua.includes('Win64') || ua.includes('x64')) os = 'Win 64-Bit';
-      else if (ua.includes('Windows')) os = 'Windows PC';
-      osEl.textContent = os;
+    // 1. Live Screen Detection
+    const realW = window.screen.width || 1920;
+    const realH = window.screen.height || 1080;
+    const dpr = window.devicePixelRatio || 1;
+    const aspect = getAspect(realW, realH);
+
+    const savedPreset = localStorage.getItem('apex_selected_screen') || 'auto';
+    if (screenSelect && screenSelect.value !== savedPreset) {
+      screenSelect.value = savedPreset;
     }
 
+    if (savedPreset === 'auto') {
+      if (resEl) {
+        resEl.textContent = realW + 'x' + realH + ' (' + aspect + ')';
+        resEl.title = 'Real-Time Screen: ' + realW + 'x' + realH + ' | DPI: ' + Math.round(dpr * 100) + '%';
+      }
+    }
+
+    // 2. Real-Time Display Refresh Detection
+    if (fpsEl) {
+      let frames = 0;
+      let start = performance.now();
+      function measure(now) {
+        frames++;
+        if (now - start >= 600) {
+          const estimatedFps = Math.round((frames * 1000) / (now - start));
+          let displayRate = '60 Hz';
+          if (estimatedFps > 130 && estimatedFps <= 155) displayRate = '144 Hz';
+          else if (estimatedFps > 155 && estimatedFps <= 180) displayRate = '165 Hz';
+          else if (estimatedFps > 200) displayRate = '240 Hz';
+          else if (estimatedFps > 70 && estimatedFps <= 130) displayRate = estimatedFps + ' Hz Live';
+          else displayRate = estimatedFps + ' Hz';
+
+          const currentPreset = screenSelect ? screenSelect.value : savedPreset;
+          if (currentPreset === 'auto') {
+            fpsEl.textContent = displayRate;
+          }
+          applyRecommendations(currentPreset, estimatedFps, realW, realH);
+        } else {
+          requestAnimationFrame(measure);
+        }
+      }
+      requestAnimationFrame(measure);
+    }
+
+    // 3. GPU Hardware Engine Detection
     if (gpuEl) {
       try {
         const canvas = document.createElement('canvas');
@@ -581,11 +677,12 @@
           const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
           if (debugInfo) {
             const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || '';
-            if (renderer.includes('NVIDIA')) gpuEl.textContent = 'NVIDIA GeForce';
-            else if (renderer.includes('AMD') || renderer.includes('Radeon')) gpuEl.textContent = 'AMD Radeon';
+            const dprText = Math.round(dpr * 100) + '% DPI';
+            if (renderer.includes('NVIDIA')) gpuEl.textContent = 'NVIDIA GeForce (' + dprText + ')';
+            else if (renderer.includes('AMD') || renderer.includes('Radeon')) gpuEl.textContent = 'AMD Radeon (' + dprText + ')';
             else if (renderer.includes('Intel')) gpuEl.textContent = 'Intel HD Graphics';
             else if (renderer.includes('Direct3D') || renderer.includes('ANGLE')) gpuEl.textContent = 'Direct3D Engine';
-            else gpuEl.textContent = renderer.slice(0, 18) || 'Hardware Accel';
+            else gpuEl.textContent = (renderer.slice(0, 14) || 'Hardware Accel') + ' (' + dprText + ')';
           } else {
             gpuEl.textContent = 'Hardware Accel';
           }
@@ -596,31 +693,40 @@
         gpuEl.textContent = 'DirectX 11/12';
       }
     }
-
-    if (fpsEl) {
-      let frames = 0;
-      let start = performance.now();
-      function measure(now) {
-        frames++;
-        if (now - start >= 600) {
-          const estimatedFps = Math.round((frames * 1000) / (now - start));
-          let displayRate = '60 Hz';
-          if (estimatedFps > 130 && estimatedFps <= 155) displayRate = '144 Hz';
-          else if (estimatedFps > 155 && estimatedFps <= 175) displayRate = '165 Hz';
-          else if (estimatedFps > 200) displayRate = '240 Hz';
-          else if (estimatedFps > 80 && estimatedFps <= 130) displayRate = '90-120 Hz';
-          else displayRate = estimatedFps + ' Hz';
-          fpsEl.textContent = displayRate;
-          if (recEl && estimatedFps >= 120) {
-            recEl.textContent = '90 FPS Unlocker Active';
-          }
-        } else {
-          requestAnimationFrame(measure);
-        }
-      }
-      requestAnimationFrame(measure);
-    }
   }
+
+  // Interactive Screen Selector & Live Detect Button
+  const screenSelect = document.getElementById('screen-preset-select');
+  const btnDetectScreen = document.getElementById('btn-detect-screen');
+
+  if (screenSelect) {
+    const saved = localStorage.getItem('apex_selected_screen');
+    if (saved) {
+      screenSelect.value = saved;
+      applyRecommendations(saved);
+    }
+
+    screenSelect.addEventListener('change', function () {
+      const val = screenSelect.value;
+      localStorage.setItem('apex_selected_screen', val);
+      applyRecommendations(val);
+      const text = screenSelect.options[screenSelect.selectedIndex]?.textContent || val;
+      showToast('Screen Selected', text);
+    });
+  }
+
+  if (btnDetectScreen) {
+    btnDetectScreen.addEventListener('click', function () {
+      if (screenSelect) screenSelect.value = 'auto';
+      localStorage.setItem('apex_selected_screen', 'auto');
+      detectSystemSpecs();
+      const realW = window.screen.width || 1920;
+      const realH = window.screen.height || 1080;
+      const dpr = window.devicePixelRatio || 1;
+      showToast('Real-Time Screen Detected', realW + 'x' + realH + ' (' + getAspect(realW, realH) + ') @ ' + Math.round(dpr * 100) + '% Scale');
+    });
+  }
+
   setTimeout(detectSystemSpecs, 200);
 
   var yearEl = document.getElementById('footer-year');

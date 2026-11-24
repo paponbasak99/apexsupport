@@ -3,6 +3,38 @@
 /* Fix: all sections need scroll-margin and smooth scrolling for scrollable website layout */
 html {
   scroll-behavior: smooth !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+body {
+  overflow: visible !important;
+  min-height: 100% !important;
+}
+
+/* Eliminate Double Scrollbars and harsh edge lines */
+::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.3) !important;
+  border-radius: 99px !important;
+  border: none !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.65) !important;
+}
+
+* {
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(168, 85, 247, 0.3) transparent !important;
 }
 
 .page {
@@ -1286,8 +1318,91 @@ body {
 .diag-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
   margin-bottom: 8px;
+}
+
+.diag-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.diag-live-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.diag-live-btn:hover {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.pulse-ring {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 6px #38bdf8;
+  animation: radarPulse 1.8s infinite;
+}
+
+@keyframes radarPulse {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+.diag-screen-selector {
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.screen-select-wrap {
+  position: relative;
+  margin-top: 4px;
+}
+
+.screen-select {
+  width: 100%;
+  background: rgba(14, 11, 30, 0.95);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.screen-select:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+.screen-select option {
+  background: #0d0a1c;
+  color: #f8fafc;
+  padding: 6px;
 }
 
 .diag-dot {

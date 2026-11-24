@@ -208,27 +208,49 @@
                 </a>
               </div>
 
-              <!-- Live Diagnostics Readout -->
+              <!-- Live Real-Time Screen & Hardware Intelligence -->
               <div class="system-deck__diagnostics" id="system-diagnostics">
                 <div class="diag-header">
-                  <span class="diag-dot"></span>
-                  <span class="diag-title">SYSTEM COMPATIBILITY DETECTOR</span>
+                  <div class="diag-header-left">
+                    <span class="diag-dot"></span>
+                    <span class="diag-title">REAL-TIME SCREEN &amp; HARDWARE INTEL</span>
+                  </div>
+                  <button type="button" id="btn-detect-screen" class="diag-live-btn" title="Refresh Live Screen Detection">
+                    <span class="pulse-ring"></span>
+                    <span>LIVE DETECT</span>
+                  </button>
                 </div>
+
+                <!-- Screen Selector Dropdown -->
+                <div class="diag-screen-selector">
+                  <label for="screen-preset-select" class="diag-label">SELECT YOUR ACTIVE SCREEN / PRESET:</label>
+                  <div class="screen-select-wrap">
+                    <select id="screen-preset-select" class="screen-select">
+                      <option value="auto">⚡ Auto-Detect My Real Screen (Live)</option>
+                      <option value="1080p-60">🖥️ 1920x1080 FHD @ 60–90 Hz (Esports Standard)</option>
+                      <option value="1080p-144">⚡ 1920x1080 FHD @ 144 Hz (High-Refresh Pro)</option>
+                      <option value="1440p-165">🎯 2560x1440 2K QHD @ 165 Hz (Ultra Sharp)</option>
+                      <option value="1080p-240">🚀 1920x1080 FHD @ 240 Hz (Apex Competitive)</option>
+                      <option value="ultrawide">🌌 2560x1080 / 3440x1440 (21:9 Ultrawide)</option>
+                    </select>
+                  </div>
+                </div>
+
                 <div class="diag-grid">
                   <div class="diag-item">
-                    <span class="diag-label">OS DETECTED</span>
-                    <span class="diag-val" id="diag-os">Windows 64-Bit</span>
+                    <span class="diag-label">REAL-TIME SCREEN</span>
+                    <span class="diag-val" id="diag-res">Detecting Display...</span>
                   </div>
                   <div class="diag-item">
                     <span class="diag-label">DISPLAY REFRESH</span>
                     <span class="diag-val" id="diag-fps">Detecting...</span>
                   </div>
                   <div class="diag-item">
-                    <span class="diag-label">GPU RENDERER</span>
+                    <span class="diag-label">GPU &amp; RENDERING</span>
                     <span class="diag-val" id="diag-gpu">Detecting GPU...</span>
                   </div>
                   <div class="diag-item">
-                    <span class="diag-label">RECOMMENDED FIX</span>
+                    <span class="diag-label">OPTIMAL FIX CONFIG</span>
                     <span class="diag-val" id="diag-rec" style="color: #4ade80;">90 FPS + C++ Pack</span>
                   </div>
                 </div>
