@@ -273,20 +273,8 @@ a {
 
 .nav__logo span {
   color: #a855f7;
-  text-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
-  animation: logoGlow 3s ease-in-out infinite;
-}
-
-@keyframes logoGlow {
-
-  0%,
-  100% {
-    text-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-  }
-
-  50% {
-    text-shadow: 0 0 35px rgba(168, 85, 247, 0.8), 0 0 60px rgba(90, 48, 255, 0.3);
-  }
+  text-shadow: none;
+  animation: none;
 }
 
 /* --- Hamburger Toggle --- */
@@ -4581,12 +4569,16 @@ body.gatekeeper-locked .ambient-light {
   width: 26px;
   height: 26px;
   object-fit: contain;
-  filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.65));
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
 }
 
 .nav__logo:hover .nav__logo-img {
-  transform: rotate(-10deg) scale(1.12);
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
 }
 
 .hero__logo-wrapper {
@@ -4598,28 +4590,7 @@ body.gatekeeper-locked .ambient-light {
 }
 
 .hero__logo-glow {
-  position: absolute;
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, transparent 70%);
-  filter: blur(20px);
-  pointer-events: none;
-  animation: logoGlowPulse 3s ease-in-out infinite;
-}
-
-@keyframes logoGlowPulse {
-
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: scale(0.95);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
+  display: none !important;
 }
 
 .hero__logo-img {
@@ -4628,12 +4599,15 @@ body.gatekeeper-locked .ambient-light {
   object-fit: contain;
   position: relative;
   z-index: 1;
-  filter: drop-shadow(0 8px 24px rgba(168, 85, 247, 0.55));
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: none !important;
+  transform: none !important;
+  animation: none !important;
 }
 
 .hero__logo-img:hover {
-  transform: scale(1.08) rotate(6deg);
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
 }
 
 .footer__logo {
@@ -4646,7 +4620,7 @@ body.gatekeeper-locked .ambient-light {
   width: 20px;
   height: 20px;
   object-fit: contain;
-  filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.5));
+  filter: none !important;
 }
 
 .nav__logo span {
