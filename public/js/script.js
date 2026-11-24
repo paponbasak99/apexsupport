@@ -86,6 +86,9 @@
     var el = document.getElementById(route);
     if (el) {
       el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+      el.querySelectorAll('.scroll-reveal').forEach(function (node) {
+        node.classList.add('revealed');
+      });
     }
     updateNav(route);
     currentRoute = route;
@@ -403,6 +406,54 @@
     });
   }
 
+  // --- Scroll-Reveal Animations Engine (Hardware Accelerated 60FPS) ---
+  function initScrollReveal() {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+    if (!('IntersectionObserver' in window)) {
+      return;
+    }
+
+    document.documentElement.classList.add('has-scroll-anim');
+
+    var revealSelectors = [
+      '.section__header',
+      '.card',
+      '.faq-item',
+      '.footer-pro'
+    ];
+
+    var targets = document.querySelectorAll(revealSelectors.join(', '));
+    targets.forEach(function (el) {
+      el.classList.add('scroll-reveal');
+    });
+
+    var revealObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -40px 0px',
+      threshold: 0.08
+    });
+
+    targets.forEach(function (el) {
+      var rect = el.getBoundingClientRect();
+      var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      if (rect.top < viewportHeight && rect.bottom > 0) {
+        el.classList.add('revealed');
+      } else {
+        revealObserver.observe(el);
+      }
+    });
+  }
+
+  initScrollReveal();
+
   // --- 1. Global Instant Fix Search ---
   const searchInput = document.getElementById('global-search');
   const searchClear = document.getElementById('search-clear');
@@ -411,7 +462,9 @@
   function filterFixes(query) {
     const q = (query || '').trim().toLowerCase();
     if (!q) {
-      document.querySelectorAll('.card').forEach(function (c) { c.style.display = ''; });
+      document.querySelectorAll('.card').forEach(function (c) {
+        c.style.display = '';
+      });
       if (searchStats) searchStats.style.display = 'none';
       if (searchClear) searchClear.style.display = 'none';
       return;
@@ -434,6 +487,7 @@
       }
       if (match) {
         card.style.display = '';
+        card.classList.add('revealed');
         count++;
       } else {
         card.style.display = 'none';

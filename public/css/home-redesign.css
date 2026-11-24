@@ -520,7 +520,8 @@ body {
   font-family: var(--font-body) !important;
   font-size: 1.02rem !important;
   line-height: 1.6 !important;
-  color: #94a3b8 !important;
+  color: #cbd5e1 !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8) !important;
   max-width: 620px !important;
   margin: 0.5rem auto 0 !important;
 }
@@ -1496,3 +1497,108 @@ body {
 .faq-answer strong {
   color: #ffffff;
 }
+
+/* ==========================================================================
+   SCROLL REVEAL & SECTION SCROLLING ANIMATIONS (60FPS HARDWARE ACCELERATED)
+   ========================================================================== */
+
+/* Progressive enhancement: Only hide elements if JavaScript has loaded and added .has-scroll-anim */
+html.has-scroll-anim .scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Specific high-priority card scroll reveal override */
+html.has-scroll-anim .card.scroll-reveal {
+  opacity: 0 !important;
+  transform: translate3d(0, 36px, 0) !important;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease !important;
+  will-change: opacity, transform;
+}
+
+/* Once revealed by IntersectionObserver */
+html.has-scroll-anim .scroll-reveal.revealed {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+html.has-scroll-anim .card.scroll-reveal.revealed {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* Section headers: slightly quicker, subtle rise */
+html.has-scroll-anim .section__header.scroll-reveal {
+  transform: translate3d(0, 26px, 0);
+  transition-duration: 0.55s;
+}
+
+/* Card cascade delays per grid row/column */
+html.has-scroll-anim .grid .card.scroll-reveal:nth-child(1) { transition-delay: 0.05s !important; }
+html.has-scroll-anim .grid .card.scroll-reveal:nth-child(2) { transition-delay: 0.12s !important; }
+html.has-scroll-anim .grid .card.scroll-reveal:nth-child(3) { transition-delay: 0.19s !important; }
+html.has-scroll-anim .grid .card.scroll-reveal:nth-child(4) { transition-delay: 0.26s !important; }
+html.has-scroll-anim .grid .card.scroll-reveal:nth-child(5) { transition-delay: 0.33s !important; }
+html.has-scroll-anim .grid .card.scroll-reveal:nth-child(6) { transition-delay: 0.40s !important; }
+html.has-scroll-anim .grid .card.scroll-reveal:nth-child(n+7) { transition-delay: 0.45s !important; }
+
+/* Stagger FAQ accordion items */
+html.has-scroll-anim .faq-container .faq-item.scroll-reveal:nth-child(1) { transition-delay: 0.04s; }
+html.has-scroll-anim .faq-container .faq-item.scroll-reveal:nth-child(2) { transition-delay: 0.10s; }
+html.has-scroll-anim .faq-container .faq-item.scroll-reveal:nth-child(3) { transition-delay: 0.16s; }
+html.has-scroll-anim .faq-container .faq-item.scroll-reveal:nth-child(4) { transition-delay: 0.22s; }
+html.has-scroll-anim .faq-container .faq-item.scroll-reveal:nth-child(5) { transition-delay: 0.28s; }
+
+/* Footer reveal */
+html.has-scroll-anim .footer-pro.scroll-reveal {
+  transform: translate3d(0, 24px, 0);
+  transition-duration: 0.7s;
+}
+
+/* Preserve card hover elevation once revealed */
+html.has-scroll-anim .card.scroll-reveal.revealed:hover {
+  transform: translate3d(0, -6px, 0) !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease !important;
+}
+
+/* Hero entrance on first page load */
+.hero__primary {
+  animation: heroEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero__secondary {
+  animation: heroEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+@keyframes heroEntrance {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Accessibility: respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html.has-scroll-anim .scroll-reveal,
+  html.has-scroll-anim .scroll-reveal.revealed,
+  .hero__primary,
+  .hero__secondary {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
