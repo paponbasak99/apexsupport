@@ -3,26 +3,30 @@
 
   const ALLOWED_ROUTES = Object.freeze([
     'home',
-    'free-panel',
+    'apk',
     'emulator',
+    'panel-fix',
+    'bypass-fix',
     'optimization',
-    'bypass-issue',
-    'panel-issue',
-    'internal-fix',
     'other-issues',
-    'tutorial-video'
+    'faq'
   ]);
   const ROUTE_ALIASES = Object.freeze({
-    'uid-bypass-fix': 'bypass-issue',
-    'uid-bypass': 'bypass-issue',
-    'bypass-fix': 'bypass-issue',
-    'free-panel-download': 'free-panel',
-    'panel': 'free-panel',
-    'lib-bypass': 'bypass-issue',
-    'lib-bypass-fix': 'bypass-issue',
-    'tutorial-setup-video': 'tutorial-video',
-    'tutorial-setup': 'tutorial-video',
-    'tutorial': 'tutorial-video'
+    'free-panel': 'apk',
+    'free-panel-download': 'apk',
+    'panel': 'panel-fix',
+    'panel-issue': 'panel-fix',
+    'panel-fix': 'panel-fix',
+    'bypass-issue': 'bypass-fix',
+    'uid-bypass-fix': 'bypass-fix',
+    'uid-bypass': 'bypass-fix',
+    'lib-bypass': 'bypass-fix',
+    'lib-bypass-fix': 'bypass-fix',
+    'internal-fix': 'panel-fix',
+    'tutorial-video': 'other-issues',
+    'tutorial-setup-video': 'other-issues',
+    'tutorial-setup': 'other-issues',
+    'tutorial': 'other-issues'
   });
   const DISCORD_URL = 'https://discord.gg/v766g2PNn6';
 
@@ -78,13 +82,12 @@
     return sanitizeRoute(raw);
   }
 
-  function showPage(route) {
-    pages.forEach(function (p) { p.classList.remove('page--active'); });
+  function showPage(route, smooth) {
     var el = document.getElementById(route);
     if (el) {
-      el.classList.add('page--active');
-      el.scrollIntoView({ behavior: 'instant', block: 'start' });
+      el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
     }
+    updateNav(route);
     currentRoute = route;
   }
 
@@ -234,33 +237,14 @@
 
   function navigate(route) {
     route = sanitizeRoute(route);
-    if (route === currentRoute) return;
-    showPage(route);
-    updateNav(route);
+    showPage(route, true);
     history.pushState(null, '', '#' + route);
     if (nav) nav.classList.remove('nav--open');
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    setupImages(document.getElementById(route));
-    setTimeout(function () { staggerCards(); }, 50);
-    if (route === 'home') setTimeout(animateStats, 100);
+    if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
   }
 
   const optModal = document.getElementById('opt-modal');
   const optModalClose = document.getElementById('opt-modal-close');
-  const tutorialModal = document.getElementById('tutorial-modal');
-  const tutorialModalClose = document.getElementById('tutorial-modal-close');
-  const bypassNoticeModal = document.getElementById('bypass-notice-modal');
-  const bypassNoticeModalClose = document.getElementById('bypass-notice-modal-close');
-  const bypassNoticeModalCancel = document.getElementById('bypass-notice-modal-cancel');
-
-  function openBypassNoticeModal() {
-    if (bypassNoticeModal) bypassNoticeModal.removeAttribute('hidden');
-  }
-
-  function closeBypassNoticeModal() {
-    if (bypassNoticeModal) bypassNoticeModal.setAttribute('hidden', '');
-  }
-
 
   function openOptimizationModal() {
     if (optModal) optModal.removeAttribute('hidden');
@@ -268,24 +252,6 @@
 
   function closeOptimizationModal() {
     if (optModal) optModal.setAttribute('hidden', '');
-  }
-
-
-
-  function openTutorialModal() {
-    if (tutorialModal) tutorialModal.removeAttribute('hidden');
-  }
-
-  function closeTutorialModal() {
-    if (tutorialModal) {
-      tutorialModal.setAttribute('hidden', '');
-      var iframe = tutorialModal.querySelector('iframe');
-      if (iframe) {
-        var s = iframe.src;
-        iframe.src = '';
-        iframe.src = s;
-      }
-    }
   }
 
   if (optModalClose) {
@@ -300,34 +266,6 @@
     });
   }
 
-
-
-  if (tutorialModalClose) {
-    tutorialModalClose.addEventListener('click', closeTutorialModal);
-  }
-
-  if (tutorialModal) {
-    tutorialModal.addEventListener('click', function (e) {
-      if (e.target === tutorialModal) {
-        closeTutorialModal();
-      }
-    });
-  }
-
-  if (bypassNoticeModalClose) {
-    bypassNoticeModalClose.addEventListener('click', closeBypassNoticeModal);
-  }
-  if (bypassNoticeModalCancel) {
-    bypassNoticeModalCancel.addEventListener('click', closeBypassNoticeModal);
-  }
-  if (bypassNoticeModal) {
-    bypassNoticeModal.addEventListener('click', function (e) {
-      if (e.target === bypassNoticeModal) {
-        closeBypassNoticeModal();
-      }
-    });
-  }
-
   document.addEventListener('click', function (e) {
     var btn = e.target.closest('.btn--download');
     if (btn && !btn.closest('.hero__actions')) {
@@ -336,12 +274,6 @@
         return;
       }
       var name = getDownloadName(btn);
-      if (name === 'Free Bypass' || btn.dataset.name === 'Free Bypass' || btn.id === 'btn-free-bypass') {
-        e.preventDefault();
-        openBypassNoticeModal();
-        showToast('Notice', 'Free Bypass will coming soon. Only Paid Bypass available for now.');
-        return;
-      }
       if (name.includes('Optimization') && btn.closest('#optimization')) {
         e.preventDefault();
         openOptimizationModal();
@@ -376,8 +308,6 @@
         }
       }
       closeOptimizationModal();
-      closeTutorialModal();
-      closeBypassNoticeModal();
     }
   });
 
@@ -444,12 +374,201 @@
   });
 
   var route = getRoute();
-  showPage(route);
-  updateNav(route);
+  updateNav(route || 'home');
   onScroll();
-  setupImages(document.getElementById(route));
-  if (route === 'home') setTimeout(animateStats, 100);
-  setTimeout(staggerCards, 50);
+  setupImages(document);
+  if (route && route !== 'home') {
+    setTimeout(function () {
+      showPage(route, false);
+    }, 150);
+  }
+
+  // ScrollSpy: auto-detect active section as user scrolls and highlight navbar
+  if ('IntersectionObserver' in window) {
+    var spyObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          updateNav(id);
+          currentRoute = id;
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -55% 0px',
+      threshold: 0
+    });
+
+    document.querySelectorAll('section[id]').forEach(function (sec) {
+      spyObserver.observe(sec);
+    });
+  }
+
+  // --- 1. Global Instant Fix Search ---
+  const searchInput = document.getElementById('global-search');
+  const searchClear = document.getElementById('search-clear');
+  const searchStats = document.getElementById('search-stats');
+
+  function filterFixes(query) {
+    const q = (query || '').trim().toLowerCase();
+    if (!q) {
+      document.querySelectorAll('.card').forEach(function (c) { c.style.display = ''; });
+      if (searchStats) searchStats.style.display = 'none';
+      if (searchClear) searchClear.style.display = 'none';
+      return;
+    }
+
+    if (searchClear) searchClear.style.display = 'block';
+    let count = 0;
+
+    document.querySelectorAll('.card').forEach(function (card) {
+      const text = card.textContent.toLowerCase();
+      const title = (card.querySelector('.card__title')?.textContent || '').toLowerCase();
+      const badge = (card.querySelector('.card__badge')?.textContent || '').toLowerCase();
+      const keywords = (card.getAttribute('data-keywords') || '').toLowerCase();
+      let match = text.includes(q) || title.includes(q) || badge.includes(q) || keywords.includes(q);
+      if (q === '0xc00007b' || q === 'c00007b') {
+        if (title.includes('directx') || title.includes('runtime') || title.includes('c++')) match = true;
+      }
+      if (q.includes('fps')) {
+        if (title.includes('fps') || title.includes('sensi') || title.includes('optimi')) match = true;
+      }
+      if (match) {
+        card.style.display = '';
+        count++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (searchStats) {
+      searchStats.style.display = 'block';
+      searchStats.textContent = count === 0 ? 'No matching fixes found. Join Discord for live help!' : 'Found ' + count + ' matching fix' + (count > 1 ? 'es' : '');
+    }
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function (e) {
+      filterFixes(e.target.value);
+    });
+  }
+
+  if (searchClear && searchInput) {
+    searchClear.addEventListener('click', function () {
+      searchInput.value = '';
+      filterFixes('');
+      searchInput.focus();
+    });
+  }
+
+  // --- 2. Copy CMD Quick Fix Buttons ---
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.btn-copy-cmd');
+    if (!btn) return;
+    const cmd = btn.getAttribute('data-cmd');
+    if (!cmd) return;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(cmd).then(function () {
+        btn.classList.add('copied');
+        const span = btn.querySelector('span');
+        if (span) span.textContent = 'Copied!';
+        showToast('Command Copied', 'Paste into Command Prompt (Run as Administrator)');
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          if (span) span.textContent = 'Copy';
+        }, 2500);
+      }).catch(function () {
+        showToast('Notice', 'Manual command: ' + cmd);
+      });
+    } else {
+      showToast('Notice', 'Manual command: ' + cmd);
+    }
+  });
+
+  // --- 3. FAQ Accordion Toggle ---
+  document.addEventListener('click', function (e) {
+    const questionBtn = e.target.closest('.faq-question');
+    if (!questionBtn) return;
+    const item = questionBtn.closest('.faq-item');
+    if (!item) return;
+
+    const isOpen = item.classList.contains('faq-open');
+    document.querySelectorAll('.faq-item.faq-open').forEach(function (other) {
+      if (other !== item) {
+        other.classList.remove('faq-open');
+        other.querySelector('.faq-question')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    item.classList.toggle('faq-open', !isOpen);
+    questionBtn.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+  });
+
+  // --- 4. Live PC & Screen Refresh Detector ---
+  function detectSystemSpecs() {
+    const osEl = document.getElementById('diag-os');
+    const fpsEl = document.getElementById('diag-fps');
+    const gpuEl = document.getElementById('diag-gpu');
+    const recEl = document.getElementById('diag-rec');
+
+    if (osEl) {
+      const ua = navigator.userAgent;
+      let os = 'Windows 64-Bit';
+      if (ua.includes('Win64') || ua.includes('x64')) os = 'Win 64-Bit';
+      else if (ua.includes('Windows')) os = 'Windows PC';
+      osEl.textContent = os;
+    }
+
+    if (gpuEl) {
+      try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (gl) {
+          const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+          if (debugInfo) {
+            const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || '';
+            if (renderer.includes('NVIDIA')) gpuEl.textContent = 'NVIDIA GeForce';
+            else if (renderer.includes('AMD') || renderer.includes('Radeon')) gpuEl.textContent = 'AMD Radeon';
+            else if (renderer.includes('Intel')) gpuEl.textContent = 'Intel HD Graphics';
+            else if (renderer.includes('Direct3D') || renderer.includes('ANGLE')) gpuEl.textContent = 'Direct3D Engine';
+            else gpuEl.textContent = renderer.slice(0, 18) || 'Hardware Accel';
+          } else {
+            gpuEl.textContent = 'Hardware Accel';
+          }
+        } else {
+          gpuEl.textContent = 'DirectX Standard';
+        }
+      } catch (err) {
+        gpuEl.textContent = 'DirectX 11/12';
+      }
+    }
+
+    if (fpsEl) {
+      let frames = 0;
+      let start = performance.now();
+      function measure(now) {
+        frames++;
+        if (now - start >= 600) {
+          const estimatedFps = Math.round((frames * 1000) / (now - start));
+          let displayRate = '60 Hz';
+          if (estimatedFps > 130 && estimatedFps <= 155) displayRate = '144 Hz';
+          else if (estimatedFps > 155 && estimatedFps <= 175) displayRate = '165 Hz';
+          else if (estimatedFps > 200) displayRate = '240 Hz';
+          else if (estimatedFps > 80 && estimatedFps <= 130) displayRate = '90-120 Hz';
+          else displayRate = estimatedFps + ' Hz';
+          fpsEl.textContent = displayRate;
+          if (recEl && estimatedFps >= 120) {
+            recEl.textContent = '90 FPS Unlocker Active';
+          }
+        } else {
+          requestAnimationFrame(measure);
+        }
+      }
+      requestAnimationFrame(measure);
+    }
+  }
+  setTimeout(detectSystemSpecs, 200);
+
   var yearEl = document.getElementById('footer-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 

@@ -25,3 +25,5 @@ desktop.ini
 # Script Backups and Temporary Files
 *.backup.js
 *.log
+scripts/
+public/screenshot_*.png

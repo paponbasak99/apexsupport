@@ -125,6 +125,7 @@
     "string-template": "^1.0.0",
     "stringz": "^2.1.0",
     "supports-color": "^7.2.0",
+    "three": "^0.187.0",
     "throttleit": "^2.1.0",
     "tslib": "^2.8.1",
     "type-check": "^0.3.2",

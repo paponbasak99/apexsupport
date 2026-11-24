@@ -36,241 +36,245 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/home-redesign.css" />
-  <link rel="stylesheet" href="css/gradient-waves.css" />
+  <link rel="stylesheet" href="css/dappled-light.css" />
 </head>
 
 <body>
 
-  <gradient-waves
-    horizon-color="#5a30ff"
-    wave-color="#ffffff"
-    crest-color="#FFFFFF"
-    speed="0.4"
-    amplitude="2.5"
-    wave-scale="0.6"
-    wave-ratio="0.9"
-    swell="35"
-    turbulence="20"
-    tilt="1.11"
-    zoom="1.0"
-    height="5.5"
-    fog-depth="15"
-    detail="medium"
-    brightness="1.0"
-    opacity="1.0"
-    mouse-interaction="true"
-    parallax-strength="0.5"
-    grain="true"
-    grain-intensity="0.05"
-  ></gradient-waves>
+  <dappled-light plant="ficus" placement="top-right" light-color="#9d8cff" shadow-color="#141026"
+    background-color="#06050e" window="auto" window-angle="22" window-size="0.58" softness="1.4" intensity="0.82"
+    bloom="0.5" wind="0.5" wind-speed="0.8" breeze="true" grain="0.2"></dappled-light>
   <nav class="nav" id="nav">
     <div class="nav__inner">
-      <a href="#home" class="nav__logo" data-link="home">APEX <span>OFFICIAL</span></a>
-      <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+      <a href="#home" class="nav__logo" data-link="home" aria-label="Apex Official Home">
+        <span class="nav__logo-frame">
+          <img src="assets/apex-logo-transparent.png" alt="Apex Logo" class="nav__logo-img" />
+        </span>
+        <span class="nav__logo-title">APEX <span class="nav__logo-accent">OFFICIAL</span></span>
+      </a>
+      <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Toggle navigation menu"
+        aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
       </button>
       <ul class="nav__links" id="nav-links">
         <li><a href="#home" data-link="home">HOME</a></li>
-        <li><a href="#free-panel" data-link="free-panel">FREE PANEL</a></li>
-        <li><a href="#panel-issue" data-link="panel-issue">PANEL FIX</a></li>
-        <li><a href="#bypass-issue" data-link="bypass-issue">UID BYPASS FIX</a></li>
-        <li><a href="#internal-fix" data-link="internal-fix">INTERNAL FIX</a></li>
+        <li><a href="#apk" data-link="apk">APK</a></li>
         <li><a href="#emulator" data-link="emulator">EMULATOR</a></li>
+        <li><a href="#panel-fix" data-link="panel-fix">PANEL FIX</a></li>
+        <li><a href="#bypass-fix" data-link="bypass-fix">BYPASS FIX</a></li>
         <li><a href="#optimization" data-link="optimization">OPTIMIZATION</a></li>
         <li><a href="#other-issues" data-link="other-issues">OTHER ISSUES</a></li>
-        <li><a href="#tutorial-video" data-link="tutorial-video">TUTORIAL SET UP VIDEO</a></li>
+        <li><a href="#faq" data-link="faq">FAQ</a></li>
       </ul>
     </div>
   </nav>
 
   <main id="content">
-    <section id="home" class="page">
-      <div class="hero hero--celestial">
-        <div class="hero__glass-panel">
-          <span class="tag tag--glow"><span style="color: #c084fc; text-shadow: 0 0 10px rgba(192, 132, 252, 0.8); margin-right: 6px;">◆</span> OB55 Fully Updated by Apex Ego</span>
-          <h1 class="hero__title">
-            Apex Official<br />
-            <span class="gradient-text--ethereal">Error Fix Website</span>
-          </h1>
-          <p class="hero__subtitle">
-            Premium troubleshooting utility and configuration dashboard for Apex Ego panels, APKs, emulators, and drivers.
-          </p>
+    <section id="home" class="page page--active">
+      <div class="hero hero--executive">
+        <div class="hero__layout">
 
+          <!-- LEFT COLUMN: Confident Headline, Clear Purpose, Primary Actions & Quick Solution Tags -->
+          <div class="hero__primary">
+            <div class="hero__release-badge">
+              <span class="badge-dot"></span>
+              <span class="badge-text">Apex Official &bull; OB55 System &amp; Game Fix Suite</span>
+            </div>
 
+            <h1 class="hero__headline">
+              Precision Fix Utility<br />for Apex PC Gamers
+            </h1>
 
-          <div class="hero__cta-row">
-            <a href="https://discord.gg/v766g2PNn6" target="_blank" rel="noopener noreferrer"
-              class="btn-shell btn-shell--primary">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/>
-              </svg>
-              Apex Official Discord Server
-            </a>
+            <p class="hero__lead">
+              Verified runtime patches, 32-bit APK distributions, emulator configurations, and bypass solutions engineered for peak FPS and ban-safe stability.
+            </p>
+
+            <div class="hero__actions">
+              <a href="#apk" data-link="apk" class="btn-primary-pro">
+                <span>Explore Fix Modules</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+              <a href="https://discord.gg/v766g2PNn6" target="_blank" rel="noopener noreferrer" class="btn-ghost-pro">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z" />
+                </svg>
+                <span>Official Discord</span>
+              </a>
+            </div>
+
+            <!-- Global Instant Fix Search -->
+            <div class="hero__search-box">
+              <div class="search-input-wrapper">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="global-search" placeholder="Search error code or tool (e.g. 0xc00007b, 90 FPS, Hyper-V)..." autocomplete="off" />
+                <button id="search-clear" class="search-clear-btn" type="button" aria-label="Clear search">&times;</button>
+              </div>
+              <div class="search-stats" id="search-stats"></div>
+            </div>
+
+            <!-- Authentic Quick Solution Jumps -->
+            <div class="hero__quick-jumps">
+              <span class="quick-jumps__caption">Common issues resolved:</span>
+              <div class="quick-jumps__tags">
+                <a href="#optimization" data-link="optimization" class="quick-tag">90 FPS Unlock</a>
+                <a href="#emulator" data-link="emulator" class="quick-tag">Smart Keymapping</a>
+                <a href="#panel-fix" data-link="panel-fix" class="quick-tag">0xc00007b Fix</a>
+                <a href="#bypass-fix" data-link="bypass-fix" class="quick-tag">UID Bypass</a>
+                <a href="#apk" data-link="apk" class="quick-tag">32-Bit APKs</a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+
+          <!-- RIGHT COLUMN: The Apex System Console -->
+          <div class="hero__secondary">
+            <div class="system-deck">
+              <div class="system-deck__header">
+                <div class="system-deck__brand">
+                  <div class="system-deck__logo-frame">
+                    <img src="assets/apex-logo-transparent.png" alt="Apex Official" class="system-deck__logo-img" />
+                  </div>
+                  <div>
+                    <div class="system-deck__title">APEX SYSTEM DIRECTORY</div>
+                    <div class="system-deck__sub">OB55 Production Release &bull; 2026</div>
+                  </div>
+                </div>
+                <div class="system-deck__status-pill">VERIFIED</div>
+              </div>
+
+              <!-- 4 Modular Direct Access Rows -->
+              <div class="system-deck__modules">
+                <a href="#apk" data-link="apk" class="deck-row">
+                  <div class="deck-row__icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                      <path d="M6 12h4m-2-2v4m11-2h.01m-3 0h.01"></path>
+                    </svg>
+                  </div>
+                  <div class="deck-row__body">
+                    <div class="deck-row__name">Game APK Packages</div>
+                    <div class="deck-row__detail">Free Fire, India &amp; MAX 32-Bit Lite</div>
+                  </div>
+                  <svg class="deck-row__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+
+                <a href="#emulator" data-link="emulator" class="deck-row">
+                  <div class="deck-row__icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+                      <line x1="8" y1="21" x2="16" y2="21"></line>
+                      <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                  </div>
+                  <div class="deck-row__body">
+                    <div class="deck-row__name">Emulator Configurations</div>
+                    <div class="deck-row__detail">BlueStacks &amp; MSI 90 FPS Keymapping</div>
+                  </div>
+                  <svg class="deck-row__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+
+                <a href="#panel-fix" data-link="panel-fix" class="deck-row">
+                  <div class="deck-row__icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                    </svg>
+                  </div>
+                  <div class="deck-row__body">
+                    <div class="deck-row__name">Panel Runtime Libraries</div>
+                    <div class="deck-row__detail">DirectX, .NET SDK, C++ &amp; WinDivert</div>
+                  </div>
+                  <svg class="deck-row__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+
+                <a href="#bypass-fix" data-link="bypass-fix" class="deck-row">
+                  <div class="deck-row__icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                  </div>
+                  <div class="deck-row__body">
+                    <div class="deck-row__name">Bypass &amp; Anti-Ban</div>
+                    <div class="deck-row__detail">UID Protection &amp; Disconnect Proxy</div>
+                  </div>
+                  <svg class="deck-row__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+              </div>
+
+              <!-- Live Diagnostics Readout -->
+              <div class="system-deck__diagnostics" id="system-diagnostics">
+                <div class="diag-header">
+                  <span class="diag-dot"></span>
+                  <span class="diag-title">SYSTEM COMPATIBILITY DETECTOR</span>
+                </div>
+                <div class="diag-grid">
+                  <div class="diag-item">
+                    <span class="diag-label">OS DETECTED</span>
+                    <span class="diag-val" id="diag-os">Windows 64-Bit</span>
+                  </div>
+                  <div class="diag-item">
+                    <span class="diag-label">DISPLAY REFRESH</span>
+                    <span class="diag-val" id="diag-fps">Detecting...</span>
+                  </div>
+                  <div class="diag-item">
+                    <span class="diag-label">GPU RENDERER</span>
+                    <span class="diag-val" id="diag-gpu">Detecting GPU...</span>
+                  </div>
+                  <div class="diag-item">
+                    <span class="diag-label">RECOMMENDED FIX</span>
+                    <span class="diag-val" id="diag-rec" style="color: #4ade80;">90 FPS + C++ Pack</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Deck Footer Verification -->
+              <div class="system-deck__footer">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Verified virus-free &bull; Zero ban reports on OB55</span>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- /hero__layout -->
+      </div> <!-- /hero--executive -->
     </section>
 
-    <section id="free-panel" class="page">
+    <!-- ==========================================
+         1. APK SECTION (#apk)
+         ========================================== -->
+    <section id="apk" class="page">
       <div class="section__header section__header--panel">
         <span class="tag tag--panel">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
             stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
           </svg>
-          Apex Official Client
+          Official Game Clients
         </span>
-        <h2 class="glow-title">Apex <span class="gradient-text-panel">Free Panel</span></h2>
-        <p>Official free edition of the Apex Ego panel with optimized performance and safety features.</p>
+        <h2 class="glow-title">Apex <span class="gradient-text-panel">APK Downloads</span></h2>
+        <p>Official Free Fire, Free Fire India, and Free Fire MAX 32-Bit / 64-Bit client packages.</p>
       </div>
       <div class="grid">
-        <div class="card" data-accent="cyan">
-          <div class="card__head">
-            <div class="card__head-top">
-              <div class="card__icon">
-                <img src="assets/folder-cyan.png" alt="Free Premium C#" loading="lazy">
-              </div>
-              <span class="card__badge">OB55 Updated</span>
-            </div>
-            <h3 class="card__title">Free Premium C#</h3>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Version</span>
-              <span class="card__value">OB55 v1.2.0</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Status</span>
-              <span class="card__status-tag card__status-tag--online">
-                <span class="status-dot"></span> Working
-              </span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-name="Free Premium C#"
-            data-url="https://www.mediafire.com/file/83cv75nizafyaye/APEX+EXTERNAL+FREE+PREMIUM+PANEL+LOADER.rar/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-
-        <div class="card" data-accent="blue">
-          <div class="card__head">
-            <div class="card__head-top">
-              <div class="card__icon">
-                <img src="assets/folder-blue.png" alt="Free Premium C++" loading="lazy">
-              </div>
-              <span class="card__badge">OB55 Updated</span>
-            </div>
-            <h3 class="card__title">Free Premium C++</h3>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Version</span>
-              <span class="card__value">OB55 v1.2.0</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Status</span>
-              <span class="card__status-tag card__status-tag--online">
-                <span class="status-dot"></span> Working
-              </span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-name="Free Premium C++"
-            data-url="https://www.mediafire.com/file/83cv75nizafyaye/APEX+EXTERNAL+FREE+PREMIUM+PANEL+LOADER.rar/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-
-        <div class="card" data-accent="purple">
-          <div class="card__head">
-            <div class="card__head-top">
-              <div class="card__icon">
-                <img src="assets/folder-purple.png" alt="Free Internal" loading="lazy">
-              </div>
-              <span class="card__badge">OB55 Updated</span>
-            </div>
-            <h3 class="card__title">Free Internal</h3>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Version</span>
-              <span class="card__value">OB55 v1.2.0</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Status</span>
-              <span class="card__status-tag card__status-tag--online">
-                <span class="status-dot"></span> Working
-              </span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-name="Free Internal"
-            data-url="https://www.mediafire.com/file/mwr3k8ro3gabv5a/Apex+Offical.rar/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-
-        <div class="card" data-accent="cyber-red">
-          <div class="card__head">
-            <div class="card__head-top">
-              <div class="card__icon">
-                <img src="assets/folder-red.png" alt="Free Bypass" loading="lazy">
-              </div>
-              <span class="card__badge">OB55 Anti-Ban</span>
-            </div>
-            <h3 class="card__title">Free Bypass</h3>
-          </div>
-          <div class="card__body">
-            <div class="card__notice" style="padding: 18px 16px; background: rgba(239, 68, 68, 0.12); border: 1px dashed rgba(239, 68, 68, 0.45); border-radius: 12px; font-size: 0.88rem; color: #fca5a5; line-height: 1.5; text-align: center;">
-              ⚠️ <strong style="color: #fecaca; display: block; margin-bottom: 4px; font-size: 0.95rem;">Free Bypass will coming soon.</strong>
-              <span style="color: #ffffff; font-weight: 600;">Only Paid Bypass available for now.</span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-name="Free Bypass"
-            id="btn-free-bypass">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-
+        <!-- 1. Free Fire -->
         <div class="card" data-accent="orange">
           <div class="card__head">
             <div class="card__head-top">
               <div class="card__icon">
-                <img src="assets/folder-orange.png" alt="Free Optimizer" loading="lazy">
+                <img src="assets/ff-logo.png" alt="Free Fire" loading="eager">
               </div>
-              <span class="card__badge">OB55 FPS Boost</span>
+              <span class="card__badge">OB55 Global</span>
             </div>
-            <h3 class="card__title">Free Optimizer</h3>
+            <h3 class="card__title">FREE FIRE</h3>
           </div>
           <div class="card__body">
             <div class="card__row">
@@ -278,39 +282,8 @@
               <span class="card__value">OB55 v1.2.0</span>
             </div>
             <div class="card__row">
-              <span class="card__label">Status</span>
-              <span class="card__status-tag card__status-tag--optimized">
-                <span class="status-dot"></span> Optimized
-              </span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-name="Free Optimizer"
-            data-url="https://www.mediafire.com/file/lyp4n2jduyq14uj/Apex+Free+Optmizer.rar/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-
-        <div class="card" data-accent="pink">
-          <div class="card__head">
-            <div class="card__head-top">
-              <div class="card__icon">
-                <img src="assets/folder-pink.png" alt="Free Aimkill" loading="lazy">
-              </div>
-              <span class="card__badge">OB55 Updated</span>
-            </div>
-            <h3 class="card__title">Free Aimkill</h3>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Version</span>
-              <span class="card__value">OB55 v1.2.0</span>
+              <span class="card__label">Architecture</span>
+              <span class="card__value">V7A (32-Bit Lite)</span>
             </div>
             <div class="card__row">
               <span class="card__label">Status</span>
@@ -319,54 +292,7 @@
               </span>
             </div>
           </div>
-          <button class="btn btn--primary btn--download"
-            data-name="Free Aimkill"
-            data-url="https://www.mediafire.com/file/83cv75nizafyaye/APEX+EXTERNAL+FREE+PREMIUM+PANEL+LOADER.rar/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section id="panel-issue" class="page">
-      <div class="section__header section__header--panel">
-        <span class="tag tag--panel">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-            stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
-            <polyline points="9 11 12 14 22 4" />
-            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-          </svg>
-          Interactive Checklist
-        </span>
-        <h2 class="glow-title">Panel <span class="gradient-text-panel">Issue Fix</span></h2>
-        <p>Complete these steps exactly to resolve any panel related issues.</p>
-      </div>
-      <div class="grid">
-        <div class="card" data-accent="orange">
-          <div class="card__head">
-            <div class="card__icon">
-              <img src="assets/ff.logo.png" alt="Free Fire" loading="lazy">
-            </div>
-            <h3 class="card__title">Panel APK</h3>
-            <span class="card__badge">FF Updated</span>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Version</span>
-              <span class="card__value">OB55 v1.2.0</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">App Base</span>
-              <span class="card__value">Fully Optimized</span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
+          <button class="btn btn--primary btn--download" data-name="Free Fire"
             data-url="https://www.mediafire.com/file/9w9nbx0ckacd8f9/Free.Fire.V7A.xapk/file">
             <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -377,10 +303,208 @@
             Download
           </button>
         </div>
+
+        <!-- 2. Free Fire India -->
+        <div class="card" data-accent="cyan">
+          <div class="card__head">
+            <div class="card__head-top">
+              <div class="card__icon">
+                <img src="assets/ff-logo.png" alt="Free Fire India" loading="eager">
+              </div>
+              <span class="card__badge">India Edition</span>
+            </div>
+            <h3 class="card__title">FIRE FIRE INDIA</h3>
+          </div>
+          <div class="card__body">
+            <div class="card__row">
+              <span class="card__label">Version</span>
+              <span class="card__value">OB55 India Client</span>
+            </div>
+            <div class="card__row">
+              <span class="card__label">Architecture</span>
+              <span class="card__value">V7A / V8A Optimized</span>
+            </div>
+            <div class="card__row">
+              <span class="card__label">Status</span>
+              <span class="card__status-tag card__status-tag--online">
+                <span class="status-dot"></span> Ready
+              </span>
+            </div>
+          </div>
+          <button class="btn btn--primary btn--download" data-name="Free Fire India"
+            data-url="https://www.mediafire.com/file/9w9nbx0ckacd8f9/Free.Fire.V7A.xapk/file">
+            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download
+          </button>
+        </div>
+
+        <!-- 3. Free Fire MAX -->
+        <div class="card" data-accent="purple">
+          <div class="card__head">
+            <div class="card__head-top">
+              <div class="card__icon">
+                <img src="assets/beta-logo.png" alt="Free Fire MAX" loading="eager">
+              </div>
+              <span class="card__badge">MAX HD Edition</span>
+            </div>
+            <h3 class="card__title">FREE FIRE MAX</h3>
+          </div>
+          <div class="card__body">
+            <div class="card__row">
+              <span class="card__label">Version</span>
+              <span class="card__value">OB55 MAX v2.100</span>
+            </div>
+            <div class="card__row">
+              <span class="card__label">Architecture</span>
+              <span class="card__value">Ultra HD (64-Bit)</span>
+            </div>
+            <div class="card__row">
+              <span class="card__label">Status</span>
+              <span class="card__status-tag card__status-tag--online">
+                <span class="status-dot"></span> Working
+              </span>
+            </div>
+          </div>
+          <button class="btn btn--primary btn--download" data-name="Free Fire MAX"
+            data-url="https://www.mediafire.com/file/yitntc414801999/FREE_FIRE_GOD_INTERNAL_APK.xapk/file">
+            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         2. EMULATOR SECTION (#emulator)
+         ========================================== -->
+    <section id="emulator" class="page">
+      <div class="section__header section__header--panel">
+        <span class="tag tag--panel">Setup Configurations</span>
+        <h2 class="glow-title">Emulator <span class="gradient-text-panel">Setups</span></h2>
+        <p>Optimize emulator engine settings to prevent crash codes, frame drops, and sensor desync errors.</p>
+      </div>
+      <div class="grid">
+        <div class="card" data-accent="purple">
+          <div class="card__head">
+            <div class="card__icon">
+              <img src="assets/msi-logo.png" alt="MSI" loading="eager">
+            </div>
+            <h3 class="card__title">MSI App Player</h3>
+            <span class="card__badge">Recommended</span>
+          </div>
+          <div class="card__body">
+            <div class="card__row">
+              <span class="card__label">Performance</span>
+              <span class="card__value">Best</span>
+            </div>
+            <div class="card__row">
+              <span class="card__label">Compatibility</span>
+              <span class="card__value">Windows</span>
+            </div>
+          </div>
+          <button class="btn btn--primary btn--download"
+            data-url="https://www.mediafire.com/file/vujf104862thne6/MSI_APP_PALYER.exe/file">
+            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download
+          </button>
+        </div>
         <div class="card" data-accent="cyan">
           <div class="card__head">
             <div class="card__icon">
-              <img src="assets/DIRECT X LOGO.png" alt="Direct X" loading="lazy">
+              <img src="assets/bluestacks_logo.jpg" alt="BlueStacks" loading="eager">
+            </div>
+            <h3 class="card__title">BlueStacks</h3>
+            <span class="card__badge">Latest</span>
+          </div>
+          <div class="card__body">
+            <div class="card__row">
+              <span class="card__label">Performance</span>
+              <span class="card__value">Max</span>
+            </div>
+            <div class="card__row">
+              <span class="card__label">Compatibility</span>
+              <span class="card__value">All PC</span>
+            </div>
+          </div>
+          <button class="btn btn--primary btn--download"
+            data-url="https://www.mediafire.com/file/wso64d71kuamck6/BlueStacks_App_Player.exe/file">
+            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download
+          </button>
+        </div>
+        <div class="card" data-accent="yellow">
+          <div class="card__head">
+            <div class="card__icon">
+              <img src="assets/memu.png" alt="MEmu Player" loading="eager">
+            </div>
+            <h3 class="card__title">MEmu Player</h3>
+            <span class="card__badge">Popular</span>
+          </div>
+          <div class="card__body">
+            <div class="card__row">
+              <span class="card__label">Performance</span>
+              <span class="card__value">High</span>
+            </div>
+            <div class="card__row">
+              <span class="card__label">Compatibility</span>
+              <span class="card__value">All PC</span>
+            </div>
+          </div>
+          <button class="btn btn--primary btn--download"
+            data-url="https://www.mediafire.com/file/8vcbcjn2rauazfn/memu_update.exe/file">
+            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         3. PANEL FIX SECTION (#panel-fix)
+         ========================================== -->
+    <section id="panel-fix" class="page">
+      <div class="section__header section__header--panel">
+        <span class="tag tag--panel">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+            <polyline points="9 11 12 14 22 4" />
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+          </svg>
+          Runtime & Dependencies
+        </span>
+        <h2 class="glow-title">Panel <span class="gradient-text-panel">Issue Fix</span></h2>
+        <p>Essential system runtimes, DirectX components, framework SDKs, and DLL repairs.</p>
+      </div>
+      <div class="grid">
+        <div class="card" data-accent="cyan">
+          <div class="card__head">
+            <div class="card__icon">
+              <img src="assets/directx-logo.png" alt="Direct X" loading="eager">
             </div>
             <h3 class="card__title">Direct X</h3>
             <span class="card__badge">Essential</span>
@@ -409,7 +533,7 @@
         <div class="card" data-accent="purple">
           <div class="card__head">
             <div class="card__icon">
-              <img src="assets/Panel Runtime Logo.png" alt="Panel Runtime" loading="lazy">
+              <img src="assets/panel-runtime-logo.png" alt="Panel Runtime" loading="eager">
             </div>
             <h3 class="card__title">Panel Runtime</h3>
             <span class="card__badge">Recommended</span>
@@ -438,7 +562,7 @@
         <div class="card" data-accent="gray">
           <div class="card__head">
             <div class="card__icon">
-              <img src="assets/dotnet logo.png" alt="Dotnet" loading="lazy">
+              <img src="assets/dotnet-logo.png" alt="Dotnet" loading="eager">
             </div>
             <h3 class="card__title">Dotnet</h3>
             <span class="card__badge">Framework</span>
@@ -468,7 +592,7 @@
         <div class="card" data-accent="orange">
           <div class="card__head">
             <div class="card__icon">
-              <img src="assets/WINDRIVER , CHARMS , D3D COMPLILER , MEMORY DLL.png" alt="Charms Fix" loading="lazy">
+              <img src="assets/windriver-dll-logo.png" alt="Charms Fix" loading="eager">
             </div>
             <h3 class="card__title">Charms Fix</h3>
             <span class="card__badge">Updated</span>
@@ -494,19 +618,54 @@
             Download
           </button>
         </div>
+
+        <div class="card" data-accent="teal">
+          <div class="card__head">
+            <div class="card__icon">
+              <img src="assets/windriver-dll-logo.png" alt="Windriver DLL" loading="eager">
+            </div>
+            <h3 class="card__title">Windriver Fix</h3>
+            <span class="card__badge">Important</span>
+          </div>
+          <div class="card__body">
+            <div class="card__row">
+              <span class="card__label">Version</span>
+              <span class="card__value">1.5.0</span>
+            </div>
+            <div class="card__row">
+              <span class="card__label">Type</span>
+              <span class="card__value">DLL Fix</span>
+            </div>
+          </div>
+          <button class="btn btn--primary btn--download"
+            data-url="https://www.mediafire.com/file/bckc5cgapaeidy9/WinDivert.dll_Error_Fix...%2521.Rar/file">
+            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download
+          </button>
+        </div>
+
+
       </div>
     </section>
 
-    <section id="bypass-issue" class="page">
+    <!-- ==========================================
+         4. BYPASS FIX SECTION (#bypass-fix)
+         ========================================== -->
+    <section id="bypass-fix" class="page">
       <div class="section__header section__header--panel">
-        <h2 class="glow-title">UID Bypass <span class="gradient-text-panel">Fix</span></h2>
-        <p>Official solutions to resolve bypass detection and UID security related issues.</p>
+        <h2 class="glow-title">Bypass <span class="gradient-text-panel">Fix</span></h2>
+        <p>Official solutions to resolve bypass detection, proxy conflicts, and UID security related issues.</p>
       </div>
       <div class="grid">
         <div class="card" data-accent="cyber-red">
           <div class="card__head">
             <div class="card__icon">
-              <img src="assets/proxy disc. logo.png" alt="Disconnect Proxy" loading="lazy">
+              <img src="assets/proxy-disconnect-logo.png" alt="Disconnect Proxy" loading="eager">
             </div>
             <h3 class="card__title">Disconnect Proxy</h3>
             <span class="card__badge">Important</span>
@@ -535,7 +694,7 @@
         <div class="card" data-accent="teal">
           <div class="card__head">
             <div class="card__icon">
-              <img src="assets/adb logo.png" alt="ADB Fix" loading="lazy">
+              <img src="assets/adb-logo.png" alt="ADB Fix" loading="eager">
             </div>
             <h3 class="card__title">ADB Fix</h3>
             <span class="card__badge">Essential</span>
@@ -561,207 +720,14 @@
             Download Fix
           </button>
         </div>
-      </div>
-    </section>
 
-
-    <section id="internal-fix" class="page">
-      <div class="section__header section__header--panel">
-        <span class="tag tag--panel">Internal Solutions</span>
-        <h2 class="glow-title">Internal <span class="gradient-text-panel">System Fix</span></h2>
-        <p>Advanced solutions for internal system errors and configurations.</p>
-      </div>
-      <div class="grid">
-        <div class="card" data-accent="orange">
-          <div class="card__head">
-            <div class="card__icon">
-              <img src="assets/beta.logo.png" alt="Free Fire MAX" loading="lazy">
-            </div>
-            <h3 class="card__title">Internal APK</h3>
-            <span class="card__badge">FF Updated</span>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Version</span>
-              <span class="card__value">V7A</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">App Base</span>
-              <span class="card__value">Fully Optimized</span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-url="https://www.mediafire.com/file/yitntc414801999/FREE_FIRE_GOD_INTERNAL_APK.xapk/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-
-        <div class="card" data-accent="teal">
-          <div class="card__head">
-            <div class="card__icon">
-              <img src="assets/Panel Runtime Logo.png" alt="Panel Runtime" loading="lazy">
-            </div>
-            <h3 class="card__title">Panel Runtime</h3>
-            <span class="card__badge">Recommended</span>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Version</span>
-              <span class="card__value">2.0.0</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Type</span>
-              <span class="card__value">Required</span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-url="https://www.mediafire.com/file/kq5wgl8igtan6nx/PANEL_RUNTIME.Rar/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-
-        <div class="card" data-accent="teal">
-          <div class="card__head">
-            <div class="card__icon">
-              <img src="assets/WINDRIVER , CHARMS , D3D COMPLILER , MEMORY DLL.png" alt="Windriver DLL" loading="lazy">
-            </div>
-            <h3 class="card__title">Windriver Fix</h3>
-            <span class="card__badge">Important</span>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Version</span>
-              <span class="card__value">1.5.0</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Type</span>
-              <span class="card__value">DLL Fix</span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-url="https://www.mediafire.com/file/bckc5cgapaeidy9/WinDivert.dll_Error_Fix...%2521.Rar/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
 
       </div>
     </section>
 
-    <section id="emulator" class="page">
-      <div class="section__header section__header--panel">
-        <span class="tag tag--panel">Setup Configurations</span>
-        <h2 class="glow-title">Emulator <span class="gradient-text-panel">Setups</span></h2>
-        <p>Optimize emulator engine settings to prevent crash codes, frame drops, and sensor desync errors.</p>
-      </div>
-      <div class="grid">
-        <div class="card" data-accent="purple">
-          <div class="card__head">
-            <div class="card__icon">
-              <img src="assets/msi.logo.png" alt="MSI" loading="lazy">
-            </div>
-            <h3 class="card__title">MSI App Player</h3>
-            <span class="card__badge">Recommended</span>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Performance</span>
-              <span class="card__value">Best</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Compatibility</span>
-              <span class="card__value">Windows</span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-url="https://www.mediafire.com/file/vujf104862thne6/MSI_APP_PALYER.exe/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-        <div class="card" data-accent="cyan">
-          <div class="card__head">
-            <div class="card__icon">
-              <img src="assets/bluestacks_logo.jpg" alt="BlueStacks" loading="lazy">
-            </div>
-            <h3 class="card__title">BlueStacks</h3>
-            <span class="card__badge">Latest</span>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Performance</span>
-              <span class="card__value">Max</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Compatibility</span>
-              <span class="card__value">All PC</span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-url="https://www.mediafire.com/file/wso64d71kuamck6/BlueStacks_App_Player.exe/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-        <div class="card" data-accent="yellow">
-          <div class="card__head">
-            <div class="card__icon">
-              <img src="assets/memu.png" alt="MEmu Player" loading="lazy">
-            </div>
-            <h3 class="card__title">MEmu Player</h3>
-            <span class="card__badge">Popular</span>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Performance</span>
-              <span class="card__value">High</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Compatibility</span>
-              <span class="card__value">All PC</span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-url="https://www.mediafire.com/file/8vcbcjn2rauazfn/memu_update.exe/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-      </div>
-    </section>
-
+    <!-- ==========================================
+         5. OPTIMIZATION SECTION (#optimization)
+         ========================================== -->
     <section id="optimization" class="page">
       <div class="section__header section__header--panel">
         <span class="tag tag--panel">Elite Custom Tuning</span>
@@ -772,7 +738,7 @@
         <div class="card" data-accent="teal">
           <div class="card__head">
             <div class="card__icon">
-              <img src="assets/OPTIMIZATION LOGO.png" alt="Optimization File" loading="lazy">
+              <img src="assets/optimization-logo.png" alt="Optimization File" loading="eager">
             </div>
             <h3 class="card__title">Optimization File</h3>
             <span class="card__badge">6 Files</span>
@@ -801,7 +767,7 @@
         <div class="card" data-accent="purple-power">
           <div class="card__head">
             <div class="card__icon">
-              <img src="assets/DRIVER BOSSTER LOGO.png" alt="Driver Booster" loading="lazy">
+              <img src="assets/driver-booster-logo.png" alt="Driver Booster" loading="eager">
             </div>
             <h3 class="card__title">Driver Booster</h3>
             <span class="card__badge">Recommended</span>
@@ -827,10 +793,12 @@
             Download
           </button>
         </div>
-
       </div>
     </section>
 
+    <!-- ==========================================
+         6. OTHER ISSUES SECTION (#other-issues)
+         ========================================== -->
     <section id="other-issues" class="page">
       <div class="section__header section__header--panel">
         <span class="tag tag--panel">Fixes & Solutions</span>
@@ -841,7 +809,7 @@
         <div class="card" data-accent="cyan">
           <div class="card__head">
             <div class="card__icon">
-              <img src="assets/hyper v logo.png" alt="HD Disable Hyper V" loading="lazy">
+              <img src="assets/hyper-v-logo.png" alt="HD Disable Hyper V" loading="eager">
             </div>
             <h3 class="card__title">HD Disable Hyper V</h3>
             <span class="card__badge">Important</span>
@@ -853,11 +821,21 @@
             </div>
             <div class="card__row">
               <span class="card__label">Status</span>
-              <span class="card__value">Updated</span>
+              <span class="card__value" style="color: #10b981;">Working</span>
+            </div>
+          </div>
+          <div class="card__quick-cmd">
+            <span class="quick-cmd__label">Instant Admin CMD Fix:</span>
+            <div class="quick-cmd__row">
+              <code class="quick-cmd__code">bcdedit /set hypervisorlaunchtype off</code>
+              <button type="button" class="btn-copy-cmd" data-cmd="bcdedit /set hypervisorlaunchtype off" aria-label="Copy command">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span>Copy</span>
+              </button>
             </div>
           </div>
           <button class="btn btn--primary btn--download"
-            data-url="https://www.mediafire.com/file/825ooh81yz20n90/HD-DisableHyperV_native_v2.rar/file">
+            data-url="https://www.mediafire.com/file/6u7i739zaivu0ik/dxwebsetup.exe/file">
             <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -867,19 +845,14 @@
             Download
           </button>
         </div>
-        <div class="card" data-accent="purple">
+
+        <div class="card" data-accent="cyan">
           <div class="card__head">
             <div class="card__icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12.55a11 11 0 0 1 14.08 0" />
-                <path d="M1.42 9a16 16 0 0 1 21.16 0" />
-                <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
-                <line x1="12" y1="20" x2="12.01" y2="20" />
-              </svg>
+              <img src="assets/net-error-fix.png" alt="Net Error Fix" loading="eager">
             </div>
             <h3 class="card__title">Net Error Fix</h3>
-            <span class="card__badge">Recommended</span>
+            <span class="card__badge">Network</span>
           </div>
           <div class="card__body">
             <div class="card__row">
@@ -888,40 +861,21 @@
             </div>
             <div class="card__row">
               <span class="card__label">Status</span>
-              <span class="card__value">Latest</span>
+              <span class="card__value" style="color: #10b981;">Working</span>
+            </div>
+          </div>
+          <div class="card__quick-cmd">
+            <span class="quick-cmd__label">Instant Winsock / DNS Reset:</span>
+            <div class="quick-cmd__row">
+              <code class="quick-cmd__code">netsh winsock reset && ipconfig /flushdns</code>
+              <button type="button" class="btn-copy-cmd" data-cmd="netsh winsock reset && ipconfig /flushdns" aria-label="Copy command">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span>Copy</span>
+              </button>
             </div>
           </div>
           <button class="btn btn--primary btn--download"
-            data-url="https://www.mediafire.com/file/yt2mwcz5l8c5fk3/NDP481-x86-x64-AllOS-ENU.rar/file">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download
-          </button>
-        </div>
-        <div class="card" data-accent="pink">
-          <div class="card__head">
-            <div class="card__icon">
-              <img src="assets/WINDRIVER , CHARMS , D3D COMPLILER , MEMORY DLL.png" alt="D3D Compiler" loading="lazy">
-            </div>
-            <h3 class="card__title">D3D Compiler</h3>
-            <span class="card__badge">Essential</span>
-          </div>
-          <div class="card__body">
-            <div class="card__row">
-              <span class="card__label">Type</span>
-              <span class="card__value">Required</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Status</span>
-              <span class="card__value">Updated</span>
-            </div>
-          </div>
-          <button class="btn btn--primary btn--download"
-            data-url="https://www.mediafire.com/file/hc5ahy0ai4ea8ev/D3DCOMPILER_FIXED.zip/file">
+            data-url="https://www.mediafire.com/file/nmjn3zk2avimdzc/Proxy_Disconnect.rar/file">
             <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -935,20 +889,60 @@
         <div class="card" data-accent="purple">
           <div class="card__head">
             <div class="card__icon">
-              <img src="assets/WINDRIVER , CHARMS , D3D COMPLILER , MEMORY DLL.png" alt="Memory DLL Issue Fix" /
-                loading="lazy">
+              <img src="assets/windriver-dll-logo.png" alt="D3D Compiler" loading="eager">
             </div>
-            <h3 class="card__title">Memory DLL Issue Fix</h3>
-            <span class="card__badge">Important</span>
+            <h3 class="card__title">D3D Compiler</h3>
+            <span class="card__badge">Updated</span>
           </div>
           <div class="card__body">
             <div class="card__row">
               <span class="card__label">Type</span>
-              <span class="card__value">Memory Fix</span>
+              <span class="card__value">DLL</span>
             </div>
             <div class="card__row">
               <span class="card__label">Status</span>
-              <span class="card__value">Latest</span>
+              <span class="card__value" style="color: #10b981;">Working</span>
+            </div>
+          </div>
+          <button class="btn btn--primary btn--download"
+            data-url="https://www.mediafire.com/file/wlqm5jsk4fvbrie/opengl32.dll/file">
+            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download
+          </button>
+        </div>
+
+        <div class="card" data-accent="teal">
+          <div class="card__head">
+            <div class="card__icon">
+              <img src="assets/windriver-dll-logo.png" alt="Memory DLL Issue Fix"
+                loading="eager">
+            </div>
+            <h3 class="card__title">Memory DLL Issue Fix</h3>
+            <span class="card__badge">Updated</span>
+          </div>
+          <div class="card__body">
+            <div class="card__row">
+              <span class="card__label">Type</span>
+              <span class="card__value">Fix</span>
+            </div>
+            <div class="card__row">
+              <span class="card__label">Status</span>
+              <span class="card__value" style="color: #10b981;">Working</span>
+            </div>
+          </div>
+          <div class="card__quick-cmd">
+            <span class="quick-cmd__label">Instant DLL / System File Scan:</span>
+            <div class="quick-cmd__row">
+              <code class="quick-cmd__code">sfc /scannow</code>
+              <button type="button" class="btn-copy-cmd" data-cmd="sfc /scannow" aria-label="Copy command">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span>Copy</span>
+              </button>
             </div>
           </div>
           <button class="btn btn--primary btn--download"
@@ -963,33 +957,27 @@
           </button>
         </div>
 
-        <div class="card" data-accent="cyan">
+        <div class="card" data-accent="orange">
           <div class="card__head">
             <div class="card__icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path
-                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
-                </path>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                <line x1="12" y1="22.08" x2="12" y2="12"></line>
-              </svg>
+              <img src="assets/windriver-dll-logo.png" alt="Grabber Remover"
+                loading="eager">
             </div>
             <h3 class="card__title">Grabber Remover</h3>
-            <span class="card__badge">New</span>
+            <span class="card__badge">Security</span>
           </div>
           <div class="card__body">
             <div class="card__row">
               <span class="card__label">Type</span>
-              <span class="card__value">Fix</span>
+              <span class="card__value">Tool</span>
             </div>
             <div class="card__row">
               <span class="card__label">Status</span>
-              <span class="card__value">Latest</span>
+              <span class="card__value" style="color: #10b981;">Clean</span>
             </div>
           </div>
           <button class="btn btn--primary btn--download"
-            data-url="https://www.mediafire.com/file/kd508unmkbrt7bv/MR._BEAST_GRABBER_FIXED.bat/file">
+            data-url="https://www.mediafire.com/file/nmjn3zk2avimdzc/Proxy_Disconnect.rar/file">
             <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -1000,183 +988,160 @@
           </button>
         </div>
       </div>
+
+
     </section>
 
-    <section id="tutorial-video" class="page">
-      <div class="section__header section__header--panel">
-        <span class="tag tag--panel">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-            stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
-            <polygon points="5 3 19 12 5 21 5 3" />
-          </svg>
-          Video Guides & Setup
-        </span>
-        <h2 class="glow-title">Tutorial <span class="gradient-text-panel">Set Up Video</span></h2>
-        <p>Watch step-by-step setup and configuration tutorials to eliminate any errors in minutes.</p>
+    <!-- ==========================================
+         7. FAQ SECTION (#faq)
+         ========================================== -->
+    <section id="faq" class="page">
+      <div class="section__header">
+        <span class="tag tag--panel">KNOWLEDGE BASE &bull; TROUBLESHOOTING</span>
+        <h2 class="glow-title">Common Crashes &amp; FAQ</h2>
+        <p>Instant solutions to the most frequent emulator startup errors, panel runtime crashes, and FPS caps.</p>
       </div>
 
-      <!-- Featured Setup Video Showcase -->
-      <div class="tutorial-featured-card">
-        <div class="tutorial-banner">
-          <div class="tutorial-banner__media" onclick="document.getElementById('tutorial-modal').removeAttribute('hidden');">
-            <div class="tutorial-preview-screen">
-              <div class="tutorial-play-glow"></div>
-              <div class="tutorial-play-btn" aria-label="Play Tutorial Video">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="6 3 20 12 6 21 6 3"></polygon>
-                </svg>
-              </div>
-              <div class="tutorial-media-badge"><span class="pulse-dot"></span> 4K 60FPS • FULL GUIDE</div>
-              <div class="tutorial-duration">12:45</div>
-            </div>
-          </div>
-          <div class="tutorial-banner__content">
-            <span class="tag tag--panel" style="margin-bottom: 10px; display: inline-flex;">Official Apex Ego Setup</span>
-            <h3 class="tutorial-banner__title">Apex Ego Client, UID Bypass & Emulator Setup Guide</h3>
-            <p class="tutorial-banner__desc">
-              Comprehensive step-by-step installation masterclass: setting up the panel client, installing required runtimes, deploying UID & Lib bypasses, and dialing in competitive FPS optimizations.
-            </p>
-            <div class="tutorial-banner__meta">
-              <span class="meta-pill"><span class="meta-icon">✓</span> Updated for OB55</span>
-              <span class="meta-pill"><span class="meta-icon">★</span> 100% Ban Safe</span>
-              <span class="meta-pill"><span class="meta-icon">⚡</span> Zero Lag Setup</span>
-            </div>
-            <div class="tutorial-banner__actions">
-              <button class="btn btn--primary" onclick="document.getElementById('tutorial-modal').removeAttribute('hidden');">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="5 3 19 12 5 21 6 3"></polygon>
-                </svg>
-                Watch Video Guide
-              </button>
-              <a href="https://discord.gg/v766g2PNn6" target="_blank" rel="noopener noreferrer" class="btn btn--discord">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/></svg>
-                Get Live Setup Support
-              </a>
-            </div>
+      <div class="faq-container">
+        <!-- Item 1 -->
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>How do I fix the 0xc00007b application error on startup?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>The <code>0xc00007b</code> error happens when a 32-bit application attempts to load a corrupted 64-bit runtime DLL. Download the <strong>Visual C++ All-in-One Runtime</strong> and <strong>DirectX 11/12 End-User Runtimes</strong> from our Panel Fix section, run the installer as Administrator, and reboot your PC.</p>
           </div>
         </div>
-      </div>
 
-      <!-- Video Grid Tutorials -->
-      <div class="grid" style="margin-top: 30px;">
-        <!-- Video Card 1 -->
-        <div class="card tutorial-card" data-accent="purple" onclick="document.getElementById('tutorial-modal').removeAttribute('hidden');">
-          <div class="tutorial-card__thumb">
-            <div class="tutorial-card__play">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
-            </div>
-            <span class="tutorial-card__badge">Part 1</span>
-            <span class="tutorial-card__time">05:12</span>
-          </div>
-          <div class="card__body" style="padding: 1.2rem 1.4rem;">
-            <h3 class="card__title" style="font-size: 1.15rem; margin-bottom: 6px;">UID Bypass Fix Setup</h3>
-            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 12px;">
-              Step-by-step tutorial on how to install and activate the UID Bypass without getting detected or banned.
-            </p>
-            <div class="card__row">
-              <span class="card__label">Level</span>
-              <span class="card__value" style="color: #c084fc;">Beginner</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Format</span>
-              <span class="card__value">Video Guide</span>
-            </div>
-          </div>
-          <button class="btn btn--secondary" style="width: 100%; margin-top: auto;">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="6 3 20 12 6 21 6 3"></polygon>
-            </svg>
-            Watch Guide
+        <!-- Item 2 -->
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>How do I unlock constant 90 FPS on a 60Hz or 144Hz display?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
+          <div class="faq-answer">
+            <p>1. Open your emulator settings, set frame rate to 90 FPS or 240 FPS, and disable in-game V-Sync.<br/>2. Download our <strong>90 FPS Unlocker</strong> from the Optimization section.<br/>3. In NVIDIA Control Panel / AMD Radeon Software, set 'Max Frame Rate' to Off and 'Low Latency Mode' to Ultra.</p>
+          </div>
         </div>
 
-        <!-- Video Card 2 -->
-        <div class="card tutorial-card" data-accent="cyan" onclick="document.getElementById('tutorial-modal').removeAttribute('hidden');">
-          <div class="tutorial-card__thumb">
-            <div class="tutorial-card__play">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
-            </div>
-            <span class="tutorial-card__badge">Part 2</span>
-            <span class="tutorial-card__time">07:40</span>
-          </div>
-          <div class="card__body" style="padding: 1.2rem 1.4rem;">
-            <h3 class="card__title" style="font-size: 1.15rem; margin-bottom: 6px;">Lib Bypass Configuration</h3>
-            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 12px;">
-              How to patch native game libraries and configure il2cpp bypasses for optimal stability in emulators.
-            </p>
-            <div class="card__row">
-              <span class="card__label">Level</span>
-              <span class="card__value" style="color: #38bdf8;">Intermediate</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Format</span>
-              <span class="card__value">Video Guide</span>
-            </div>
-          </div>
-          <button class="btn btn--secondary" style="width: 100%; margin-top: auto;">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="6 3 20 12 6 21 6 3"></polygon>
-            </svg>
-            Watch Guide
+        <!-- Item 3 -->
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>Why does SmartGaGa or LDPlayer get stuck at 98% loading?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
+          <div class="faq-answer">
+            <p>Stuck at 98% is almost always caused by Windows Hyper-V or Core Isolation blocking hardware virtualization (VT-x/AMD-V). Use our one-click quick command <code>bcdedit /set hypervisorlaunchtype off</code> in Admin Command Prompt, then reboot your computer.</p>
+          </div>
         </div>
 
-        <!-- Video Card 3 -->
-        <div class="card tutorial-card" data-accent="orange" onclick="document.getElementById('tutorial-modal').removeAttribute('hidden');">
-          <div class="tutorial-card__thumb">
-            <div class="tutorial-card__play">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
-            </div>
-            <span class="tutorial-card__badge">Part 3</span>
-            <span class="tutorial-card__time">04:18</span>
-          </div>
-          <div class="card__body" style="padding: 1.2rem 1.4rem;">
-            <h3 class="card__title" style="font-size: 1.15rem; margin-bottom: 6px;">ADB Fix & Port Troubleshooting</h3>
-            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 12px;">
-              Resolve emulator connection timed out, ADB port conflicts, and proxy network errors quickly.
-            </p>
-            <div class="card__row">
-              <span class="card__label">Level</span>
-              <span class="card__value" style="color: #fb923c;">Essential</span>
-            </div>
-            <div class="card__row">
-              <span class="card__label">Format</span>
-              <span class="card__value">Video Guide</span>
-            </div>
-          </div>
-          <button class="btn btn--secondary" style="width: 100%; margin-top: auto;">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="6 3 20 12 6 21 6 3"></polygon>
-            </svg>
-            Watch Guide
+        <!-- Item 4 -->
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>Are the OB55 UID &amp; Lib bypasses ban-safe on PC?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
+          <div class="faq-answer">
+            <p>Yes. All bypasses provided on Apex Official utilize client-side memory hook protection tested against the OB55 anti-cheat engine. However, we always recommend verifying new game updates on a guest or secondary account first before ranked matches.</p>
+          </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>How do I prevent Windows Defender from deleting panel files?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Because panel and bypass modules inject memory into the emulator process, security suites flag them as false positives. Download the <strong>Antivirus Exclusions</strong> script from Panel Fix, or add your emulator folder to Windows Security &gt; Virus &amp; threat protection &gt; Manage settings &gt; Exclusions.</p>
+          </div>
         </div>
       </div>
     </section>
 
   </main>
 
-  <footer class="footer">
-    <div class="footer__line"></div>
-    <div class="footer__inner">
-      <div class="footer__brand">
-        <div class="footer__brand-row">
-          <span class="footer__logo">APEX <span>OFFICIAL</span></span>
-          <span class="footer__pill"><span class="footer__dot"></span> OB55</span>
+  <footer class="footer-pro" id="footer">
+    <div class="footer-pro__line"></div>
+    <div class="footer-pro__inner">
+      <div class="footer-pro__grid">
+        <!-- Brand Column -->
+        <div class="footer-pro__brand-col">
+          <div class="footer-pro__brand-header">
+            <div class="footer-pro__logo-box">
+              <img src="assets/apex-logo-transparent.png" alt="Apex Official" class="footer-pro__logo-img" />
+            </div>
+            <div class="footer-pro__brand-titles">
+              <div class="footer-pro__brand-name">APEX <span>OFFICIAL</span></div>
+              <div class="footer-pro__brand-sub">PC Gaming Utility Suite</div>
+            </div>
+          </div>
+          <p class="footer-pro__desc">
+            Precision configuration dashboard and runtime troubleshooting system for competitive Free Fire PC gamers. Verified OB55 stability.
+          </p>
+          <div class="footer-pro__status-badge">
+            <span class="status-pulse-dot"></span>
+            <span>OB55 Live Core &bull; 100% Anti-Cheat Ban Safe</span>
+          </div>
         </div>
-        <p class="footer__tagline">Premium support hub for APEX OFFICIAL panel users.</p>
+
+        <!-- Column 2: Fix Modules -->
+        <div class="footer-pro__col">
+          <h4 class="footer-pro__heading">Fix Modules</h4>
+          <ul class="footer-pro__links">
+            <li><a href="#apk" data-link="apk">32-Bit APKs</a></li>
+            <li><a href="#emulator" data-link="emulator">Pre-Configured Emulators</a></li>
+            <li><a href="#panel-fix" data-link="panel-fix">Panel Runtime Fixes</a></li>
+            <li><a href="#bypass-fix" data-link="bypass-fix">UID &amp; Lib Bypasses</a></li>
+            <li><a href="#optimization" data-link="optimization">90 FPS Optimization</a></li>
+            <li><a href="#other-issues" data-link="other-issues">Network &amp; Hyper-V Fix</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Community & Support -->
+        <div class="footer-pro__col">
+          <h4 class="footer-pro__heading">Community &amp; Help</h4>
+          <ul class="footer-pro__links">
+            <li>
+              <a href="https://discord.gg/v766g2PNn6" target="_blank" rel="noopener noreferrer" class="link-discord">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z" />
+                </svg>
+                Official Discord Server
+              </a>
+            </li>
+            <li><a href="https://discord.gg/v766g2PNn6" target="_blank" rel="noopener noreferrer">24/7 Live Support</a></li>
+            <li><a href="#panel-fix" data-link="panel-fix">0xc00007b Fix Guide</a></li>
+            <li><a href="#optimization" data-link="optimization">Low Input Latency Regedit</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: System Compatibility & Back to Top -->
+        <div class="footer-pro__col">
+          <h4 class="footer-pro__heading">Platform Specs</h4>
+          <div class="footer-pro__specs">
+            <div class="spec-pill">Windows 10 / 11 64-Bit</div>
+            <div class="spec-pill">DirectX 11 &bull; Vulkan &bull; OpenGL</div>
+            <div class="spec-pill">VT-x / AMD-V Virtualization</div>
+          </div>
+          <a href="#home" data-link="home" class="footer-pro__back-top">
+            <span>Back to Top</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 15l-6-6-6 6"/>
+            </svg>
+          </a>
+        </div>
       </div>
 
-      <div class="footer__right">
-        <nav class="footer__nav">
-          <a href="https://discord.gg/v766g2PNn6" target="_blank" rel="noopener noreferrer" class="footer__link footer__link--discord">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/></svg>
-            Discord
-          </a>
-          <a href="https://discord.gg/v766g2PNn6" target="_blank" rel="noopener noreferrer" class="footer__link">Support</a>
-          <a href="#home" data-link="home" class="footer__link">Top &uarr;</a>
-        </nav>
-        <span class="footer__copy">&copy; <span id="footer-year">2026</span> APEX OFFICIAL. All Rights Reserved.</span>
+      <!-- Bottom Bar: Legal & Copyright -->
+      <div class="footer-pro__bottom">
+        <div class="footer-pro__copyright">
+          &copy; <span id="footer-year">2026</span> APEX OFFICIAL. All Rights Reserved.
+        </div>
+        <div class="footer-pro__disclaimer">
+          Independent configuration and troubleshooting hub for PC players. Not affiliated with or endorsed by Garena.
+        </div>
       </div>
     </div>
   </footer>
@@ -1205,9 +1170,12 @@
       <div class="modal-header">
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;">
           <h2 class="modal-title" style="margin: 0;"><span class="gradient-text">Optimization</span> Files</h2>
-          <span style="font-size: 0.72rem; font-weight: 800; font-family: var(--font-mono); padding: 3px 10px; border-radius: 999px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); color: #38bdf8; text-transform: uppercase; letter-spacing: 0.05em;">6 PRO TWEAKS</span>
+          <span
+            style="font-size: 0.72rem; font-weight: 800; font-family: var(--font-mono); padding: 3px 10px; border-radius: 999px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); color: #38bdf8; text-transform: uppercase; letter-spacing: 0.05em;">6
+            PRO TWEAKS</span>
         </div>
-        <p class="modal-subtitle">Configure these 6 system performance tweaks to maximize game client FPS, stability, and response times.</p>
+        <p class="modal-subtitle">Configure these 6 system performance tweaks to maximize game client FPS, stability,
+          and response times.</p>
       </div>
       <div class="modal-body">
         <div class="modal-grid modal-grid--2col">
@@ -1228,7 +1196,8 @@
             </div>
             <p class="card__description">Applies advanced system tweaks to optimize game client throughput and
               responsiveness.</p>
-            <button class="btn btn--primary btn--download" data-url="https://www.mediafire.com/file/zj64ucfzop79tqd/ET-Optimizer.exe/file">
+            <button class="btn btn--primary btn--download"
+              data-url="https://www.mediafire.com/file/zj64ucfzop79tqd/ET-Optimizer.exe/file">
               <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -1253,7 +1222,8 @@
             </div>
             <p class="card__description">Optimizes processor kernel settings and registry parameters for maximum frame
               stability.</p>
-            <button class="btn btn--primary btn--download" data-url="https://www.mediafire.com/file/t7aq170jennjw26/Performance_V4.exe/file">
+            <button class="btn btn--primary btn--download"
+              data-url="https://www.mediafire.com/file/t7aq170jennjw26/Performance_V4.exe/file">
               <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -1278,7 +1248,8 @@
             </div>
             <p class="card__description">Optimizes Windows environment settings and cleans system variables to boost
               overall FPS.</p>
-            <button class="btn btn--primary btn--download" data-url="https://www.mediafire.com/file/on7t64o38l7ixxz/amberfps.exe/file">
+            <button class="btn btn--primary btn--download"
+              data-url="https://www.mediafire.com/file/on7t64o38l7ixxz/amberfps.exe/file">
               <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -1305,7 +1276,8 @@
             </div>
             <p class="card__description">Disables unnecessary background services, schedules, and telemetry for raw
               system speed.</p>
-            <button class="btn btn--primary btn--download" data-url="https://www.mediafire.com/file/bwo9h5vth9zogb7/ATLAS_OS.rar/file">
+            <button class="btn btn--primary btn--download"
+              data-url="https://www.mediafire.com/file/bwo9h5vth9zogb7/ATLAS_OS.rar/file">
               <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -1332,10 +1304,13 @@
             </div>
             <p class="card__description">Elite in-game sensitivities, DPI calibration, and pointer speed configurations.
             </p>
-            <button class="btn btn--secondary btn--download" disabled style="opacity:0.5;cursor:not-allowed;" title="Coming Soon">
+            <button class="btn btn--secondary btn--download" disabled style="opacity:0.5;cursor:not-allowed;"
+              title="Coming Soon">
               <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
               Coming Soon
             </button>
@@ -1359,10 +1334,13 @@
             </div>
             <p class="card__description">Premium display engine calibration registry scripts and precision tuning
               parameters.</p>
-            <button class="btn btn--primary btn--download" disabled style="opacity:0.5;cursor:not-allowed;" title="Coming Soon">
+            <button class="btn btn--primary btn--download" disabled style="opacity:0.5;cursor:not-allowed;"
+              title="Coming Soon">
               <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
               Coming Soon
             </button>
@@ -1372,142 +1350,44 @@
     </div> <!-- closing modal-content -->
   </div> <!-- closing opt-modal overlay -->
 
-  <!-- Tutorial Video Pop-up Modal -->
-  <div id="tutorial-modal" class="modal-overlay" hidden>
-    <div class="modal-content" style="max-width: 820px;">
-      <button class="modal-close" id="tutorial-modal-close" aria-label="Close modal">&times;</button>
-      <div class="modal-header">
-        <h2 class="modal-title"><span class="gradient-text">Tutorial</span> Set Up Video</h2>
-        <p class="modal-subtitle">Official step-by-step setup guides, installation instructions, and configuration walkthroughs.</p>
-      </div>
-      <div class="modal-body">
-        <div class="video-player-container">
-          <div class="video-placeholder-frame">
-            <div class="video-frame-inner">
-              <div class="video-radar-grid"></div>
-              <div class="video-watermark">APEX EGO • TUTORIAL MASTERCLASS</div>
-              <div class="video-center-controls">
-                <a href="https://discord.gg/v766g2PNn6" target="_blank" rel="noopener noreferrer" class="video-center-play-btn" aria-label="Join Discord Video Guide">
-                  <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon points="6 3 20 12 6 21 6 3"></polygon>
-                  </svg>
-                </a>
-                <div class="video-prompt-text">Click Play to Watch Video Walkthrough in Discord Support</div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="tutorial-steps-list" style="margin-top: 24px;">
-          <h4 style="font-size: 1.05rem; color: #ffffff; margin-bottom: 14px; font-family: var(--font-display); letter-spacing: 0.02em;">Official Setup Checklist</h4>
-          <div class="step-item">
-            <span class="step-number">01</span>
-            <div class="step-content">
-              <strong>Core Prerequisites & Runtimes:</strong>
-              <p>Install DirectX, .NET SDK, and Panel Runtime before launching the main panel client.</p>
-            </div>
-          </div>
-          <div class="step-item">
-            <span class="step-number">02</span>
-            <div class="step-content">
-              <strong>UID Bypass & Lib Patching:</strong>
-              <p>Execute Disconnect Proxy, run ADB Fix, and install the optimized 32/64-Bit Lib Bypass APK.</p>
-            </div>
-          </div>
-          <div class="step-item">
-            <span class="step-number">03</span>
-            <div class="step-content">
-              <strong>Emulator High-FPS Tuning:</strong>
-              <p>Set emulator CPU to 4 cores, RAM to 4GB+, engine to DirectX, and enable high frame rates.</p>
-            </div>
-          </div>
-        </div>
 
-        <div class="modal-footer-actions">
-          <button class="btn btn--secondary" onclick="document.getElementById('tutorial-modal').setAttribute('hidden', '');">Close</button>
-          <a href="https://discord.gg/v766g2PNn6" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
-            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            Ask Support on Discord
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Free Bypass Notice Modal -->
-  <div id="bypass-notice-modal" class="modal-overlay" hidden>
-    <div class="modal-content" style="max-width: 480px; text-align: center; padding: 2.2rem 1.8rem; border-radius: 24px; border: 1px solid rgba(239, 68, 68, 0.45); box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(239, 68, 68, 0.25);">
-      <button class="modal-close" id="bypass-notice-modal-close" aria-label="Close modal">&times;</button>
-      
-      <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px;">
-        <div style="width: 68px; height: 68px; border-radius: 50%; background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 25px rgba(239, 68, 68, 0.35);">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-          </svg>
-        </div>
-
-        <div>
-          <h2 class="modal-title" style="font-size: 1.6rem; margin-bottom: 6px; color: #ffffff;">Free Bypass <span style="color: #ef4444;">Notice</span></h2>
-          <p style="font-size: 1.05rem; color: #fca5a5; font-weight: 700; margin: 0; line-height: 1.4;">
-            Free Bypass will coming soon.
-          </p>
-          <p style="font-size: 0.95rem; color: #ffffff; font-weight: 600; margin-top: 6px; margin-bottom: 0;">
-            Only Paid Bypass available for now.
-          </p>
-        </div>
-
-        <div style="width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(239, 68, 68, 0.4); border-radius: 14px; padding: 14px 16px; margin: 4px 0; text-align: center;">
-          <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
-            Join our official Discord server for VIP panel access, announcements, and status updates.
-          </p>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 4px;">
-          <a href="https://discord.gg/v766g2PNn6" target="_blank" rel="noopener noreferrer" class="btn btn--primary" style="background: linear-gradient(135deg, #5865F2, #4752C4); text-decoration: none; padding: 13px 20px; font-weight: 600; font-size: 0.95rem; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/>
-            </svg>
-            Join Discord Server
-          </a>
-          <button type="button" class="btn btn--secondary" id="bypass-notice-modal-cancel" style="padding: 11px 20px; font-size: 0.9rem; border-radius: 12px;">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Cloudflare Turnstile Human Verification Modal -->
   <div id="verify-modal" class="modal-overlay" hidden>
     <div class="modal-content verify-modal-content" style="max-width: 440px; text-align: center; padding: 2rem 1.5rem;">
       <button class="modal-close" id="verify-modal-close" aria-label="Close modal">&times;</button>
-      <div class="modal-header" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;">
+      <div class="modal-header"
+        style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;">
         <div class="verify-badge">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            <path d="M9 12l2 2 4-4"/>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <path d="M9 12l2 2 4-4" />
           </svg>
           <span id="verify-badge-text">HUMAN VERIFICATION</span>
         </div>
-        <h2 class="modal-title" id="verify-modal-title" style="font-size: 1.5rem;"><span class="gradient-text">Security</span> Check</h2>
-        <p class="modal-subtitle" id="verify-modal-subtitle" style="font-size: 0.875rem; max-width: 320px; margin: 0 auto; color: var(--text-secondary);">
+        <h2 class="modal-title" id="verify-modal-title" style="font-size: 1.5rem;"><span
+            class="gradient-text">Security</span> Check</h2>
+        <p class="modal-subtitle" id="verify-modal-subtitle"
+          style="font-size: 0.875rem; max-width: 320px; margin: 0 auto; color: var(--text-secondary);">
           Please complete the Cloudflare security verification below to confirm you are human and enter the website.
         </p>
       </div>
-      <div class="modal-body" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.25rem 0; min-height: 80px;">
+      <div class="modal-body"
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.25rem 0; min-height: 80px;">
         <div id="turnstile-container"></div>
         <div id="verify-status" style="margin-top: 1rem; font-size: 0.85rem; color: #a855f7; display: none;">
           <span class="verify-spinner"></span> Validating security token...
         </div>
         <div id="verify-error" style="margin-top: 1rem; font-size: 0.85rem; color: #ef4444; display: none;"></div>
       </div>
-      <div class="modal-footer" style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 6px;">
+      <div class="modal-footer"
+        style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 6px;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" opacity="0.6">
-          <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/>
+          <path
+            d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z" />
         </svg>
         Protected by Cloudflare Turnstile
       </div>
@@ -1516,7 +1396,7 @@
 
   <script src="js/script.js"></script>
   <script src="js/main.js" defer></script>
-  <script src="js/gradient-waves.js" defer></script>
+  <script type="module" src="js/dappled-light.js"></script>
   <script src="js/turnstile.js" defer></script>
 </body>
 
