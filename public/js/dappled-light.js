@@ -66,8 +66,8 @@ function generatePlantBranches(plant, placement, scale, density, seed, aspectRat
   const densityFilter = clamp(0.5 + 0.5 * effectiveDensity, 0.25, 1);
   const leafScaleFactor = 0.82 + 0.18 * clamp(effectiveDensity, 0.3, 1.6);
 
-  const baseX = place.x * (aspectRatio / 2 + 0.05);
-  const baseY = Math.abs(place.y) === 1 ? 0.56 * place.y : place.y;
+  const baseX = place.x * (aspectRatio / 2 - 0.08);
+  const baseY = Math.abs(place.y) === 1 ? 0.54 * place.y : place.y;
 
   return definitions.map((def, branchIdx) => {
     const normalAngle = place.angle + Math.PI / 2;
@@ -374,7 +374,7 @@ void main() {
   float shade = texture2D(uMask, vUv).r;
   float falloff;
   float win = windowMask(p, falloff);
-  vec3 light = uLightColor * (1.0 - shade) + uShadowColor * shade * 0.08;
+  vec3 light = uLightColor * (1.0 - shade * 0.85) + uShadowColor * shade * 0.15;
   vec3 emission = light * win * falloff * uSun * uIntensity;
   gl_FragColor = vec4(emission, 1.0);
 }
@@ -465,7 +465,7 @@ void main() {
   float n = hash(gl_FragCoord.xy + fract(uTime * 17.0) * 911.0) - 0.5;
   color += n * uGrain * 0.1 * mask;
   color += (hash(gl_FragCoord.xy * 1.7) - 0.5) / 255.0 * mask;
-  gl_FragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
+  gl_FragColor = vec4(clamp(color, 0.0, 1.0), clamp(l * 2.2, 0.0, 1.0));
 }
 `;
 
@@ -588,7 +588,7 @@ class DappledLightElement extends HTMLElement {
     try {
       renderer = new THREE.WebGLRenderer({
         canvas,
-        alpha: false,
+        alpha: true,
         antialias: false,
         powerPreference: 'high-performance',
       });
@@ -686,7 +686,7 @@ class DappledLightElement extends HTMLElement {
 
     const createTarget = (hdr) =>
       new THREE.WebGLRenderTarget(1, 1, {
-        type: hdr ? THREE.HalfFloatType : THREE.UnsignedByteType,
+        type: THREE.UnsignedByteType,
         format: THREE.RGBAFormat,
         depthBuffer: false,
         stencilBuffer: false,
@@ -939,14 +939,10 @@ class DappledLightElement extends HTMLElement {
 
       if (introStartTime < 0) {
         introStartTime = now;
-        introDone = reduced || !cfg.intro;
+        introDone = true;
       }
 
       let introProgress = 1;
-      if (!introDone) {
-        introProgress = smooth((now - introStartTime) / 2.4);
-        if (introProgress >= 1) introDone = true;
-      }
 
       const cloudFreq = reduced ? 0 : clamp(cfg.clouds, 0, 1);
       const cloudFactor = cloudFreq > 0 ? smooth((Math.sin(0.037 * simTime + 1.3) * Math.sin(0.023 * simTime) - 0.25) / 0.45) : 0;
@@ -1043,7 +1039,7 @@ class DappledLightElement extends HTMLElement {
       sharedUniforms.uWindowOn.value = isWindowOn ? 1 : 2 * (!isLightBg ? 1 : 0);
 
       const placeMeta = PLACEMENTS[cfg.placement] ?? PLACEMENTS['top-right'];
-      const winSize = clamp(cfg.windowSize, 0.2, 2) * clamp(aspect / 1.5, 0.48, 1) * (isWindowOn ? 1 : 1.25);
+      const winSize = clamp(cfg.windowSize, 0.2, 2.5) * clamp(aspect / 1.5, 0.65, 1.3) * (isWindowOn ? 1.15 : 1.35);
       const winLimit = aspect * 0.5 - 0.35 * winSize;
       const winSoftness = (0.018 + 0.03 * clamp(cfg.softness, 0, 3)) * (1 + 0.8 * cloudFreq * cloudFactor + 1.5 * (1 - introProgress));
 

@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "build": "node scripts/obfuscate.js"
+    "build": "node scripts/build-bundle.js"
   },
   "repository": {
     "type": "git",
