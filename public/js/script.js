@@ -101,53 +101,6 @@
     });
   }
 
-  function animateStats() {
-    var nums = document.querySelectorAll('.stat__num');
-    nums.forEach(function (el) {
-      var target = parseFloat(el.dataset.target);
-      if (isNaN(target)) return;
-      var current = 0;
-      var step = target / 40;
-      function update() {
-        current += step;
-        if (current >= target) {
-          el.textContent = target >= 10 ? Math.round(target) : target.toFixed(1);
-          return;
-        }
-        el.textContent = target >= 10 ? Math.round(current) : current.toFixed(1);
-        requestAnimationFrame(update);
-      }
-      requestAnimationFrame(update);
-    });
-  }
-
-  function staggerCards() {
-    var cards = document.querySelectorAll('.page--active .card');
-    cards.forEach(function (card, i) {
-      card.style.animation = 'none';
-      void card.offsetHeight;
-      card.style.animation = '';
-      card.style.setProperty('animation-delay', (i * 0.08) + 's');
-    });
-  }
-
-  function createCheckmarkIcon() {
-    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', 'btn__icon');
-    svg.setAttribute('width', '16');
-    svg.setAttribute('height', '16');
-    svg.setAttribute('viewBox', '0 0 24 24');
-    svg.setAttribute('fill', 'none');
-    svg.setAttribute('stroke', 'currentColor');
-    svg.setAttribute('stroke-width', '3');
-    svg.setAttribute('stroke-linecap', 'round');
-    svg.setAttribute('stroke-linejoin', 'round');
-    var polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-    polyline.setAttribute('points', '20 6 9 17 4 12');
-    svg.appendChild(polyline);
-    return svg;
-  }
-
   function getDownloadName(btn) {
     var card = btn.closest('.card');
     if (!card) return 'File';

@@ -52,11 +52,6 @@ section[id] {
   padding-bottom: 20px !important;
 }
 
-/* Ambient HUD Background removed, handled by styles.css html background */
-.hud-bg {
-  display: none;
-}
-
 /* ==========================================================================
    EXECUTIVE HERO & APEX SYSTEM DIRECTORY (BESPOKE PREMIUM DESIGN)
    ========================================================================== */

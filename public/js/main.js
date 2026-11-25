@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <div class="card" data-accent="${accent}">
             <div class="card__head">
               <div class="card__icon">
-                <img src="${card.logo_url || 'assets/msi.logo.png'}" alt="${card.title}" width="40" height="40" loading="lazy" style="width: 40px; height: 40px; object-fit: contain; border-radius: 8px;">
+                <img src="${card.logo_url || 'assets/msi-logo.png'}" alt="${card.title}" width="40" height="40" loading="lazy" style="width: 40px; height: 40px; object-fit: contain; border-radius: 8px;">
               </div>
               <h3 class="card__title">${card.title}</h3>
               ${card.badge_text ? `<span class="card__badge">${card.badge_text}</span>` : ''}
