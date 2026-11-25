@@ -306,27 +306,24 @@ float windowMask(vec2 p, out float falloff) {
   if (uWindowOn < 0.5) return 1.0;
   vec2 d = p - uWindow.xy;
   if (uWindowOn > 1.5) {
-    vec2 e = d / vec2(uWindow.z * 1.35, uWindow.z);
+    vec2 e = d / vec2(uWindow.z * 1.5, uWindow.z * 1.15);
     float r = length(e);
-    falloff = mix(0.55, 1.0, 1.0 - smoothstep(0.0, 1.0, r));
-    return 1.0 - smoothstep(0.35, 1.0, r);
+    falloff = mix(0.65, 1.0, 1.0 - smoothstep(0.0, 1.0, r));
+    return 1.0 - smoothstep(0.2, 1.0, r);
   }
   float c = cos(uWindowAngle);
   float s = sin(uWindowAngle);
   vec2 r = vec2(c * d.x + s * d.y, -s * d.x + c * d.y);
   float size = uWindow.z;
-  float soft = uWindow.w;
-  float halfLen = size * 1.3;
-  float persp = 1.0 + 0.3 * clamp(r.x / halfLen, -1.0, 1.0);
+  float soft = max(uWindow.w, 0.12);
+  float halfLen = size * 1.45;
+  float persp = 1.0 + 0.18 * clamp(r.x / halfLen, -1.0, 1.0);
   float y = r.y / persp;
-  float halfW = size * 0.5;
-  float across = smoothstep(-halfW - soft, -halfW + soft, y) * (1.0 - smoothstep(halfW - soft, halfW + soft, y));
-  float along = smoothstep(-halfLen - soft * 2.0, -halfLen + soft * 2.0, r.x) * (1.0 - smoothstep(halfLen - soft * 2.0, halfLen + soft * 2.0, r.x));
-  float bar = size * 0.018;
-  float mullion = 1.0 - (1.0 - smoothstep(bar, bar + soft * 1.1, abs(y))) * 0.55;
-  float transom = 1.0 - (1.0 - smoothstep(bar, bar + soft * 1.1, abs(r.x + halfLen * 0.28))) * 0.5;
-  falloff = mix(0.5, 1.0, 1.0 - smoothstep(-halfLen, halfLen, r.x)) * mix(0.8, 1.0, 1.0 - smoothstep(0.0, halfW, abs(y)));
-  return across * along * mullion * transom;
+  float halfW = size * 0.62;
+  float across = smoothstep(-halfW - soft * 2.5, -halfW + soft * 2.5, y) * (1.0 - smoothstep(halfW - soft * 2.5, halfW + soft * 2.5, y));
+  float along = smoothstep(-halfLen - soft * 3.5, -halfLen + soft * 3.5, r.x) * (1.0 - smoothstep(halfLen - soft * 3.5, halfLen + soft * 3.5, r.x));
+  falloff = mix(0.55, 1.0, 1.0 - smoothstep(-halfLen, halfLen, r.x)) * mix(0.75, 1.0, 1.0 - smoothstep(0.0, halfW, abs(y)));
+  return across * along;
 }
 `;
 
