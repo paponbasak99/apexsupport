@@ -12,29 +12,29 @@ body {
   min-height: 100% !important;
 }
 
-/* Eliminate Double Scrollbars and harsh edge lines */
-::-webkit-scrollbar {
-  width: 6px !important;
-  height: 6px !important;
+/* 100% Invisible Scrollbars (Full scrollability, zero visible line on screen edge) */
+html,
+body,
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
-::-webkit-scrollbar-track {
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
   background: transparent !important;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(168, 85, 247, 0.3) !important;
-  border-radius: 99px !important;
-  border: none !important;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 85, 247, 0.65) !important;
-}
-
-* {
-  scrollbar-width: thin !important;
-  scrollbar-color: rgba(168, 85, 247, 0.3) transparent !important;
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 .page {
@@ -687,25 +687,11 @@ body {
   box-shadow: 0 24px 52px -10px rgba(0, 0, 0, 0.85), 0 0 32px rgba(168, 85, 247, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
-/* Card Top Specular Light Line */
-.card::after {
-  content: '' !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 20% !important;
-  right: 20% !important;
-  height: 2px !important;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), #ffffff, rgba(255, 255, 255, 0.5), transparent) !important;
-  opacity: 0.5 !important;
-  transition: all 0.35s ease !important;
-  pointer-events: none !important;
-}
-
-.card:hover::after {
-  opacity: 1 !important;
-  left: 10% !important;
-  right: 10% !important;
-  box-shadow: 0 0 16px #ffffff !important;
+/* Remove Card Specular Line & Beam Artifacts */
+.card::after,
+.card::before {
+  display: none !important;
+  content: none !important;
 }
 
 /* Card Head */

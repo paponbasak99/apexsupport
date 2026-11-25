@@ -115,20 +115,16 @@ a {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(8, 7, 20, 0.85);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.4);
-  border-radius: 99px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 85, 247, 0.7);
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-corner {
+  display: none !important;
 }
 
 :focus-visible {
@@ -2607,53 +2603,10 @@ main {
     inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
 }
 
-/* --- Top Edge Light Highlight (Radiant White) --- */
-.card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 15%;
-  right: 15%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), #ffffff, rgba(255, 255, 255, 0.6), transparent);
-  opacity: 0.6;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.7), 0 0 25px rgba(255, 255, 255, 0.4);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.card:hover::after {
-  opacity: 1;
-  left: 8%;
-  right: 8%;
-  filter: brightness(1.5);
-  box-shadow: 0 0 16px #ffffff, 0 0 35px rgba(255, 255, 255, 0.9);
-}
-
-/* --- Inner Shimmer Overlay (Pure White Light Beam) --- */
+.card::after,
 .card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(115deg,
-      transparent 0%,
-      transparent 35%,
-      rgba(255, 255, 255, 0.08) 42%,
-      rgba(255, 255, 255, 0.45) 50%,
-      rgba(255, 255, 255, 0.08) 58%,
-      transparent 65%,
-      transparent 100%);
-  background-size: 250% 100%;
-  background-position: 130% 0;
-  transition: background-position 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.card:hover::before {
-  background-position: -50% 0;
+  display: none !important;
+  content: none !important;
 }
 
 /* --- Card Head --- */
@@ -3917,21 +3870,21 @@ select {
 
 .modal-body {
   overflow-y: auto;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
   padding-right: 6px;
   flex: 1;
 }
 
 .modal-body::-webkit-scrollbar {
-  width: 4px;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-.modal-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-
+.modal-body::-webkit-scrollbar-track,
 .modal-body::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.4);
-  border-radius: 99px;
+  display: none !important;
 }
 
 .modal-grid {
@@ -4452,23 +4405,16 @@ body.gatekeeper-locked .ambient-light {
 
 /* --- 1. Custom Smooth Cyber Scrollbar & Selection --- */
 ::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-::-webkit-scrollbar-track {
-  background: #060411;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #7c3aed 0%, #38bdf8 100%);
-  border-radius: 99px;
-  border: 2px solid #060411;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #a855f7 0%, #60a5fa 100%);
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-corner {
+  display: none !important;
 }
 
 ::selection {
