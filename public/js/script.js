@@ -514,32 +514,7 @@
     });
   }
 
-  // --- 2. Copy CMD Quick Fix Buttons ---
-  document.addEventListener('click', function (e) {
-    const btn = e.target.closest('.btn-copy-cmd');
-    if (!btn) return;
-    const cmd = btn.getAttribute('data-cmd');
-    if (!cmd) return;
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(cmd).then(function () {
-        btn.classList.add('copied');
-        const span = btn.querySelector('span');
-        if (span) span.textContent = 'Copied!';
-        showToast('Command Copied', 'Paste into Command Prompt (Run as Administrator)');
-        setTimeout(function () {
-          btn.classList.remove('copied');
-          if (span) span.textContent = 'Copy';
-        }, 2500);
-      }).catch(function () {
-        showToast('Notice', 'Manual command: ' + cmd);
-      });
-    } else {
-      showToast('Notice', 'Manual command: ' + cmd);
-    }
-  });
-
-  // --- 3. FAQ Accordion Toggle ---
+  // --- 2. FAQ Accordion Toggle ---
   document.addEventListener('click', function (e) {
     const questionBtn = e.target.closest('.faq-question');
     if (!questionBtn) return;
