@@ -60,6 +60,20 @@ app.use(helmet({
 app.use(cors());
 app.use(express.json());
 
+// Log incoming requests for live debugging
+app.use((req, res, next) => {
+  if (!req.url.startsWith('/assets/')) {
+    console.log(`[REQ] ${req.method} ${req.url}`);
+  }
+  next();
+});
+
+// Client diagnostic error logger
+app.post('/api/client-error', (req, res) => {
+  console.log('[CLIENT ERROR]', req.body);
+  res.json({ ok: true });
+});
+
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, '../public')));
 

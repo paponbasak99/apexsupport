@@ -10,6 +10,27 @@
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
 
+  <script>
+    window.addEventListener('error', function(e) {
+      try {
+        fetch('/api/client-error', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'error', message: e.message, filename: e.filename, lineno: e.lineno, colno: e.colno })
+        }).catch(function(){});
+      } catch(err){}
+    });
+    window.addEventListener('unhandledrejection', function(e) {
+      try {
+        fetch('/api/client-error', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'unhandledrejection', reason: String(e.reason) })
+        }).catch(function(){});
+      } catch(err){}
+    });
+  </script>
+
   <!-- Open Graph / Social Media Meta Tags -->
   <meta property="og:title" content="APEX ELITE SUPPORT HUB" />
   <meta property="og:description"
@@ -38,6 +59,11 @@
   <link
     href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
     rel="stylesheet" />
+  <!-- Dappled Light Engine Preload -->
+  <link rel="modulepreload" href="js/dappled-light.js" />
+  <link rel="modulepreload" href="js/three.module.js" />
+  <link rel="modulepreload" href="js/three.core.js" />
+
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/home-redesign.css" />
   <link rel="stylesheet" href="css/dappled-light.css" />
@@ -45,9 +71,9 @@
 
 <body>
 
-  <dappled-light plant="ficus" placement="top-right" light-color="#9d8cff" shadow-color="#141026"
-    background-color="#06050e" window="auto" window-angle="22" window-size="0.58" softness="1.4" intensity="0.82"
-    bloom="0.5" wind="0.5" wind-speed="0.8" breeze="true" grain="0.2"></dappled-light>
+  <dappled-light plant="ficus" placement="top-right" light-color="#a892ff" shadow-color="#4d3580"
+    background-color="#06050e" window="on" window-angle="26" window-size="0.72" softness="1.1" intensity="1.15"
+    scale="1.12" density="1.1" bloom="0.65" wind="0.6" wind-speed="0.85" breeze="true" grain="0.18"></dappled-light>
   <nav class="nav" id="nav">
     <div class="nav__inner">
       <a href="#home" class="nav__logo" data-link="home" aria-label="Apex Official Home">
